@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
+#import "Status.h"
+
 @interface MainPageViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
 @end

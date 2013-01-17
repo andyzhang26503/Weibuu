@@ -23,6 +23,15 @@
     return self;
 }
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.tabBarItem.title=@"个人资料";
+        self.tabBarItem.image=[UIImage imageNamed:@"Calendar-32p"];
+    }
+    return self;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
