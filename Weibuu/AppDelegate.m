@@ -9,11 +9,39 @@
 #import "AppDelegate.h"
 
 @implementation AppDelegate
+@synthesize sinaweibo=_sinaweibo;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    MainPageViewController *mpvc = [[MainPageViewController alloc] initWithNibName:nil bundle:nil];
+    MentionsViewController *mvc = [[MentionsViewController alloc] initWithNibName:nil bundle:nil];
+    FollowAndFansViewController *fvc = [[FollowAndFansViewController alloc] initWithNibName:nil bundle:nil];
+    ProfileViewController *pvc = [[ProfileViewController alloc] initWithNibName:nil bundle:nil];
+    SettingsViewController *svc = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
+    
+    UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:mpvc];
+    UINavigationController *nv2 = [[UINavigationController alloc] initWithRootViewController:mvc];
+    UINavigationController *nv3 = [[UINavigationController alloc] initWithRootViewController:fvc];
+    UINavigationController *nv4 = [[UINavigationController alloc] initWithRootViewController:pvc];
+    UINavigationController *nv5 = [[UINavigationController alloc] initWithRootViewController:svc];
+    
+    UITabBarController *tabbc = [[UITabBarController alloc] init];
+    tabbc.viewControllers = [NSArray arrayWithObjects:nv,nv2,nv3,nv4,nv5, nil];
+    
+    _sinaweibo = [[SinaWeibo alloc] initWithAppKey:kAppKey appSecret:kAppSecret appRedirectURI:kAppRedirectURI andDelegate:mpvc];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *sinaweiboInfo = [defaults objectForKey:@"SinaWeiboAuthData"];
+    if ([sinaweiboInfo objectForKey:@"AccessTokenKey"] && [sinaweiboInfo objectForKey:@"ExpirationDateKey"] && [sinaweiboInfo objectForKey:@"UserIDKey"])
+    {
+        _sinaweibo.accessToken = [sinaweiboInfo objectForKey:@"AccessTokenKey"];
+        _sinaweibo.expirationDate = [sinaweiboInfo objectForKey:@"ExpirationDateKey"];
+        _sinaweibo.userID = [sinaweiboInfo objectForKey:@"UserIDKey"];
+    }
+    
+    self.window.rootViewController = tabbc;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
