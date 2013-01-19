@@ -26,6 +26,6 @@
 
 @property (nonatomic,strong) User *user;
 
--(id) initWithJson;
--(NSMutableArray *) statusesWithJson:(id)json;
+
++ (NSMutableArray *)statusesWithJson:(id)json;
 @end

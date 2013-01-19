@@ -26,16 +26,7 @@
 
 @synthesize user=_user;
 
--(id) initWithJson
-{
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-
--(NSMutableArray *) statusesWithJson:(id)json
++ (NSMutableArray *)statusesWithJson:(id)json
 {
     NSMutableArray *statusesArray =[[NSMutableArray alloc] initWithCapacity:20];
     NSArray *statuses = [json objectForKey:@"statuses"];
