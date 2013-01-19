@@ -12,4 +12,5 @@
 
 @interface MainPageViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
+@property (nonatomic,strong) NSArray *statusesArray;
 @end

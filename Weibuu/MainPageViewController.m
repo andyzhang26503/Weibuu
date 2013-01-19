@@ -14,12 +14,13 @@
 @end
 
 @implementation MainPageViewController
+@synthesize statusesArray = _statusesArray;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+
     }
     return self;
 }
@@ -56,33 +57,23 @@
     UIBarButtonItem *bbiQuit = [[UIBarButtonItem alloc] initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(logOut)];
     self.navigationItem.leftBarButtonItem=bbiQuit;
     
-    NSLog(@"view did load");
+    [self requestTimeLine];
     
+}
+- (void)requestTimeLine
+{
+    SinaWeibo *mysinaweibo = [self sinaweibo];
     if (mysinaweibo.isAuthValid) {
         [mysinaweibo requestWithURL:@"statuses/friends_timeline.json"
                              params:nil
                          httpMethod:@"Get"
                            delegate:self];
-
+        
     }
-    
-//    if (mysinaweibo.isAuthValid) {
-//        [mysinaweibo requestWithURL:@"statuses/mentions.json"
-//                             params:nil
-//                         httpMethod:@"Get"
-//                           delegate:self];
-//        
-//    }
-//    NSString *weiboid = @"3535048819028303";
-//    if (mysinaweibo.isAuthValid) {
-//        [mysinaweibo requestWithURL:@"statuses/comments.json"
-//                             params:[NSMutableDictionary dictionaryWithObject:weiboid forKey:@"id"]
-//                         httpMethod:@"Get"
-//                           delegate:self];
-//        
-//    }
+    NSLog(@"viewdidload after..");
 
 }
+
 - (void)logOut
 {
     [[self sinaweibo] logOut];
@@ -97,25 +88,35 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    NSLog(@"into numberofrows");
+    NSLog([NSString stringWithFormat:@"statuses33count==%d",[self.statusesArray count]]);
+    return [self.statusesArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"into cellforrow");
+    NSLog([NSString stringWithFormat:@"statuses22count==%d",[self.statusesArray count]]);
+    
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+
     
-    // Configure the cell...
-    
+    if (self.statusesArray) {
+        Status *status =  [self.statusesArray objectAtIndex:indexPath.row];
+        //cell.textLabel.text = [NSString stringWithFormat:@"%d",indexPath.row] ;
+        cell.textLabel.text = status.text;
+        cell.detailTextLabel.text = status.user.name;
+        
+    }
     return cell;
 }
 
@@ -169,6 +170,7 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    
 }
 
 
@@ -182,6 +184,8 @@
     NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:mysinaweibo.accessToken,@"AccessTokenKey",mysinaweibo.expirationDate,@"ExpirationDateKey",mysinaweibo.userID,@"UserIDKey", nil];
     [defaults setObject:dictionary forKey:@"SinaWeiboAuthData"];
     [defaults synchronize];
+    
+    [self requestTimeLine];
 }
 
 - (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
@@ -212,21 +216,10 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if ([request.url hasSuffix:@"statuses/friends_timeline.json"]) {
-
-        Status *sta = [[Status alloc] init];
-        NSMutableArray *statuses = [sta statusesWithJson:result];
-        Status *status1 = [statuses objectAtIndex:0];
-
-        NSLog([NSString stringWithFormat:@"statuses/friends_timeline:%@",status1.createdAt]);
-        
+        NSLog([NSString stringWithFormat:@"result==%@",result]);
+        self.statusesArray = [Status statusesWithJson:result];
+        Status *status1 = [self.statusesArray objectAtIndex:0];
+        [[self tableView] reloadData];
     }
-//    if ([request.url hasSuffix:@"statuses/mentions.json"]){
-//        NSLog([NSString stringWithFormat:@"statuses/mentions.json result:%@",result]);
-//    }
-//    if ([request.url hasSuffix:@"statuses/comments.json"]){
-//        NSLog([NSString stringWithFormat:@"statuses/comments.json result:%@",result]);
-//    }
-    
-   
 }
 @end

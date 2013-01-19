@@ -16,7 +16,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    MainPageViewController *mpvc = [[MainPageViewController alloc] initWithNibName:nil bundle:nil];
+    MainPageViewController *mpvc = [[MainPageViewController alloc] initWithStyle:UITableViewStylePlain];
     MentionsViewController *mvc = [[MentionsViewController alloc] initWithNibName:nil bundle:nil];
     FollowAndFansViewController *fvc = [[FollowAndFansViewController alloc] initWithNibName:nil bundle:nil];
     ProfileViewController *pvc = [[ProfileViewController alloc] initWithNibName:nil bundle:nil];
