@@ -25,7 +25,8 @@
 @property (nonatomic,strong) NSString *thumbnailPic;
 
 @property (nonatomic,strong) User *user;
-
+@property (nonatomic,strong) Status *origStatus;
 
 + (NSMutableArray *)statusesWithJson:(id)json;
++ (NSMutableArray *)mentionStatusesWithJson:(id)json;
 @end
