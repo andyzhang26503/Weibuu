@@ -7,13 +7,13 @@
 //
 
 #import "MentionsViewController.h"
-
+#import "SinaWeibo.h"
 @interface MentionsViewController ()
 
 @end
 
 @implementation MentionsViewController
-
+@synthesize retweetStatus = _retweetStatus;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -36,13 +36,21 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"mentions viewDidload");
     [super viewDidLoad];
 
+    self.title=@"@我";
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"mentions viewWillAppear");
+    [self requestMenstions];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,26 +63,27 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [self.retweetStatus count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
+    static NSString *CellIdentifier = @"MentionsCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    Status *mentionStatus = [self.retweetStatus objectAtIndex:[indexPath row]];
+    cell.textLabel.text = mentionStatus.text;
+    cell.detailTextLabel.text = mentionStatus.origStatus.text;
     
     return cell;
+
 }
 
 /*
@@ -128,5 +137,56 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
+#pragma mark - weibo request
+- (void)requestMenstions
+{
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
+    if (mysinaweibo.isAuthValid) {
+        [mysinaweibo requestWithURL:@"friendships/friends.json"
+                             params:nil
+                         httpMethod:@"Get"
+                           delegate:self];
+        
+    }
+
+}
+
+
+#pragma mark - SinaWeibo Delegate
+- (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
+{
+
+}
+
+- (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
+{
+    
+
+    
+}
+
+#pragma mark - SinaWeiboRequestDelegate
+- (void)request:(SinaWeiboRequest *)request didReceiveResponse:(NSURLResponse *)response;
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didReceiveRawData:(NSData *)data
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
+    if ([request.url hasSuffix:@"statuses/mentions.json"]) {
+        self.retweetStatus = [Status mentionStatusesWithJson:result];
+        [[self tableView] reloadData];
+        
+    }
+}
+
 
 @end

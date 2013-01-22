@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ProfileViewController : UITableViewController
+#import "SinaWeiboManager.h"
+#import "SinaWeibo.h"
+@interface ProfileViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
 @end

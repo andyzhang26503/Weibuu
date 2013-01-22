@@ -35,6 +35,10 @@
 {
     [super viewDidLoad];
 
+    
+    UIBarButtonItem *bbiQuit = [[UIBarButtonItem alloc] initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(logOut)];
+    self.navigationItem.leftBarButtonItem=bbiQuit;
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -127,4 +131,9 @@
      */
 }
 
+
+- (void)logOut
+{
+    [[SinaWeiboManager sinaweibo] logOut];
+}
 @end

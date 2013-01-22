@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
 #import "Status.h"
-
+#import "SinaWeiboManager.h"
 @interface MainPageViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
 @property (nonatomic,strong) NSArray *statusesArray;

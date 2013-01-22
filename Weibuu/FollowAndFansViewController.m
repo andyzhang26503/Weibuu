@@ -36,12 +36,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title =@"好友";
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSLog(@"friends viewWillAppear");
+    [self requestfriends];
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,5 +134,60 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
+
+
+#pragma mark - weibo request
+- (void)requestfriends
+{
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
+    if (mysinaweibo.isAuthValid) {
+        [mysinaweibo requestWithURL:@"statuses/followers.json"
+                             params:nil
+                         httpMethod:@"GET"
+                           delegate:self];
+        
+    }
+    
+}
+
+
+#pragma mark - SinaWeibo Delegate
+- (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
+{
+    
+}
+
+- (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
+{
+    
+    
+    
+}
+
+#pragma mark - SinaWeiboRequestDelegate
+- (void)request:(SinaWeiboRequest *)request didReceiveResponse:(NSURLResponse *)response;
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didReceiveRawData:(NSData *)data
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
+    if ([request.url hasSuffix:@"statuses/followers.json"]) {
+        NSLog([NSString stringWithFormat:@"json==%@",result]);
+        //self.retweetStatus = [Status mentionStatusesWithJson:result];
+        //[[self tableView] reloadData];
+        
+    }
+}
+
+
 
 @end

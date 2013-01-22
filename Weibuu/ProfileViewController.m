@@ -35,12 +35,30 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.title = @"我的资料";
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self requestMyStatus];
+}
+
+- (void)requestMyStatus
+{
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
+    if (mysinaweibo.isAuthValid) {
+        [mysinaweibo requestWithURL:@"statuses/user_timeline.json"
+                             params:nil
+                         httpMethod:@"Get"
+                           delegate:self];
+        
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,4 +145,27 @@
      */
 }
 
+
+
+#pragma mark - SinaWeiboRequestDelegate
+- (void)request:(SinaWeiboRequest *)request didReceiveResponse:(NSURLResponse *)response;
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didReceiveRawData:(NSData *)data
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
+    if ([request.url hasSuffix:@"statuses/user_timeline.json"]) {
+        NSLog([NSString stringWithFormat:@"json==%@",result]);
+        //self.statusesArray = [Status statusesWithJson:result];
+        //[[self tableView] reloadData];
+    }
+}
 @end

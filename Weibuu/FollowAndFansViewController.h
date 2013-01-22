@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface FollowAndFansViewController : UITableViewController
+#import "SinaWeibo.h"
+#import "SinaWeiboManager.h"
+@interface FollowAndFansViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
 @end

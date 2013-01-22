@@ -7,8 +7,7 @@
 //
 
 #import "MainPageViewController.h"
-#import "AppDelegate.h"
-
+#import "WriteWbViewController.h"
 @interface MainPageViewController ()
 
 @end
@@ -36,16 +35,11 @@
     return self;
 }
 
--(SinaWeibo *)sinaweibo
-{
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-    return [delegate sinaweibo];
-}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    SinaWeibo *mysinaweibo = [self sinaweibo];
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
     [mysinaweibo logIn];
 
     // Uncomment the following line to preserve selection between presentations.
@@ -54,7 +48,7 @@
     self.navigationItem.rightBarButtonItem = bbi;
     
 
-    UIBarButtonItem *bbiQuit = [[UIBarButtonItem alloc] initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(logOut)];
+    UIBarButtonItem *bbiQuit = [[UIBarButtonItem alloc] initWithTitle:@"写微博" style:UIBarButtonItemStylePlain target:self action:@selector(writeWeibo)];
     self.navigationItem.leftBarButtonItem=bbiQuit;
     
     [self requestTimeLine];
@@ -62,7 +56,7 @@
 }
 - (void)requestTimeLine
 {
-    SinaWeibo *mysinaweibo = [self sinaweibo];
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
     if (mysinaweibo.isAuthValid) {
         [mysinaweibo requestWithURL:@"statuses/friends_timeline.json"
                              params:nil
@@ -70,14 +64,21 @@
                            delegate:self];
         
     }
-    NSLog(@"viewdidload after..");
 
 }
 
 - (void)logOut
 {
-    [[self sinaweibo] logOut];
+    [[SinaWeiboManager sinaweibo] logOut];
 }
+
+- (void)writeWeibo
+{
+    WriteWbViewController *wvc = [[WriteWbViewController alloc] init];
+    
+    [self.navigationController pushViewController:wvc animated:YES];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -93,17 +94,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"into numberofrows");
-    NSLog([NSString stringWithFormat:@"statuses33count==%d",[self.statusesArray count]]);
     return [self.statusesArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"into cellforrow");
-    NSLog([NSString stringWithFormat:@"statuses22count==%d",[self.statusesArray count]]);
-    
-    static NSString *CellIdentifier = @"Cell";
+
+    static NSString *CellIdentifier = @"MainPageCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
@@ -180,7 +177,7 @@
     NSLog([NSString stringWithFormat:@"user did login:userid=%@,accessToken=%@,expireDate=%@,refreshToken=%@",sinaweibo.userID,sinaweibo.accessToken,sinaweibo.expirationDate,sinaweibo.refreshToken] );
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    SinaWeibo *mysinaweibo = [self sinaweibo];
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
     NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:mysinaweibo.accessToken,@"AccessTokenKey",mysinaweibo.expirationDate,@"ExpirationDateKey",mysinaweibo.userID,@"UserIDKey", nil];
     [defaults setObject:dictionary forKey:@"SinaWeiboAuthData"];
     [defaults synchronize];
@@ -190,13 +187,12 @@
 
 - (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
 {
-    NSLog(@"weibo log out!");
-    
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:@"SinaWeiboAuthData"];
     [defaults synchronize];
     
-    [[self sinaweibo] logIn];
+    [[SinaWeiboManager sinaweibo] logIn];
 
 }
 
@@ -216,9 +212,7 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if ([request.url hasSuffix:@"statuses/friends_timeline.json"]) {
-        NSLog([NSString stringWithFormat:@"result==%@",result]);
         self.statusesArray = [Status statusesWithJson:result];
-        Status *status1 = [self.statusesArray objectAtIndex:0];
         [[self tableView] reloadData];
     }
 }

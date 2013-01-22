@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SinaWeiboManager.h"
 @interface SettingsViewController : UITableViewController
 
 @end

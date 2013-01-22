@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SinaWeiboManager.h"
+#import "Status.h"
+@interface MentionsViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
-@interface MentionsViewController : UITableViewController
 
+@property (nonatomic,strong) NSArray *retweetStatus;
 @end
