@@ -183,10 +183,8 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if ([request.url hasSuffix:@"friendships/friends.json"]) {
-        NSLog([NSString stringWithFormat:@"json==%@",result]);
         self.usersArray = [User usersWithJson:result];
         [[self tableView] reloadData];
-        
     }
 }
 

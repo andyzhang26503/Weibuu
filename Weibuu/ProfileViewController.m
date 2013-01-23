@@ -164,7 +164,6 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if ([request.url hasSuffix:@"statuses/user_timeline.json"]) {
-        //NSLog([NSString stringWithFormat:@"json==%@",result]);
         self.myStatuses = [Status statusesWithJson:result];
         [[self tableView] reloadData];
     }

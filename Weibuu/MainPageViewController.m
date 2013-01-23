@@ -8,12 +8,15 @@
 
 #import "MainPageViewController.h"
 #import "WriteWbViewController.h"
+
+#define FriendStatusCell @"FriendStatusCell"
 @interface MainPageViewController ()
 
 @end
 
 @implementation MainPageViewController
 @synthesize statusesArray = _statusesArray;
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -51,6 +54,9 @@
 
     UIBarButtonItem *bbiQuit = [[UIBarButtonItem alloc] initWithTitle:@"写微博" style:UIBarButtonItemStylePlain target:self action:@selector(writeWeibo)];
     self.navigationItem.leftBarButtonItem=bbiQuit;
+    
+    UINib *nib = [UINib nibWithNibName:@"StatusCell" bundle:nil];
+    [[self tableView] registerNib:nib forCellReuseIdentifier:FriendStatusCell];
     
     [self requestTimeLine];
     
@@ -104,22 +110,32 @@
     return [self.statusesArray count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 200;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    static NSString *CellIdentifier = @"MainPageCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    }
+    //static NSString *CellIdentifier = @"MainPageCell";
+    StatusCell *cell = [tableView dequeueReusableCellWithIdentifier:FriendStatusCell];
+//    if (!cell) {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+//    }
 
     
     if (self.statusesArray) {
         Status *status =  [self.statusesArray objectAtIndex:indexPath.row];
-        //cell.textLabel.text = [NSString stringWithFormat:@"%d",indexPath.row] ;
-        cell.textLabel.text = status.text;
-        cell.detailTextLabel.text = status.user.name;
-        
+
+        //cell.textLabel.text = status.text;
+        //cell.detailTextLabel.text = status.user.name;
+        cell.name.text = status.user.name;
+        cell.retweetCount.text = [status.repostsCount stringValue];
+        cell.commentCount.text = [status.commentsCount stringValue];
+        cell.status.text = status.text;
+        cell.createdAt.text = status.createdAt;
+        cell.source.text =status.source;
     }
     return cell;
 }
