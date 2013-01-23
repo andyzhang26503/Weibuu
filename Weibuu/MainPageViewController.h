@@ -12,5 +12,5 @@
 #import "SinaWeiboManager.h"
 @interface MainPageViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
-@property (nonatomic,strong) NSArray *statusesArray;
+@property (nonatomic,strong) NSMutableArray *statusesArray;
 @end

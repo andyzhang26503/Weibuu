@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
 #import "SinaWeiboManager.h"
+#import "User.h"
 @interface FollowAndFansViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
+@property (nonatomic,strong) NSMutableArray *usersArray;
 @end

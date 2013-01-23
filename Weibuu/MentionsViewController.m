@@ -143,7 +143,7 @@
 {
     SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
     if (mysinaweibo.isAuthValid) {
-        [mysinaweibo requestWithURL:@"friendships/friends.json"
+        [mysinaweibo requestWithURL:@"statuses/mentions.json"
                              params:nil
                          httpMethod:@"Get"
                            delegate:self];
@@ -182,7 +182,7 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if ([request.url hasSuffix:@"statuses/mentions.json"]) {
-        self.retweetStatus = [Status mentionStatusesWithJson:result];
+        self.retweetStatus = [Status statusesWithJson:result];
         [[self tableView] reloadData];
         
     }

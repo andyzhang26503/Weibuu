@@ -37,6 +37,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"main page viewDidLoad");
     [super viewDidLoad];
     
     SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
@@ -53,6 +54,12 @@
     
     [self requestTimeLine];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"main page viewWillAppear");
+    [self requestTimeLine];
 }
 - (void)requestTimeLine
 {
@@ -212,6 +219,7 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if ([request.url hasSuffix:@"statuses/friends_timeline.json"]) {
+        NSLog([NSString stringWithFormat:@"statuses/friends_timeline==%@",result]);
         self.statusesArray = [Status statusesWithJson:result];
         [[self tableView] reloadData];
     }

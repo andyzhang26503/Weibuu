@@ -12,5 +12,5 @@
 @interface MentionsViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
 
-@property (nonatomic,strong) NSArray *retweetStatus;
+@property (nonatomic,strong) NSMutableArray *retweetStatus;
 @end

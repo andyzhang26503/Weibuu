@@ -71,25 +71,26 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [self.myStatuses count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+    static NSString *CellIdentifier = @"MyStatusCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
     // Configure the cell...
+    Status *status = [self.myStatuses objectAtIndex:indexPath.row];
     
+    cell.textLabel.text =status.text;
+    cell.detailTextLabel.text = status.origStatus.text;
     return cell;
 }
 
@@ -163,9 +164,9 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if ([request.url hasSuffix:@"statuses/user_timeline.json"]) {
-        NSLog([NSString stringWithFormat:@"json==%@",result]);
-        //self.statusesArray = [Status statusesWithJson:result];
-        //[[self tableView] reloadData];
+        //NSLog([NSString stringWithFormat:@"json==%@",result]);
+        self.myStatuses = [Status statusesWithJson:result];
+        [[self tableView] reloadData];
     }
 }
 @end

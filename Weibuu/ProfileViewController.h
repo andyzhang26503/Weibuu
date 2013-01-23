@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SinaWeiboManager.h"
 #import "SinaWeibo.h"
+#import "Status.h";
 @interface ProfileViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
+
+@property (nonatomic,strong) NSMutableArray *myStatuses;
 @end

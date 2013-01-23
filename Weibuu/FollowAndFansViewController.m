@@ -61,25 +61,27 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+
+    return [self.usersArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    static NSString *CellIdentifier = @"FollowsCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    User *user = [self.usersArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = user.name;
+    cell.detailTextLabel.text = user.description;
+
     return cell;
 }
 
@@ -142,8 +144,8 @@
 {
     SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
     if (mysinaweibo.isAuthValid) {
-        [mysinaweibo requestWithURL:@"statuses/followers.json"
-                             params:nil
+        [mysinaweibo requestWithURL:@"friendships/friends.json"
+                             params:[NSMutableDictionary dictionaryWithObjectsAndKeys:mysinaweibo.userID,@"uid", nil]
                          httpMethod:@"GET"
                            delegate:self];
         
@@ -180,10 +182,10 @@
 }
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
-    if ([request.url hasSuffix:@"statuses/followers.json"]) {
+    if ([request.url hasSuffix:@"friendships/friends.json"]) {
         NSLog([NSString stringWithFormat:@"json==%@",result]);
-        //self.retweetStatus = [Status mentionStatusesWithJson:result];
-        //[[self tableView] reloadData];
+        self.usersArray = [User usersWithJson:result];
+        [[self tableView] reloadData];
         
     }
 }
