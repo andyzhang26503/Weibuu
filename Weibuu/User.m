@@ -46,4 +46,53 @@
 @synthesize verifiedReason=_verifiedReason;
 @synthesize verifiedType=_verifiedType;
 @synthesize weihao=_weihao;
+@synthesize statusId = _statusId;
++ (NSMutableArray *)usersWithJson:(id)json
+{
+    NSMutableArray *usersArray = [NSMutableArray arrayWithCapacity:20];
+    NSArray *array = [json objectForKey:@"users"];
+    for (id userJson in array) {
+        User *user = [[User alloc] init];
+        user.id =  [userJson objectForKey:@"id"];
+        user.idstr = [userJson objectForKey:@"idstr"];
+        user.screenName = [userJson objectForKey:@"screen_name"];
+        user.name = [userJson objectForKey:@"name"];
+        user.province = [userJson objectForKey:@"province"];
+        user.city = [userJson objectForKey:@"city"];
+        user.location = [userJson objectForKey:@"location"];
+        user.description = [userJson objectForKey:@"description"];
+        user.url = [userJson objectForKey:@"url"];
+        user.profileImageUrl = [userJson objectForKey:@"profile_image_url"];
+        user.profileUrl = [userJson objectForKey:@"profile_url"];
+        user.domain = [userJson objectForKey:@"domain"];
+        user.weihao = [userJson objectForKey:@"weihao"];
+        user.gender = [userJson objectForKey:@"gender"];
+        user.followCount = [userJson objectForKey:@"followers_count"];
+        user.friendsCount = [userJson objectForKey:@"friends_count"];
+        user.statusesCount = [userJson objectForKey:@"statuses_count"];
+        user.favouritesCount = [userJson objectForKey:@"favourites_count"];
+        user.createdAt = [userJson objectForKey:@"created_at"];
+        user.following = [userJson objectForKey:@"following"];
+        user.allowAllActMsg = [userJson objectForKey:@"allow_all_act_msg"];
+        user.geoEnabled = [userJson objectForKey:@"geo_enabled"];
+        user.verified = [userJson objectForKey:@"verified"];
+        user.verifiedType = [userJson objectForKey:@"verified_type"];
+        user.remark = [userJson objectForKey:@"remark"];
+        user.statusId = [userJson objectForKey:@"status_id"];
+        user.allowAllComment = [userJson objectForKey:@"allow_all_comment"];
+        user.avatarLarge = [userJson objectForKey:@"avatar_large"];
+        user.verifiedReason = [userJson objectForKey:@"verified_reason"];
+        user.followMe = [userJson objectForKey:@"follow_me"];
+        user.onlineStatus = [userJson objectForKey:@"online_status"];
+        user.biFollowersCount = [userJson objectForKey:@"bi_followers_count"];
+        user.lang = [userJson objectForKey:@"lang"];
+        user.star = [userJson objectForKey:@"star"];
+        user.mbtype = [userJson objectForKey:@"mbtype"];
+        user.mbrank = [userJson objectForKey:@"mbrank"];
+        user.blockWord = [userJson objectForKey:@"block_word"];
+        
+        [usersArray addObject:user];
+    }
+    return usersArray;
+}
 @end

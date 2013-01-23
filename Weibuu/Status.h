@@ -28,5 +28,5 @@
 @property (nonatomic,strong) Status *origStatus;
 
 + (NSMutableArray *)statusesWithJson:(id)json;
-+ (NSMutableArray *)mentionStatusesWithJson:(id)json;
+//+ (NSMutableArray *)mentionStatusesWithJson:(id)json;
 @end

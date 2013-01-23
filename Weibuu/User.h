@@ -45,4 +45,8 @@
 @property (nonatomic,strong) NSString *verifiedReason;
 @property (nonatomic,strong) NSNumber *verifiedType;
 @property (nonatomic,strong) NSString *weihao;
+
+@property (nonatomic,strong) NSString *statusId;
+@property (nonatomic,strong) NSString *coverImage;
++ (NSMutableArray *)usersWithJson:(id)json;
 @end
