@@ -128,14 +128,8 @@
     StatusCell *cell = [tableView dequeueReusableCellWithIdentifier:FriendStatusCell];
     
     Status *status =  [self.statusesArray objectAtIndex:indexPath.row];
-
-    cell.name.text = status.user.name;
-    cell.retweetCount.text = [status.repostsCount stringValue];
-    cell.commentCount.text = [status.commentsCount stringValue];
-    cell.status.text = status.text;
-    cell.createdAt.text = status.createdAt;
-    cell.source.text =status.source;
-    
+    [cell setStatusEntity:status];
+     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
@@ -236,6 +230,7 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if ([request.url hasSuffix:@"statuses/friends_timeline.json"]) {
+        NSLog([NSString stringWithFormat:@"result==%@",result]);
         self.statusesArray = [Status statusesWithJson:result];
         [[self tableView] reloadData];
     }

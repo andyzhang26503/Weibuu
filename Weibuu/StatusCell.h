@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Status.h"
 @interface StatusCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImage;
@@ -19,4 +19,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *source;
 @property (weak, nonatomic) IBOutlet UITextView *status;
 
+@property (nonatomic,strong) Status *statusEntity;
 @end
