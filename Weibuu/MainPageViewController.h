@@ -12,6 +12,8 @@
 #import "SinaWeiboManager.h"
 #import "StatusCell.h"
 @interface MainPageViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
-
+{
+    UIActivityIndicatorView *_activityIndicatorView;
+}
 @property (nonatomic,strong) NSMutableArray *statusesArray;
 @end

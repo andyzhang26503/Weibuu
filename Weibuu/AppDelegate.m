@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "AFNetworking.h"
 @implementation AppDelegate
 @synthesize sinaweibo=_sinaweibo;
 
@@ -40,6 +40,8 @@
         _sinaweibo.expirationDate = [sinaweiboInfo objectForKey:@"ExpirationDateKey"];
         _sinaweibo.userID = [sinaweiboInfo objectForKey:@"UserIDKey"];
     }
+    
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
     self.window.rootViewController = tabbc;
     self.window.backgroundColor = [UIColor whiteColor];

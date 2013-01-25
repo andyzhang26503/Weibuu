@@ -43,6 +43,8 @@
     NSLog(@"main page viewDidLoad");
     [super viewDidLoad];
     
+    [[self tableView] setHidden:YES];
+    
     SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
     [mysinaweibo logIn];
 
@@ -57,6 +59,12 @@
     
     UINib *nib = [UINib nibWithNibName:@"StatusCell" bundle:nil];
     [[self tableView] registerNib:nib forCellReuseIdentifier:FriendStatusCell];
+    
+    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _activityIndicatorView.hidesWhenStopped = YES;
+    _activityIndicatorView.center = self.view.center;
+    [self.view addSubview:_activityIndicatorView];
+    [_activityIndicatorView startAnimating];
     
     [self requestTimeLine];
     
@@ -117,26 +125,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    //static NSString *CellIdentifier = @"MainPageCell";
     StatusCell *cell = [tableView dequeueReusableCellWithIdentifier:FriendStatusCell];
-//    if (!cell) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-//    }
-
     
-    if (self.statusesArray) {
-        Status *status =  [self.statusesArray objectAtIndex:indexPath.row];
+    Status *status =  [self.statusesArray objectAtIndex:indexPath.row];
 
-        //cell.textLabel.text = status.text;
-        //cell.detailTextLabel.text = status.user.name;
-        cell.name.text = status.user.name;
-        cell.retweetCount.text = [status.repostsCount stringValue];
-        cell.commentCount.text = [status.commentsCount stringValue];
-        cell.status.text = status.text;
-        cell.createdAt.text = status.createdAt;
-        cell.source.text =status.source;
-    }
+    cell.name.text = status.user.name;
+    cell.retweetCount.text = [status.repostsCount stringValue];
+    cell.commentCount.text = [status.commentsCount stringValue];
+    cell.status.text = status.text;
+    cell.createdAt.text = status.createdAt;
+    cell.source.text =status.source;
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
@@ -235,9 +236,10 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if ([request.url hasSuffix:@"statuses/friends_timeline.json"]) {
-        NSLog([NSString stringWithFormat:@"statuses/friends_timeline==%@",result]);
         self.statusesArray = [Status statusesWithJson:result];
         [[self tableView] reloadData];
     }
+    [_activityIndicatorView stopAnimating];
+    [[self tableView] setHidden:NO];
 }
 @end
