@@ -7,7 +7,7 @@
 //
 
 #import "Status.h"
-
+#import "HtmlString.h"
 @implementation Status
 
 @synthesize attitudesCount=_attitudesCount;
@@ -22,6 +22,8 @@
 @synthesize repostsCount=_repostsCount;
 @synthesize source=_source;
 @synthesize text=_text;
+@synthesize textHtml = _textHtml;
+
 @synthesize thumbnailPic=_thumbnailPic;
 
 @synthesize user=_user;
@@ -45,6 +47,9 @@
         status.repostsCount = [statues objectForKey:@"reposts_count"];
         status.source = [statues objectForKey:@"source"];
         status.text = [statues objectForKey:@"text"];
+        
+        status.textHtml = [HtmlString transformString:status.text];
+        
         status.thumbnailPic = [statues objectForKey:@"thumbnail_pic"];
         
         
