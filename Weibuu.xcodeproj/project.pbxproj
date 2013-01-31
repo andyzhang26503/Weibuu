@@ -16,6 +16,9 @@
 		292582CD16A79A7600B2B2F5 /* Calendar-32p.png in Resources */ = {isa = PBXBuildFile; fileRef = 292582C616A79A7600B2B2F5 /* Calendar-32p.png */; };
 		292582CE16A79A7600B2B2F5 /* Comments-32p.png in Resources */ = {isa = PBXBuildFile; fileRef = 292582C716A79A7600B2B2F5 /* Comments-32p.png */; };
 		292582CF16A79A7600B2B2F5 /* Home-32p.png in Resources */ = {isa = PBXBuildFile; fileRef = 292582C816A79A7600B2B2F5 /* Home-32p.png */; };
+		29336C5716B7659700071EE7 /* HtmlString.m in Sources */ = {isa = PBXBuildFile; fileRef = 29336C5416B7659700071EE7 /* HtmlString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		29336C5816B7659700071EE7 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 29336C5616B7659700071EE7 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		29336C5A16B7674100071EE7 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 29336C5916B7674100071EE7 /* libicucore.dylib */; };
 		2968345916A6F70000497598 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2968345816A6F70000497598 /* UIKit.framework */; };
 		2968345B16A6F70000497598 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2968345A16A6F70000497598 /* Foundation.framework */; };
 		2968345D16A6F70000497598 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2968345C16A6F70000497598 /* CoreGraphics.framework */; };
@@ -38,6 +41,7 @@
 		2978D7D716AD2A980002E134 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2978D7D616AD2A980002E134 /* QuartzCore.framework */; };
 		2978D7DD16AD2C880002E134 /* WriteWbViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2978D7DC16AD2C880002E134 /* WriteWbViewController.m */; };
 		29886BA016ACED7500CA7E8C /* SinaWeiboManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 29886B9F16ACED7500CA7E8C /* SinaWeiboManager.m */; };
+		29ABDDE116B61C13008D1500 /* STTweetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ABDDE016B61C13008D1500 /* STTweetLabel.m */; };
 		29CD822A16AF8F3800F4114F /* StatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29CD822916AF8F3800F4114F /* StatusCell.m */; };
 		29CD822D16AF8F7000F4114F /* StatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29CD822C16AF8F7000F4114F /* StatusCell.xib */; };
 		29CD823016AF91B900F4114F /* avatar_vip.png in Resources */ = {isa = PBXBuildFile; fileRef = 29CD822E16AF91B900F4114F /* avatar_vip.png */; };
@@ -82,6 +86,11 @@
 		292582C616A79A7600B2B2F5 /* Calendar-32p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Calendar-32p.png"; sourceTree = "<group>"; };
 		292582C716A79A7600B2B2F5 /* Comments-32p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Comments-32p.png"; sourceTree = "<group>"; };
 		292582C816A79A7600B2B2F5 /* Home-32p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Home-32p.png"; sourceTree = "<group>"; };
+		29336C5316B7659700071EE7 /* HtmlString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HtmlString.h; sourceTree = "<group>"; };
+		29336C5416B7659700071EE7 /* HtmlString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HtmlString.m; sourceTree = "<group>"; };
+		29336C5516B7659700071EE7 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		29336C5616B7659700071EE7 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		29336C5916B7674100071EE7 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		2968345416A6F70000497598 /* Weibuu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weibuu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2968345816A6F70000497598 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2968345A16A6F70000497598 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -120,6 +129,8 @@
 		2978D7DC16AD2C880002E134 /* WriteWbViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WriteWbViewController.m; sourceTree = "<group>"; };
 		29886B9E16ACED7500CA7E8C /* SinaWeiboManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboManager.h; sourceTree = "<group>"; };
 		29886B9F16ACED7500CA7E8C /* SinaWeiboManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboManager.m; sourceTree = "<group>"; };
+		29ABDDDF16B61C13008D1500 /* STTweetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTweetLabel.h; sourceTree = "<group>"; };
+		29ABDDE016B61C13008D1500 /* STTweetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTweetLabel.m; sourceTree = "<group>"; };
 		29CD822816AF8F3800F4114F /* StatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusCell.h; sourceTree = "<group>"; };
 		29CD822916AF8F3800F4114F /* StatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusCell.m; sourceTree = "<group>"; };
 		29CD822C16AF8F7000F4114F /* StatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusCell.xib; sourceTree = "<group>"; };
@@ -168,6 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29336C5A16B7674100071EE7 /* libicucore.dylib in Frameworks */,
 				2978D7D716AD2A980002E134 /* QuartzCore.framework in Frameworks */,
 				2968345916A6F70000497598 /* UIKit.framework in Frameworks */,
 				2968345B16A6F70000497598 /* Foundation.framework in Frameworks */,
@@ -222,6 +234,17 @@
 			name = myimage;
 			sourceTree = "<group>";
 		};
+		29336C5116B7657300071EE7 /* Sina_emoji */ = {
+			isa = PBXGroup;
+			children = (
+				29336C5316B7659700071EE7 /* HtmlString.h */,
+				29336C5416B7659700071EE7 /* HtmlString.m */,
+				29336C5516B7659700071EE7 /* RegexKitLite.h */,
+				29336C5616B7659700071EE7 /* RegexKitLite.m */,
+			);
+			name = Sina_emoji;
+			sourceTree = "<group>";
+		};
 		2968344916A6F70000497598 = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +265,7 @@
 		2968345716A6F70000497598 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				29336C5916B7674100071EE7 /* libicucore.dylib */,
 				2978D7D616AD2A980002E134 /* QuartzCore.framework */,
 				2968345816A6F70000497598 /* UIKit.framework */,
 				2968345A16A6F70000497598 /* Foundation.framework */,
@@ -253,6 +277,8 @@
 		2968345E16A6F70000497598 /* Weibuu */ = {
 			isa = PBXGroup;
 			children = (
+				29336C5116B7657300071EE7 /* Sina_emoji */,
+				29ABDDDE16B61C13008D1500 /* STTweetLabel */,
 				29E9702616B25DEB00D12F0A /* AFNetworking */,
 				291BCB2516A8275D0091F508 /* model */,
 				2968346716A6F70000497598 /* AppDelegate.h */,
@@ -318,6 +344,15 @@
 				2968348916A6F87D00497598 /* SinaWeiboRequest.m */,
 			);
 			path = SinaWeibo;
+			sourceTree = "<group>";
+		};
+		29ABDDDE16B61C13008D1500 /* STTweetLabel */ = {
+			isa = PBXGroup;
+			children = (
+				29ABDDDF16B61C13008D1500 /* STTweetLabel.h */,
+				29ABDDE016B61C13008D1500 /* STTweetLabel.m */,
+			);
+			path = STTweetLabel;
 			sourceTree = "<group>";
 		};
 		29E9702616B25DEB00D12F0A /* AFNetworking */ = {
@@ -464,6 +499,9 @@
 				29E9704016B25DEB00D12F0A /* AFURLConnectionOperation.m in Sources */,
 				29E9704116B25DEB00D12F0A /* AFXMLRequestOperation.m in Sources */,
 				29E9704216B25DEB00D12F0A /* UIImageView+AFNetworking.m in Sources */,
+				29ABDDE116B61C13008D1500 /* STTweetLabel.m in Sources */,
+				29336C5716B7659700071EE7 /* HtmlString.m in Sources */,
+				29336C5816B7659700071EE7 /* RegexKitLite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
