@@ -40,7 +40,7 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"main page viewDidLoad");
+
     [super viewDidLoad];
     
     [[self tableView] setHidden:YES];
@@ -120,7 +120,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 200;
+    StatusCell *cell = [tableView dequeueReusableCellWithIdentifier:FriendStatusCell];
+    
+    return [cell hightForCellWithStatus:[self.statusesArray objectAtIndex:indexPath.row]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -134,6 +136,7 @@
     
     return cell;
 }
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -230,7 +233,6 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if ([request.url hasSuffix:@"statuses/friends_timeline.json"]) {
-        NSLog([NSString stringWithFormat:@"result==%@",result]);
         self.statusesArray = [Status statusesWithJson:result];
         [[self tableView] reloadData];
     }
