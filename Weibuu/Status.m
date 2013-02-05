@@ -60,6 +60,9 @@
         origStatus.createdAt = [origStatusDict objectForKey:@"created_at"];
         origStatus.id = [origStatusDict objectForKey:@"id"];
         origStatus.text = [origStatusDict objectForKey:@"text"];
+        
+        //origStatus.textHtml = [HtmlString transformString:origStatus.text];
+        
         origStatus.source = [origStatusDict objectForKey:@"source"];
         origStatus.favorited = [origStatusDict objectForKey:@"favorited"];
         origStatus.geo = [origStatusDict objectForKey:@"geo"];
@@ -146,7 +149,7 @@
         user.star = [userDict objectForKey:@"star"];
         user.statusesCount = [userDict objectForKey:@"statuses_count"];
         user.url = [userDict objectForKey:@"url"];
-        user.verified = [userDict objectForKey:@"verified"];
+        user.verified = [[userDict objectForKey:@"verified"] boolValue];
         user.verifiedReason = [userDict objectForKey:@"verified_reason"];
         user.verifiedType = [userDict objectForKey:@"verified_type"];
         user.weihao = [userDict objectForKey:@"weihao"];
@@ -154,7 +157,11 @@
         status.user = user;
         
         [statusesArray addObject:status];
-
+        
+        status = nil;
+        origStatusDict = nil;
+        origStatusUserDict = nil;
+        userDict = nil;
     }
 
     return statusesArray;

@@ -8,6 +8,7 @@
 
 #import "MainPageViewController.h"
 #import "WriteWbViewController.h"
+#import "StatusDetailViewController.h"
 
 #define FriendStatusCell @"FriendStatusCell"
 @interface MainPageViewController ()
@@ -34,6 +35,7 @@
         self.title=@"主页";
         self.tabBarItem.title=@"主页";
         self.tabBarItem.image=[UIImage imageNamed:@"Home-32p"];
+        //self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemTopRated tag:100];
     }
     return self;
 }
@@ -70,10 +72,14 @@
     
 }
 
+- (void)refresh
+{
+    [self requestTimeLine];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"main page viewWillAppear");
-    [self requestTimeLine];
+
 }
 - (void)requestTimeLine
 {
@@ -188,6 +194,9 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    NSLog(@"select!");
+    StatusDetailViewController *dvc = [[StatusDetailViewController alloc] initWithStatusMain:[self.statusesArray objectAtIndex:indexPath.row]];
+    [self.navigationController pushViewController:dvc animated:YES];
     
 }
 

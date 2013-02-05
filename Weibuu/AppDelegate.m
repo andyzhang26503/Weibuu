@@ -16,6 +16,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
+    [self customAppearance];
     MainPageViewController *mpvc = [[MainPageViewController alloc] initWithStyle:UITableViewStylePlain];
     MentionsViewController *mvc = [[MentionsViewController alloc] initWithNibName:nil bundle:nil];
     FollowAndFansViewController *fvc = [[FollowAndFansViewController alloc] initWithNibName:nil bundle:nil];
@@ -47,6 +48,49 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)customAppearance
+{
+    UIImage *surfGradient32 = [[UIImage imageNamed:@"surf_gradient_textured_32.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    UIImage *surfGradient44 = [[UIImage imageNamed:@"surf_gradient_textured_44.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [[UINavigationBar appearance] setBackgroundImage:surfGradient44 forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:surfGradient32 forBarMetrics:UIBarMetricsLandscapePhone];
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:255/255 green:255/255 blue:255/255 alpha:1],UITextAttributeTextColor,[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5],UITextAttributeTextShadowColor,[NSValue valueWithUIOffset:UIOffsetMake(0, -1)],UITextAttributeTextShadowOffset,[UIFont fontWithName:@"Arial_Bold" size:12.0],UITextAttributeFont, nil]];
+    [[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"navBarShadow.png"]];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
+    
+    
+    UIImage *button24 = [[UIImage imageNamed:@"button_textured_24.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+    UIImage *button30 = [[UIImage imageNamed:@"button_textured_30.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+    
+    [[UIBarButtonItem appearance] setBackgroundImage:button30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackgroundImage:button24 forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          [UIColor colorWithRed:220.0/255.0 green:104.0/255.0 blue:1.0/255.0 alpha:1.0],
+                                                          UITextAttributeTextColor,
+                                                          [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0],
+                                                          UITextAttributeTextShadowColor,
+                                                          [NSValue valueWithUIOffset:UIOffsetMake(0, 1)],
+                                                          UITextAttributeTextShadowOffset,
+                                                          [UIFont fontWithName:@"AmericanTypewriter" size:0.0],
+                                                          UITextAttributeFont,
+                                                          nil]
+                                                forState:UIControlStateNormal];
+    
+    UIImage *buttonBack30 = [[UIImage imageNamed:@"button_back_textured_30"]
+                             resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)];
+    UIImage *buttonBack24 = [[UIImage imageNamed:@"button_back_textured_24"]
+                             resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack24 forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
+    
+    
+    UIImage *tabBarImage = [UIImage imageNamed:@"tab_select_indicator.png"];
+    [[UITabBar appearance] setSelectionIndicatorImage:tabBarImage];
+    
+    UIImage *tabBackground = [[UIImage imageNamed:@"tab_bg.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [[UITabBar appearance] setBackgroundImage:tabBackground];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

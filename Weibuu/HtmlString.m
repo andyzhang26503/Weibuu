@@ -25,7 +25,7 @@
             NSRange range = [text rangeOfString:str];
             NSString *funUrlStr = [NSString stringWithFormat:@"<a href='%@'>%@</a>",str, str];
             text = [text stringByReplacingCharactersInRange:NSMakeRange(range.location, str.length) withString:funUrlStr];
-            NSLog(@"text:%@", text);
+            //NSLog(@"text:%@", text);
         }
     }
 
@@ -42,7 +42,7 @@
                 [test_arr addObject:str];
                 NSString *funUrlStr = [NSString stringWithFormat:@"<a href='&cmd1&%@'>%@</a>",str, str];
                 text = [text stringByReplacingCharactersInRange:NSMakeRange(range.location, [str length]) withString:funUrlStr];
-                NSLog(@"text:%@", text);
+                //NSLog(@"text:%@", text);
             }
         }
         [test_arr release];
@@ -57,7 +57,7 @@
             NSRange range = [text rangeOfString:str];
             NSString *funUrlStr = [NSString stringWithFormat:@"<a href='&cmd2&%@'>%@</a>",str, str];
             text = [text stringByReplacingCharactersInRange:NSMakeRange(range.location, [str length]) withString:funUrlStr];
-            NSLog(@"text:%@", text);
+            //NSLog(@"text:%@", text);
         }
     }
     

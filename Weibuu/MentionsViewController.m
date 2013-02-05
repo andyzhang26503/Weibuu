@@ -8,6 +8,9 @@
 
 #import "MentionsViewController.h"
 #import "SinaWeibo.h"
+#import "StatusCell.h"
+
+#define MentionsStatusCell @"MentionsStatusCell"
 @interface MentionsViewController ()
 
 @end
@@ -40,6 +43,9 @@
     [super viewDidLoad];
 
     self.title=@"@我";
+    
+    UINib *nib = [UINib nibWithNibName:@"StatusCell" bundle:nil];
+    [[self tableView] registerNib:nib forCellReuseIdentifier:MentionsStatusCell];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -71,16 +77,29 @@
     return [self.retweetStatus count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    StatusCell *cell = [tableView dequeueReusableCellWithIdentifier:MentionsStatusCell];
+    
+    return [cell hightForCellWithStatus:[self.retweetStatus objectAtIndex:indexPath.row]];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"MentionsCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    }
-    Status *mentionStatus = [self.retweetStatus objectAtIndex:[indexPath row]];
-    cell.textLabel.text = mentionStatus.text;
-    cell.detailTextLabel.text = mentionStatus.origStatus.text;
+//    static NSString *CellIdentifier = @"MentionsCell";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    if (!cell) {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+//    }
+//    Status *mentionStatus = [self.retweetStatus objectAtIndex:[indexPath row]];
+//    cell.textLabel.text = mentionStatus.text;
+//    cell.detailTextLabel.text = mentionStatus.origStatus.text;
+    
+    StatusCell *cell = [tableView dequeueReusableCellWithIdentifier:MentionsStatusCell];
+    Status *status =  [self.retweetStatus objectAtIndex:indexPath.row];
+    [cell setStatusEntity:status];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 
