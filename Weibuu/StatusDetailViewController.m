@@ -7,9 +7,13 @@
 //
 
 #import "StatusDetailViewController.h"
-#import "StatusDetailCell.h"
+#import "StatusDetailNameCell.h"
+#import "StatusDetailContentCell.h"
 #import "AFNetworking.h"
-#define StatusDetailCellId @"StatusDetailCellId"
+
+#define StatusDetailName @"StatusDetailCellName"
+#define StatusDetailContent @"StatusDetailCellContent"
+#define StatusDetailComment @"StatusDetailComment"
 @interface StatusDetailViewController ()
 
 @end
@@ -37,10 +41,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[self tableView] setHidden:YES];
+    //[[self tableView] setHidden:YES];
     //[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    UINib *nib = [UINib nibWithNibName:@"StatusDetailCell" bundle:nil];
-    [self.tableView registerNib:nib forCellReuseIdentifier:StatusDetailCellId];
+//    UINib *nib = [UINib nibWithNibName:@"StatusDetailCell" bundle:nil];
+//    [self.tableView registerNib:nib forCellReuseIdentifier:StatusDetailCellContent];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -71,14 +75,22 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    StatusDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:StatusDetailCellId];
-    CGFloat cellHeight = 70.0f;
+    //StatusDetailCell *contentCell = [tableView dequeueReusableCellWithIdentifier:StatusDetailCellContent];
+    CGFloat cellHeight;
+    StatusDetailContentCell *contentCell;
     switch (indexPath.row) {
         case 0:
-            cellHeight = 87.0f;
+            cellHeight = 75.0f;
             break;
         case 1:
-            cellHeight = [cell hightForCellWithStatus:_statusEntity];
+            contentCell = [tableView dequeueReusableCellWithIdentifier:StatusDetailContent];
+            if (!contentCell) {
+                NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"StatusDetailContentCell" owner:nil options:nil];
+                contentCell = [topLevelObjects objectAtIndex:0];
+                
+            }
+            
+            cellHeight = [contentCell hightForCellWithStatus:_statusEntity];
             break;
         default:
             cellHeight = 87.0f;
@@ -90,64 +102,63 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    StatusDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:StatusDetailCellId forIndexPath:indexPath];
     NSURL *imageUrl = [NSURL URLWithString:_statusEntity.user.profileImageUrl];
-
+    StatusDetailNameCell *nameCell;
+    StatusDetailContentCell *contentCell;
     switch (indexPath.row) {
         case 0:
-            [cell.avatarImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"touxiang_40x40.png"]];
-            cell.name.text = _statusEntity.user.name;
+            nameCell = [tableView dequeueReusableCellWithIdentifier:StatusDetailName];
+            if (!nameCell) {
+                NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"StatusDetailNameCell" owner:nil options:nil];
+                nameCell = [topLevelObjects objectAtIndex:0];
+                //nameCell = [[StatusDetailNameCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:StatusDetailName];
+            }
+            [nameCell.avatarImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"touxiang_40x40.png"]];
+            nameCell.name.text = _statusEntity.user.name;
             if (_statusEntity.user.verified) {
-                cell.verifiedImage.hidden = NO;
+                nameCell.verifiedImage.hidden = NO;
             }else{
-                cell.verifiedImage.hidden = YES;
-            }       
-            cell.thumbnailPic.hidden = YES;
-            cell.retweetBlock.hidden = YES;
-            cell.createdAt.hidden = YES;
-            cell.commentPic.hidden = YES;
-            cell.commentCount.hidden = YES;
-            cell.retweetPic.hidden=YES;
-            cell.retweetCount.hidden = YES;
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                nameCell.verifiedImage.hidden = YES;
+            }
+            [nameCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [nameCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            return nameCell;
             break;
         case 1:
-            
-            [cell setStatusEntity:_statusEntity];
-            cell.verifiedImage.hidden = YES;
-            cell.avatarImage.hidden = YES;
-            cell.name.hidden = YES;
-            cell.thumbnailPic.hidden = YES;
-            cell.createdAt.hidden = YES;
-            cell.retweetBlock.hidden=YES;
-            cell.commentPic.hidden = YES;
-            cell.commentCount.hidden = YES;
-            cell.retweetPic.hidden=YES;
-            cell.retweetCount.hidden = YES;
+            contentCell = [tableView dequeueReusableCellWithIdentifier:StatusDetailContent];
+            if (!contentCell) {
+                NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"StatusDetailContentCell" owner:nil options:nil];
+                contentCell = [topLevelObjects objectAtIndex:0];
+
+            }
+            [contentCell setStatusEntity:_statusEntity];
+            [contentCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            return contentCell;
             break;
         default:
-            [cell.avatarImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"touxiang_40x40.png"]];
-            cell.name.text = _statusEntity.user.name;
-            if (_statusEntity.user.verified) {
-                cell.verifiedImage.hidden = NO;
-            }else{
-                cell.verifiedImage.hidden = YES;
+            nameCell = [tableView dequeueReusableCellWithIdentifier:StatusDetailName];
+            if (!nameCell) {
+                NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"StatusDetailNameCell" owner:nil options:nil];
+                nameCell = [topLevelObjects objectAtIndex:0];
+
             }
-            cell.thumbnailPic.hidden = YES;
-            cell.retweetBlock.hidden = YES;
-            cell.createdAt.hidden = YES;
-            cell.commentPic.hidden = YES;
-            cell.commentCount.hidden = YES;
-            cell.retweetPic.hidden=YES;
-            cell.retweetCount.hidden = YES;
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [nameCell.avatarImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"touxiang_40x40.png"]];
+            nameCell.name.text = _statusEntity.user.name;
+            if (_statusEntity.user.verified) {
+                nameCell.verifiedImage.hidden = NO;
+            }else{
+                nameCell.verifiedImage.hidden = YES;
+            }
+            [nameCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [nameCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            return nameCell;
             break;
     }
     
-
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [[self tableView] setHidden:NO];
-    return cell;
+    
+    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    //[[self tableView] setHidden:NO];
+    return nil;
 }
 
 /*

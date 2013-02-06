@@ -1,18 +1,16 @@
 //
-//  StatusDetailCell.m
+//  StatusDetailContentCell.m
 //  Weibuu
 //
-//  Created by zhang andy on 13-2-4.
+//  Created by zhang andy on 13-2-6.
 //  Copyright (c) 2013年 com.andy. All rights reserved.
 //
 
-#import "StatusDetailCell.h"
-#import "StatusCell.h"
+#import "StatusDetailContentCell.h"
 #import "AFNetworking.h"
 #import "HtmlString.h"
-
-#define thumbnailPicHeight 80.0f
-@implementation StatusDetailCell
+#define thumbnailPicHeight 122.0f
+@implementation StatusDetailContentCell
 @synthesize statusEntity  = _statusEntity;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -27,7 +25,7 @@
 - (UIWebView *)tweetWebView
 {
     if (!_tweetWebView) {
-        _tweetWebView = [[UIWebView alloc] initWithFrame:CGRectMake(29, 20.0, 250.0, 80.0)];
+        _tweetWebView = [[UIWebView alloc] initWithFrame:CGRectMake(10, 20.0, 300.0, 80.0)];
         _tweetWebView.delegate = self;
         _tweetWebView.scrollView.scrollEnabled = NO;
         [self.contentView addSubview:_tweetWebView];
@@ -38,7 +36,7 @@
 - (UIWebView *)retweetWebView
 {
     if (!_retweetWebView) {
-        _retweetWebView = [[UIWebView alloc] initWithFrame:CGRectMake(48.0f, 91.0f, 236.0f, 50.0f)];
+        _retweetWebView = [[UIWebView alloc] initWithFrame:CGRectMake(20.0f, 91.0f, 250.0f, 50.0f)];
         _retweetWebView.delegate = self;
         _retweetWebView.scrollView.scrollEnabled = NO;
         [self.contentView addSubview:_retweetWebView];
@@ -72,16 +70,16 @@
     resultFormatter.dateFormat = @"MM-dd HH:mm";
     self.createdAt.text = [resultFormatter stringFromDate:date];
     
-//    NSRegularExpression *reg = [[NSRegularExpression alloc] initWithPattern:@"<a .*>(.*)</a>" options:0 error:nil];
-//    NSArray *matches = [reg matchesInString:statusEntity.source options:0 range:NSMakeRange(0, [statusEntity.source length])];
-//    if ([matches count]>0) {
-//        NSTextCheckingResult *result = [matches objectAtIndex:0];
-//        if ([result numberOfRanges]==2) {
-//            NSRange r = [result rangeAtIndex:1];
-//            self.source.text =[NSString stringWithFormat:@" 来自:%@",[[statusEntity source] substringWithRange:r]];
-//            
-//        }
-//    }
+    //    NSRegularExpression *reg = [[NSRegularExpression alloc] initWithPattern:@"<a .*>(.*)</a>" options:0 error:nil];
+    //    NSArray *matches = [reg matchesInString:statusEntity.source options:0 range:NSMakeRange(0, [statusEntity.source length])];
+    //    if ([matches count]>0) {
+    //        NSTextCheckingResult *result = [matches objectAtIndex:0];
+    //        if ([result numberOfRanges]==2) {
+    //            NSRange r = [result rangeAtIndex:1];
+    //            self.source.text =[NSString stringWithFormat:@" 来自:%@",[[statusEntity source] substringWithRange:r]];
+    //
+    //        }
+    //    }
     
     if (statusEntity.thumbnailPic) {
         NSURL *thumbnailPicUrl = [NSURL URLWithString:statusEntity.thumbnailPic];
@@ -133,14 +131,14 @@
 - (CGFloat)statusHeight:(NSString *)text
 {
     
-    CGSize statusSize = [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:13.0] constrainedToSize:CGSizeMake(250, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize statusSize = [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:13.0] constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
     return statusSize.height+52.0f;
 }
 
 - (CGFloat)retweetStatusHeight:(NSString *)text
 {
     
-    CGSize statusSize = [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:13.0] constrainedToSize:CGSizeMake(256, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize statusSize = [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:13.0] constrainedToSize:CGSizeMake(260, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
     return statusSize.height+52.0f;
 }
 
@@ -161,9 +159,8 @@
 - (CGFloat)hightForCellWithStatus:(Status *)status
 {
     _statusEntity = status;
-    
+
     [self setNeedsLayout];
-    
     CGFloat webViewHeight = [self webViewHeight];
     CGFloat cellHeight =  webViewHeight;
     if (self.statusEntity.thumbnailPic) {
@@ -177,8 +174,8 @@
             cellHeight += [self retweetWebViewHeight]+90.0f;
         }
     }
-    return fmaxf(185.0f, cellHeight);
     
+    return fmaxf(105.0f, cellHeight);
 }
 
 - (void)layoutSubviews {
@@ -190,7 +187,7 @@
     
     if (self.statusEntity.thumbnailPic) {
         CGRect thumbnailPicRect = self.thumbnailPic.frame;
-        thumbnailPicRect.origin.y = webViewRect.size.height;
+        thumbnailPicRect.origin.y = webViewRect.size.height+20.0f;
         thumbnailPicRect.size.height = thumbnailPicHeight;
         self.thumbnailPic.frame = thumbnailPicRect;
     }else{
@@ -212,7 +209,7 @@
             retweetWebViewRect.origin.x += 20;
             CGFloat retweetWebViewHeight = [self retweetWebViewHeight];
             retweetWebViewRect.size.height = retweetWebViewHeight;
-            retweetWebViewRect.size.width = 236.0f;
+            retweetWebViewRect.size.width = 260.0f;
             self.retweetWebView.frame = retweetWebViewRect;
             
             CGRect thumbnailPicRect = self.thumbnailPic.frame;
@@ -280,4 +277,3 @@
 }
 
 @end
-
