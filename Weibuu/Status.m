@@ -16,7 +16,7 @@
 @synthesize createdAt=_createdAt;
 @synthesize favorited=_favorited;
 @synthesize geo=_geo;
-@synthesize id=_id;
+@synthesize statusId=_statusId;
 @synthesize idstr=_idstr;
 @synthesize originalPic=_originalPic;
 @synthesize repostsCount=_repostsCount;
@@ -41,7 +41,7 @@
         status.createdAt = [statues objectForKey:@"created_at"];
         status.favorited = [statues objectForKey:@"favorited"];
         status.geo = [statues objectForKey:@"geo"];
-        status.id = [statues objectForKey:@"id"];
+        status.statusId = [[statues objectForKey:@"id"] intValue];
         status.idstr = [statues objectForKey:@"idstr"];
         status.originalPic = [statues objectForKey:@"original_pic"];
         status.repostsCount = [statues objectForKey:@"reposts_count"];
@@ -58,7 +58,7 @@
         Status *origStatus = [[Status alloc] init];
         origStatus.attitudesCount = [origStatusDict objectForKey:@"attitudes_count"];
         origStatus.createdAt = [origStatusDict objectForKey:@"created_at"];
-        origStatus.id = [origStatusDict objectForKey:@"id"];
+        origStatus.statusId = [[origStatusDict objectForKey:@"id"] intValue];
         origStatus.text = [origStatusDict objectForKey:@"text"];
         
         //origStatus.textHtml = [HtmlString transformString:origStatus.text];
@@ -93,7 +93,7 @@
         origStatusUser.friendsCount = [origStatusUserDict objectForKey:@"friends_count"];
         origStatusUser.gender = [origStatusUserDict objectForKey:@"gender"];
         origStatusUser.geoEnabled = [origStatusUserDict objectForKey:@"geo_enabled"];
-        origStatusUser.id = [origStatusUserDict objectForKey:@"id"];
+        origStatusUser.idNo = [[origStatusUserDict objectForKey:@"id"] intValue];
         origStatusUser.location = [origStatusUserDict objectForKey:@"location"];
         origStatusUser.mbrank = [origStatusDict objectForKey:@"mbrank"];
         origStatusUser.mbtype = [origStatusDict objectForKey:@"mbtype"];
@@ -133,7 +133,7 @@
         user.friendsCount = [userDict objectForKey:@"friends_count"];
         user.gender = [userDict objectForKey:@"gender"];
         user.geoEnabled = [userDict objectForKey:@"geo_enabled"];
-        user.id = [userDict objectForKey:@"id"];
+        user.idNo = [[userDict objectForKey:@"id"] intValue];
         user.idstr = [userDict objectForKey:@"idstr"];
         user.lang = [userDict objectForKey:@"lang"];
         user.location = [userDict objectForKey:@"location"];

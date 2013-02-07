@@ -26,7 +26,7 @@
 @synthesize friendsCount=_friendsCount;
 @synthesize gender=_gender;
 @synthesize geoEnabled=_geoEnabled;
-@synthesize id=_id;
+@synthesize idNo=_idNo;
 @synthesize idstr=_idstr;
 @synthesize lang=_lang;
 @synthesize location=_location;
@@ -53,7 +53,7 @@
     NSArray *array = [json objectForKey:@"users"];
     for (id userJson in array) {
         User *user = [[User alloc] init];
-        user.id =  [userJson objectForKey:@"id"];
+        user.idNo =  [[userJson objectForKey:@"id"] intValue];
         user.idstr = [userJson objectForKey:@"idstr"];
         user.screenName = [userJson objectForKey:@"screen_name"];
         user.name = [userJson objectForKey:@"name"];

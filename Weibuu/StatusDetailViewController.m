@@ -9,11 +9,15 @@
 #import "StatusDetailViewController.h"
 #import "StatusDetailNameCell.h"
 #import "StatusDetailContentCell.h"
+#import "StatusDetailCommentCell.h"
+
 #import "AFNetworking.h"
+#import "SinaWeiboManager.h"
+#import "Comment.h"
 
 #define StatusDetailName @"StatusDetailCellName"
 #define StatusDetailContent @"StatusDetailCellContent"
-#define StatusDetailComment @"StatusDetailComment"
+#define StatusDetailComment @"StatusDetailCellComment"
 @interface StatusDetailViewController ()
 
 @end
@@ -51,7 +55,22 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self requestComments];
 }
+
+- (void)requestComments
+{
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
+    if (mysinaweibo.isAuthValid) {
+        [mysinaweibo requestWithURL:@"comments/show.json"
+                             params:[NSMutableDictionary dictionaryWithObjectsAndKeys:_statusEntity.idstr,@"id", nil]
+                         httpMethod:@"Get"
+                           delegate:self];
+        
+    }
+    
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -70,7 +89,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 3;
+    return 2+_commentsArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -78,6 +97,7 @@
     //StatusDetailCell *contentCell = [tableView dequeueReusableCellWithIdentifier:StatusDetailCellContent];
     CGFloat cellHeight;
     StatusDetailContentCell *contentCell;
+    StatusDetailCommentCell *commentCell;
     switch (indexPath.row) {
         case 0:
             cellHeight = 75.0f;
@@ -93,7 +113,14 @@
             cellHeight = [contentCell hightForCellWithStatus:_statusEntity];
             break;
         default:
-            cellHeight = 87.0f;
+            commentCell = [tableView dequeueReusableCellWithIdentifier:StatusDetailComment];
+            if (!commentCell) {
+                NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"StatusDetailCommentCell" owner:nil options:nil];
+                commentCell = [topLevelObjects objectAtIndex:0];
+            }
+            cellHeight = [commentCell heightForCellWithComment:[_commentsArray objectAtIndex:indexPath.row-2]];
+            
+            //cellHeight = 57.0f;
             break;
     }
     
@@ -105,6 +132,8 @@
     NSURL *imageUrl = [NSURL URLWithString:_statusEntity.user.profileImageUrl];
     StatusDetailNameCell *nameCell;
     StatusDetailContentCell *contentCell;
+    StatusDetailCommentCell *commentCell;
+    
     switch (indexPath.row) {
         case 0:
             nameCell = [tableView dequeueReusableCellWithIdentifier:StatusDetailName];
@@ -136,22 +165,16 @@
             return contentCell;
             break;
         default:
-            nameCell = [tableView dequeueReusableCellWithIdentifier:StatusDetailName];
-            if (!nameCell) {
-                NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"StatusDetailNameCell" owner:nil options:nil];
-                nameCell = [topLevelObjects objectAtIndex:0];
+            commentCell = [tableView dequeueReusableCellWithIdentifier:StatusDetailComment];
+            if (!commentCell) {
+                NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"StatusDetailCommentCell" owner:nil options:nil];
+                commentCell = [topLevelObjects objectAtIndex:0];
 
             }
-            [nameCell.avatarImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"touxiang_40x40.png"]];
-            nameCell.name.text = _statusEntity.user.name;
-            if (_statusEntity.user.verified) {
-                nameCell.verifiedImage.hidden = NO;
-            }else{
-                nameCell.verifiedImage.hidden = YES;
-            }
-            [nameCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-            [nameCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            return nameCell;
+            Comment *comment = [_commentsArray objectAtIndex:indexPath.row-2];
+            [commentCell setCommentEntity:comment];
+            [commentCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            return commentCell;
             break;
     }
     
@@ -212,5 +235,44 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
+
+#pragma mark - SinaWeibo Delegate
+- (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
+{
+
+}
+
+- (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
+{
+    
+    
+}
+
+#pragma mark - SinaWeiboRequestDelegate
+- (void)request:(SinaWeiboRequest *)request didReceiveResponse:(NSURLResponse *)response;
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didReceiveRawData:(NSData *)data
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
+    if ([request.url hasSuffix:@"comments/show.json"]) {
+        //NSLog(@"comments/show.json==%@",result);
+        _commentsArray = [Comment commentsWithJson:result];
+        //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:1];
+        //[[self tableView] reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [[self tableView] reloadData];
+    }
+
+}
+
 
 @end

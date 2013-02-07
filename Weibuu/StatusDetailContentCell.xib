@@ -115,6 +115,7 @@
 								<string key="NSFrame">{{314, 169}, {36, 21}}</string>
 								<reference key="NSSuperview" ref="189638865"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -197,6 +198,7 @@
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="189638865"/>
+				<string key="IBUIReuseIdentifier">StatusDetailCellContent</string>
 				<real value="191" key="IBUIRowHeight"/>
 			</object>
 		</array>

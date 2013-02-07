@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "Status.h"
-@interface StatusDetailViewController : UITableViewController
+#import "SinaWeibo.h"
+#import "Comment.h"
+
+@interface StatusDetailViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
 {
     Status *_statusEntity;
+    NSMutableArray *_commentsArray;
 }
 
 - (id)initWithStatusMain:(Status *)status;

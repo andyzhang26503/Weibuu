@@ -19,6 +19,7 @@
 		29336C5716B7659700071EE7 /* HtmlString.m in Sources */ = {isa = PBXBuildFile; fileRef = 29336C5416B7659700071EE7 /* HtmlString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		29336C5816B7659700071EE7 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 29336C5616B7659700071EE7 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		29336C5A16B7674100071EE7 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 29336C5916B7674100071EE7 /* libicucore.dylib */; };
+		294D2BF916C292A600478BB6 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 294D2BF816C292A600478BB6 /* Comment.m */; };
 		296400CA16C2236E00DCEF23 /* StatusDetailNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 296400C916C2236E00DCEF23 /* StatusDetailNameCell.m */; };
 		296400CC16C2238400DCEF23 /* StatusDetailNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 296400CB16C2238400DCEF23 /* StatusDetailNameCell.xib */; };
 		296400CF16C223FE00DCEF23 /* StatusDetailContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 296400CE16C223FE00DCEF23 /* StatusDetailContentCell.m */; };
@@ -141,6 +142,8 @@
 		29336C5516B7659700071EE7 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		29336C5616B7659700071EE7 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		29336C5916B7674100071EE7 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		294D2BF716C292A600478BB6 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		294D2BF816C292A600478BB6 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		296400C816C2236E00DCEF23 /* StatusDetailNameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusDetailNameCell.h; sourceTree = "<group>"; };
 		296400C916C2236E00DCEF23 /* StatusDetailNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusDetailNameCell.m; sourceTree = "<group>"; };
 		296400CB16C2238400DCEF23 /* StatusDetailNameCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusDetailNameCell.xib; sourceTree = "<group>"; };
@@ -301,6 +304,8 @@
 				291BCB2816A827A20091F508 /* Status.m */,
 				291BCB2A16A8295F0091F508 /* User.h */,
 				291BCB2B16A8295F0091F508 /* User.m */,
+				294D2BF716C292A600478BB6 /* Comment.h */,
+				294D2BF816C292A600478BB6 /* Comment.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -718,6 +723,7 @@
 				296400CA16C2236E00DCEF23 /* StatusDetailNameCell.m in Sources */,
 				296400CF16C223FE00DCEF23 /* StatusDetailContentCell.m in Sources */,
 				296400D616C24A8A00DCEF23 /* StatusDetailCommentCell.m in Sources */,
+				294D2BF916C292A600478BB6 /* Comment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

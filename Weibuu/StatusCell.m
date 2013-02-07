@@ -14,6 +14,9 @@
 @implementation StatusCell
 @synthesize statusEntity  = _statusEntity;
 @synthesize statusLabel = _statusLabel;
+
+static NSDateFormatter *formatter;
+static NSDateFormatter *resultFormatter;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -65,12 +68,12 @@
     
     [[self tweetWebView] loadHTMLString:myDescriptionHTML baseURL:nil];
     
-    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    formatter=[[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"EEE MMM dd HH:mm:ss zzz yyyy"];
     [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     NSDate *date=[formatter dateFromString:statusEntity.createdAt];
     
-    NSDateFormatter *resultFormatter=[[NSDateFormatter alloc] init];
+    resultFormatter=[[NSDateFormatter alloc] init];
     resultFormatter.dateFormat = @"MM-dd HH:mm";
     self.createdAt.text = [resultFormatter stringFromDate:date];
 
@@ -93,13 +96,8 @@
     }
     
     NSURL *imageUrl = [NSURL URLWithString:statusEntity.user.profileImageUrl];
-    //self.avatarImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageUrl]];
     [self.avatarImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"touxiang_40x40.png"]];
-    
     self.name.textColor = [UIColor grayColor];
-    //self.statusLabel.textColor = [UIColor darkGrayColor];
-    //self.statusLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:17.0];
-    
     if (statusEntity.thumbnailPic) {
         NSURL *thumbnailPicUrl = [NSURL URLWithString:statusEntity.thumbnailPic];
         [self.thumbnailPic setImageWithURL:thumbnailPicUrl placeholderImage:[UIImage imageNamed:@"loadingImage_50x118.png"]];
