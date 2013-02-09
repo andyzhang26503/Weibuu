@@ -30,6 +30,15 @@
         userEntity.profileImageUrl = [userDict objectForKey:@"profile_image_url"];
         userEntity.verified = [[userDict objectForKey:@"verified"] boolValue];
         
+        userEntity.location = [userDict objectForKey:@"location"];
+        userEntity.description = [userDict objectForKey:@"description"];
+        userEntity.gender = [userDict objectForKey:@"gender"];
+        userEntity.followCount = [userDict objectForKey:@"followers_count"];
+        userEntity.friendsCount = [userDict objectForKey:@"friends_count"];
+        userEntity.statusesCount = [userDict objectForKey:@"statuses_count"];
+        userEntity.favouritesCount = [userDict objectForKey:@"favourites_count"];
+        userEntity.avatarLarge = [userDict objectForKey:@"avatar_large"];
+        userEntity.verifiedReason = [userDict objectForKey:@"verified_reason"];
         commentEntity.user = userEntity;
         
         [commentsArray addObject:commentEntity];

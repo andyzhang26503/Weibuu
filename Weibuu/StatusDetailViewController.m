@@ -14,6 +14,7 @@
 #import "AFNetworking.h"
 #import "SinaWeiboManager.h"
 #import "Comment.h"
+#import "UserDetailViewController.h"
 
 #define StatusDetailName @"StatusDetailCellName"
 #define StatusDetailContent @"StatusDetailCellContent"
@@ -234,6 +235,9 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    
+    UserDetailViewController *udv = [[UserDetailViewController alloc] initWithUserInfo:_statusEntity.user];
+    [self.navigationController pushViewController:udv animated: YES];
 }
 
 
