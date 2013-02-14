@@ -75,7 +75,7 @@
         user.following = [userJson objectForKey:@"following"];
         user.allowAllActMsg = [userJson objectForKey:@"allow_all_act_msg"];
         user.geoEnabled = [userJson objectForKey:@"geo_enabled"];
-        user.verified = [userJson objectForKey:@"verified"];
+        user.verified = [[userJson objectForKey:@"verified"] boolValue];
         user.verifiedType = [userJson objectForKey:@"verified_type"];
         user.remark = [userJson objectForKey:@"remark"];
         user.statusId = [userJson objectForKey:@"status_id"];
@@ -94,5 +94,45 @@
         [usersArray addObject:user];
     }
     return usersArray;
+}
+
++ (User *)oneUserWithJson:(id)json
+{
+    
+    User *user = [[User alloc] init];
+    user.idNo =  [[json objectForKey:@"id"] intValue];
+    user.idstr = [json objectForKey:@"idstr"];
+    user.screenName = [json objectForKey:@"screen_name"];
+    user.name = [json objectForKey:@"name"];
+    user.province = [json objectForKey:@"province"];
+    user.city = [json objectForKey:@"city"];
+    user.location = [json objectForKey:@"location"];
+    user.description = [json objectForKey:@"description"];
+    user.url = [json objectForKey:@"url"];
+    user.profileImageUrl = [json objectForKey:@"profile_image_url"];
+    user.profileUrl = [json objectForKey:@"profile_url"];
+    user.domain = [json objectForKey:@"domain"];
+    user.weihao = [json objectForKey:@"weihao"];
+    user.gender = [json objectForKey:@"gender"];
+    user.followCount = [json objectForKey:@"followers_count"];
+    user.friendsCount = [json objectForKey:@"friends_count"];
+    user.statusesCount = [json objectForKey:@"statuses_count"];
+    user.favouritesCount = [json objectForKey:@"favourites_count"];
+    user.createdAt = [json objectForKey:@"created_at"];
+    user.following = [json objectForKey:@"following"];
+    user.allowAllActMsg = [json objectForKey:@"allow_all_act_msg"];
+    user.geoEnabled = [json objectForKey:@"geo_enabled"];
+    user.verified = [[json objectForKey:@"verified"] boolValue];
+    user.verifiedType = [json objectForKey:@"verified_type"];
+    //user.remark = [json objectForKey:@"remark"];
+    //user.statusId = [json objectForKey:@"status_id"];
+    user.allowAllComment = [json objectForKey:@"allow_all_comment"];
+    user.avatarLarge = [json objectForKey:@"avatar_large"];
+    user.verifiedReason = [json objectForKey:@"verified_reason"];
+    user.followMe = [json objectForKey:@"follow_me"];
+    user.onlineStatus = [json objectForKey:@"online_status"];
+    user.biFollowersCount = [json objectForKey:@"bi_followers_count"];
+
+    return user;
 }
 @end

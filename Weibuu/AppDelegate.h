@@ -13,6 +13,7 @@
 #import "FollowAndFansViewController.h"
 #import "ProfileViewController.h"
 #import "SettingsViewController.h"
+#import "UserDetailViewController.h"
 
 #define kAppKey             @"445238580"
 #define kAppSecret          @"616a55ff175e3de0727bb93608d02f82"

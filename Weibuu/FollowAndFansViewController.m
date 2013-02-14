@@ -7,6 +7,10 @@
 //
 
 #import "FollowAndFansViewController.h"
+#import "UserDetailNameCell.h"
+#import "AFNetworking.h"
+#import "UserDetailViewController.h"
+#define UserDetailName @"UserDetailNameCell"
 
 @interface FollowAndFansViewController ()
 
@@ -37,6 +41,14 @@
 {
     [super viewDidLoad];
     self.title =@"好友";
+    
+    UINib *nib = [UINib nibWithNibName:@"UserDetailNameCell" bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:UserDetailName];
+    
+    _segControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"关注",@"粉丝", nil]];
+    _segControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    self.navigationItem.titleView = _segControl;
+    [_segControl addTarget:self action:@selector(selFollow) forControlEvents:UIControlEventValueChanged];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -44,10 +56,23 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+- (void)selFollow
+{
+    _segIndex = _segControl.selectedSegmentIndex;
+    if (_segIndex==0) {
+        [self requestfriends];
+    }else if(_segIndex==1){
+        [self requestFans];
+    }
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     NSLog(@"friends viewWillAppear");
+    
+    _segControl.selectedSegmentIndex=0;
+    _segIndex = _segControl.selectedSegmentIndex;
     [self requestfriends];
 }
 
@@ -73,16 +98,35 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"FollowsCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    }
-    User *user = [self.usersArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = user.name;
-    cell.detailTextLabel.text = user.description;
 
-    return cell;
+    UserDetailNameCell *nameCell = [tableView dequeueReusableCellWithIdentifier:UserDetailName];
+    User *user = [self.usersArray objectAtIndex:indexPath.row];
+    
+    NSURL *imageUrl = [NSURL URLWithString:user.profileImageUrl];
+    [nameCell.avatarView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"touxiang_40x40.png"]];
+    nameCell.nameLabel.text = user.name;
+    if (user.verified) {
+        nameCell.verifiedImage.hidden = NO;
+    }else{
+        nameCell.verifiedImage.hidden = YES;
+    }
+    [nameCell.unfollowButton setTitle:@"取消关注" forState:UIControlStateNormal];
+    nameCell.userDetailVC = self;
+    nameCell.screenName = user.screenName;
+    nameCell.backgroundView=nil;
+    nameCell.backgroundColor = [UIColor clearColor];
+    nameCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    nameCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    //cell.textLabel.text = user.name;
+    //cell.detailTextLabel.text = user.description;
+
+    return nameCell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 72.0f;
 }
 
 /*
@@ -128,13 +172,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+
+    UserDetailViewController *udv = [[UserDetailViewController alloc] initWithUserInfo:[self.usersArray objectAtIndex:indexPath.row]];
+    [self.navigationController pushViewController:udv animated: YES];
 }
 
 
@@ -151,6 +191,31 @@
         
     }
     
+}
+
+- (void)requestFans
+{
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
+    if (mysinaweibo.isAuthValid) {
+        [mysinaweibo requestWithURL:@"friendships/followers.json"
+                             params:[NSMutableDictionary dictionaryWithObjectsAndKeys:mysinaweibo.userID,@"uid", nil]
+                         httpMethod:@"GET"
+                           delegate:self];
+        
+    }
+
+}
+
+- (void)unfollowUser:(NSString *)screenName
+{
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
+    if (mysinaweibo.isAuthValid) {
+        [mysinaweibo requestWithURL:@"friendships/destroy.json"
+                             params:[NSMutableDictionary dictionaryWithObjectsAndKeys:screenName,@"screen_name", nil]
+                         httpMethod:@"POST"
+                           delegate:self];
+        
+    }
 }
 
 
@@ -185,6 +250,14 @@
     if ([request.url hasSuffix:@"friendships/friends.json"]) {
         self.usersArray = [User usersWithJson:result];
         [[self tableView] reloadData];
+    }
+    if ([request.url hasSuffix:@"friendships/followers.json"]) {
+        self.usersArray = [User usersWithJson:result];
+        [[self tableView] reloadData];
+    }
+    if ([request.url hasSuffix:@"friendships/destroy.json"]) {
+        NSLog(@"friendships/destroy.json==%@",result);
+
     }
 }
 

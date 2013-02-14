@@ -49,4 +49,5 @@
 @property (nonatomic,strong) NSString *statusId;
 @property (nonatomic,strong) NSString *coverImage;
 + (NSMutableArray *)usersWithJson:(id)json;
++ (User *)oneUserWithJson:(id)json;
 @end

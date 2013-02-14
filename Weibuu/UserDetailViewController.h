@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
-@interface UserDetailViewController : UITableViewController
+#import "SinaWeibo.h"
+@interface UserDetailViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 {
     User *_userEntity;
 }

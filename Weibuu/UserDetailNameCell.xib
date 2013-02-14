@@ -147,7 +147,7 @@
 								</object>
 							</object>
 						</array>
-						<string key="NSFrameSize">{316, 73}</string>
+						<string key="NSFrameSize">{316, 71}</string>
 						<reference key="NSSuperview" ref="876103800"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="878812088"/>
@@ -163,7 +163,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{316, 74}</string>
+				<string key="NSFrameSize">{316, 72}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="275864780"/>
@@ -171,7 +171,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="275864780"/>
 				<string key="IBUIReuseIdentifier">UserDetailNameCell</string>
-				<real value="74" key="IBUIRowHeight"/>
+				<real value="72" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -199,6 +199,23 @@
 						<reference key="destination" ref="878812088"/>
 					</object>
 					<int key="connectionID">23</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">unfollowButton</string>
+						<reference key="source" ref="876103800"/>
+						<reference key="destination" ref="793640452"/>
+					</object>
+					<int key="connectionID">24</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">destroyFollow:</string>
+						<reference key="source" ref="793640452"/>
+						<reference key="destination" ref="876103800"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">26</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -271,16 +288,28 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">23</int>
+			<int key="maxID">26</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">UserDetailNameCell</string>
 					<string key="superclassName">UITableViewCell</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">destroyFollow:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">destroyFollow:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">destroyFollow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="avatarView">UIImageView</string>
 						<string key="nameLabel">UILabel</string>
+						<string key="unfollowButton">UIButton</string>
 						<string key="verifiedImage">UIImageView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -291,6 +320,10 @@
 						<object class="IBToOneOutletInfo" key="nameLabel">
 							<string key="name">nameLabel</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="unfollowButton">
+							<string key="name">unfollowButton</string>
+							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="verifiedImage">
 							<string key="name">verifiedImage</string>

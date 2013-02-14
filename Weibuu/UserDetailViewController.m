@@ -13,6 +13,7 @@
 #import "UserDetailInfoCell.h"
 #import "UserDetailIntroCell.h"
 #import "AFNetworking.h"
+#import "SinaWeiboManager.h"
 @interface UserDetailViewController ()
 
 @end
@@ -136,11 +137,13 @@
                 }else{
                     nameCell.verifiedImage.hidden = YES;
                 }
+                nameCell.screenName = _userEntity.name;
+                nameCell.userDetailVC = self;
                 
                 nameCell.backgroundView=nil;
                 nameCell.backgroundColor = [UIColor clearColor];
                 nameCell.selectionStyle = UITableViewCellSelectionStyleNone;
- 
+                
                 return nameCell;
                 break;
             case 1:
@@ -216,6 +219,19 @@
     return nil;
 }
 
+- (void)unfollowUser:(NSString *)screenName
+{
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
+    if (mysinaweibo.isAuthValid) {
+        [mysinaweibo requestWithURL:@"friendships/destroy.json"
+                             params:[NSMutableDictionary dictionaryWithObjectsAndKeys:screenName,@"screen_name", nil]
+                         httpMethod:@"POST"
+                           delegate:self];
+        
+    }
+}
+
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -267,5 +283,32 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
+#pragma mark - SinaWeiboRequestDelegate
+- (void)request:(SinaWeiboRequest *)request didReceiveResponse:(NSURLResponse *)response;
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didReceiveRawData:(NSData *)data
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
+    
+}
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
+    if ([request.url hasSuffix:@"friendships/destroy.json"]) {
+        NSLog(@"friendships/destroy.json==%@",result);
+        //_commentsArray = [Comment commentsWithJson:result];
+        //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:1];
+        //[[self tableView] reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        //[[self tableView] reloadData];
+    }
+    
+}
+
+
 
 @end

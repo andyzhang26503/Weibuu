@@ -26,4 +26,12 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)destroyFollow:(id)sender {
+    if([self.userDetailVC respondsToSelector:@selector(unfollowUser:)]){
+        [self.userDetailVC performSelector:@selector(unfollowUser:) withObject:self.screenName];
+        
+        [self.unfollowButton setTitle:@"关注" forState:UIControlStateNormal];
+    }
+
+}
 @end

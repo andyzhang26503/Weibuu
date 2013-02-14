@@ -11,6 +11,9 @@
 #import "SinaWeiboManager.h"
 #import "User.h"
 @interface FollowAndFansViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
-
+{
+    UISegmentedControl *_segControl;
+    int _segIndex;
+}
 @property (nonatomic,strong) NSMutableArray *usersArray;
 @end

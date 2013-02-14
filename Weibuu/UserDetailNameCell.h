@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface UserDetailNameCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *avatarView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImage;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *unfollowButton;
+@property (weak, nonatomic) id userDetailVC;
+@property (weak, nonatomic) NSString *screenName;
+- (IBAction)destroyFollow:(id)sender;
 
 @end

@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SinaWeiboManager.h"
 #import "SinaWeibo.h"
-#import "Status.h";
+#import "User.h"
 @interface ProfileViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
-
-@property (nonatomic,strong) NSMutableArray *myStatuses;
+@property (nonatomic,strong) User *userEntity;
+//- (id)initWithUserInfo:(User *)user;
 @end

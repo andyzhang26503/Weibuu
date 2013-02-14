@@ -33,7 +33,6 @@
 		2968346516A6F70000497598 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2968346416A6F70000497598 /* main.m */; };
 		2968346916A6F70000497598 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2968346816A6F70000497598 /* AppDelegate.m */; };
 		2968346B16A6F70000497598 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2968346A16A6F70000497598 /* Default.png */; };
-		2968346D16A6F70000497598 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2968346C16A6F70000497598 /* Default@2x.png */; };
 		2968346F16A6F70000497598 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2968346E16A6F70000497598 /* Default-568h@2x.png */; };
 		2968348A16A6F87D00497598 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2968348016A6F87D00497598 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2968348B16A6F87D00497598 /* SinaWeibo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2968348216A6F87D00497598 /* SinaWeibo.bundle */; };
@@ -204,6 +203,7 @@
 		2978D7D616AD2A980002E134 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2978D7DB16AD2C880002E134 /* WriteWbViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WriteWbViewController.h; sourceTree = "<group>"; };
 		2978D7DC16AD2C880002E134 /* WriteWbViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WriteWbViewController.m; sourceTree = "<group>"; };
+		297F86C316CB6ABB0046CA90 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2985355F16BF687D0026E4BB /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
 		2985356016BF687D0026E4BB /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
 		2985356116BF687D0026E4BB /* down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down@2x.png"; sourceTree = "<group>"; };
@@ -396,6 +396,7 @@
 		2968344916A6F70000497598 = {
 			isa = PBXGroup;
 			children = (
+				297F86C316CB6ABB0046CA90 /* Default-568h@2x.png */,
 				2968345E16A6F70000497598 /* Weibuu */,
 				2968345716A6F70000497598 /* Frameworks */,
 				2968345516A6F70000497598 /* Products */,
@@ -668,7 +669,6 @@
 			files = (
 				2968346316A6F70000497598 /* InfoPlist.strings in Resources */,
 				2968346B16A6F70000497598 /* Default.png in Resources */,
-				2968346D16A6F70000497598 /* Default@2x.png in Resources */,
 				2968346F16A6F70000497598 /* Default-568h@2x.png in Resources */,
 				2968348B16A6F87D00497598 /* SinaWeibo.bundle in Resources */,
 				292582C916A79A7600B2B2F5 /* Delicious-32p.png in Resources */,

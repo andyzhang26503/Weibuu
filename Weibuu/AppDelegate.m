@@ -15,22 +15,9 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    
+ 
     [self customAppearance];
     MainPageViewController *mpvc = [[MainPageViewController alloc] initWithStyle:UITableViewStylePlain];
-    MentionsViewController *mvc = [[MentionsViewController alloc] initWithNibName:nil bundle:nil];
-    FollowAndFansViewController *fvc = [[FollowAndFansViewController alloc] initWithNibName:nil bundle:nil];
-    ProfileViewController *pvc = [[ProfileViewController alloc] initWithNibName:nil bundle:nil];
-    SettingsViewController *svc = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
-    
-    UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:mpvc];
-    UINavigationController *nv2 = [[UINavigationController alloc] initWithRootViewController:mvc];
-    UINavigationController *nv3 = [[UINavigationController alloc] initWithRootViewController:fvc];
-    UINavigationController *nv4 = [[UINavigationController alloc] initWithRootViewController:pvc];
-    UINavigationController *nv5 = [[UINavigationController alloc] initWithRootViewController:svc];
-    
-    UITabBarController *tabbc = [[UITabBarController alloc] init];
-    tabbc.viewControllers = [NSArray arrayWithObjects:nv,nv2,nv3,nv4,nv5, nil];
     
     _sinaweibo = [[SinaWeibo alloc] initWithAppKey:kAppKey appSecret:kAppSecret appRedirectURI:kAppRedirectURI andDelegate:mpvc];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -42,6 +29,23 @@
         _sinaweibo.userID = [sinaweiboInfo objectForKey:@"UserIDKey"];
     }
     
+    
+    MentionsViewController *mvc = [[MentionsViewController alloc] initWithNibName:nil bundle:nil];
+    FollowAndFansViewController *fvc = [[FollowAndFansViewController alloc] initWithNibName:nil bundle:nil];
+    ProfileViewController *pvc = [[ProfileViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    //UserDetailViewController *udvc = [UserDetailViewController alloc] init
+    SettingsViewController *svc = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
+    
+    UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:mpvc];
+    UINavigationController *nv2 = [[UINavigationController alloc] initWithRootViewController:mvc];
+    UINavigationController *nv3 = [[UINavigationController alloc] initWithRootViewController:fvc];
+    UINavigationController *nv4 = [[UINavigationController alloc] initWithRootViewController:pvc];
+    UINavigationController *nv5 = [[UINavigationController alloc] initWithRootViewController:svc];
+    
+    UITabBarController *tabbc = [[UITabBarController alloc] init];
+    tabbc.viewControllers = [NSArray arrayWithObjects:nv,nv2,nv3,nv4,nv5, nil];
+    
+        
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
     self.window.rootViewController = tabbc;
@@ -91,6 +95,25 @@
     
     UIImage *tabBackground = [[UIImage imageNamed:@"tab_bg.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
     [[UITabBar appearance] setBackgroundImage:tabBackground];
+    
+    
+    UIImage *segUnsSel = [UIImage imageNamed:@"segcontrol_uns-sel.png"];
+    UIImage *segUnsUns = [UIImage imageNamed:@"segcontrol_uns-uns.png"];
+    UIImage *segSelUns = [UIImage imageNamed:@"segcontrol_sel-uns.png"];
+    UIImage *segSel = [UIImage imageNamed:@"segcontrol_sel.png"];
+    UIImage *segUns = [UIImage imageNamed:@"segcontrol_uns.png"];
+    
+    [[UISegmentedControl appearance] setBackgroundImage:[segSel resizableImageWithCapInsets:UIEdgeInsetsMake(0, 15, 0, 15)] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [[UISegmentedControl appearance] setBackgroundImage:[segUns resizableImageWithCapInsets:UIEdgeInsetsMake(0, 15, 0, 15)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
+    [[UISegmentedControl appearance] setDividerImage:segUnsUns forLeftSegmentState:UIControlStateNormal
+                                   rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
+    [[UISegmentedControl appearance] setDividerImage:segSelUns forLeftSegmentState:UIControlStateSelected rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
+    [[UISegmentedControl appearance] setDividerImage:segUnsSel forLeftSegmentState:UIControlStateNormal
+                                   rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
