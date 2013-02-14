@@ -15,5 +15,8 @@
     UISegmentedControl *_segControl;
     int _segIndex;
 }
+@property (nonatomic,assign) int segIndex;
 @property (nonatomic,strong) NSMutableArray *usersArray;
+@property (nonatomic,strong) NSString *screenName;
+
 @end

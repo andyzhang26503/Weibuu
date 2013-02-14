@@ -71,9 +71,10 @@
     [super viewWillAppear:animated];
     NSLog(@"friends viewWillAppear");
     
-    _segControl.selectedSegmentIndex=0;
-    _segIndex = _segControl.selectedSegmentIndex;
+    _segControl.selectedSegmentIndex=_segIndex;
+
     [self requestfriends];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -183,26 +184,50 @@
 - (void)requestfriends
 {
     SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
-    if (mysinaweibo.isAuthValid) {
-        [mysinaweibo requestWithURL:@"friendships/friends.json"
-                             params:[NSMutableDictionary dictionaryWithObjectsAndKeys:mysinaweibo.userID,@"uid", nil]
-                         httpMethod:@"GET"
-                           delegate:self];
-        
+    if (!self.screenName) {
+        if (mysinaweibo.isAuthValid) {
+            [mysinaweibo requestWithURL:@"friendships/friends.json"
+                                 params:[NSMutableDictionary dictionaryWithObjectsAndKeys:mysinaweibo.userID,@"uid", nil]
+                             httpMethod:@"GET"
+                               delegate:self];
+            
+        }
+    }else{
+        if (mysinaweibo.isAuthValid) {
+            [mysinaweibo requestWithURL:@"friendships/friends.json"
+                                 params:[NSMutableDictionary dictionaryWithObjectsAndKeys:self.screenName,@"screen_name", nil]
+                             httpMethod:@"GET"
+                               delegate:self];
+            
+        }
     }
+    
+
     
 }
 
 - (void)requestFans
 {
     SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
-    if (mysinaweibo.isAuthValid) {
-        [mysinaweibo requestWithURL:@"friendships/followers.json"
-                             params:[NSMutableDictionary dictionaryWithObjectsAndKeys:mysinaweibo.userID,@"uid", nil]
-                         httpMethod:@"GET"
-                           delegate:self];
-        
+    if (!self.screenName) {
+        if (mysinaweibo.isAuthValid) {
+            [mysinaweibo requestWithURL:@"friendships/followers.json"
+                                 params:[NSMutableDictionary dictionaryWithObjectsAndKeys:mysinaweibo.userID,@"uid", nil]
+                             httpMethod:@"GET"
+                               delegate:self];
+            
+        }
+    }else{
+        if (mysinaweibo.isAuthValid) {
+            [mysinaweibo requestWithURL:@"friendships/followers.json"
+                                 params:[NSMutableDictionary dictionaryWithObjectsAndKeys:self.screenName,@"screen_name", nil]
+                             httpMethod:@"GET"
+                               delegate:self];
+            
+        }
+
     }
+    
 
 }
 

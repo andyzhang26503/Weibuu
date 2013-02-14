@@ -14,4 +14,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *statusNoButton;
 @property (weak, nonatomic) IBOutlet UIButton *topicButton;
 
+@property (weak, nonatomic) id viewController;
+@property (strong,nonatomic) NSString *screenName;
+- (IBAction)fansButtonTap:(id)sender;
+- (IBAction)followButtonTap:(id)sender;
+- (IBAction)statusButtonTap:(id)sender;
+- (IBAction)topicButtonTap:(id)sender;
+
 @end

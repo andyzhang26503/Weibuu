@@ -13,6 +13,8 @@
 #import "UserDetailInfoCell.h"
 #import "UserDetailIntroCell.h"
 #import "AFNetworking.h"
+#import "FollowAndFansViewController.h"
+#import "MentionsViewController.h"
 @interface ProfileViewController ()
 
 @end
@@ -214,6 +216,7 @@
                 infoCell.backgroundView = nil;
                 infoCell.backgroundColor= [UIColor clearColor];
                 infoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                infoCell.viewController = self;
                 return infoCell;
                 break;
         }
@@ -253,6 +256,30 @@
     }
     return nil;
 }
+
+- (void)fansButtonTap:(NSString *)ascreenName
+{
+    FollowAndFansViewController *fvc = [[FollowAndFansViewController alloc] initWithNibName:nil bundle:nil];
+    fvc.screenName = ascreenName;
+    fvc.segIndex = 1;
+    [self.navigationController pushViewController:fvc animated:YES];
+}
+
+- (void)statusButtonTap:(NSString *)ascreenName
+{
+    MentionsViewController *mvc = [[MentionsViewController alloc] initWithNibName:nil bundle:nil];
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
+    mvc.loginUserId = mysinaweibo.userID;
+    [self.navigationController pushViewController:mvc animated:YES];
+}
+
+- (void)followButtonTap:(NSString *)ascreenName
+{
+    FollowAndFansViewController *fvc = [[FollowAndFansViewController alloc] initWithNibName:nil bundle:nil];
+    fvc.screenName = ascreenName;
+    [self.navigationController pushViewController:fvc animated:YES];
+}
+
 
 /*
  // Override to support conditional editing of the table view.

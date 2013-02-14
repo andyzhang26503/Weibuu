@@ -11,6 +11,8 @@
 #import "Status.h"
 @interface MentionsViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
-
+@property (strong, nonatomic) NSString *screenName;
 @property (nonatomic,strong) NSMutableArray *retweetStatus;
+
+@property (nonatomic,strong) NSString *loginUserId;
 @end

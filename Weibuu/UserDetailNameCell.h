@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *unfollowButton;
 @property (weak, nonatomic) id userDetailVC;
-@property (weak, nonatomic) NSString *screenName;
+@property (strong, nonatomic) NSString *screenName;
 - (IBAction)destroyFollow:(id)sender;
 
 @end

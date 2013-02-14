@@ -57,7 +57,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"mentions viewWillAppear");
-    [self requestMenstions];
+    if (!self.screenName &&!self.loginUserId) {
+        [self requestMenstions];
+    }else{
+        [self requestAllStatusByUser];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -166,6 +171,25 @@
     }
 
 }
+- (void)requestAllStatusByUser
+{
+    
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
+    
+    if (mysinaweibo.isAuthValid) {
+        if (self.loginUserId) {
+            [mysinaweibo requestWithURL:@"statuses/user_timeline.json"
+                                 params:[NSMutableDictionary dictionaryWithObjectsAndKeys:self.loginUserId,@"uid", nil]
+                             httpMethod:@"Get"
+                               delegate:self];
+        }else{
+            [mysinaweibo requestWithURL:@"statuses/user_timeline.json"
+                                 params:[NSMutableDictionary dictionaryWithObjectsAndKeys:self.screenName,@"screen_name", nil]
+                             httpMethod:@"Get"
+                               delegate:self];
+        }
+    }
+}
 
 
 #pragma mark - SinaWeibo Delegate
@@ -197,6 +221,11 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if ([request.url hasSuffix:@"statuses/mentions.json"]) {
+        self.retweetStatus = [Status statusesWithJson:result];
+        [[self tableView] reloadData];
+        
+    }
+    if ([request.url hasSuffix:@"statuses/user_timeline.json"]) {
         self.retweetStatus = [Status statusesWithJson:result];
         [[self tableView] reloadData];
         
