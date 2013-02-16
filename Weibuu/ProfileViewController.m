@@ -69,7 +69,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self requestMyStatus];
+    if (!self.screenName) {
+        [self requestMyStatus];
+    }else{
+        [self requestUserDetailByName:self.screenName];
+    }
+
     
 }
 
@@ -84,6 +89,18 @@
         
     }
     
+}
+
+- (void)requestUserDetailByName:(NSString *)ascreenName
+{
+    SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
+    if (mysinaweibo.isAuthValid) {
+        [mysinaweibo requestWithURL:@"users/show.json"
+                             params:[NSMutableDictionary dictionaryWithObjectsAndKeys:ascreenName,@"screen_name", nil]
+                         httpMethod:@"Get"
+                           delegate:self];
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -217,6 +234,7 @@
                 infoCell.backgroundColor= [UIColor clearColor];
                 infoCell.selectionStyle = UITableViewCellSelectionStyleNone;
                 infoCell.viewController = self;
+                infoCell.screenName = self.screenName;
                 return infoCell;
                 break;
         }
@@ -269,7 +287,11 @@
 {
     MentionsViewController *mvc = [[MentionsViewController alloc] initWithNibName:nil bundle:nil];
     SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
-    mvc.loginUserId = mysinaweibo.userID;
+    if (!self.screenName) {
+        mvc.loginUserId = mysinaweibo.userID;
+    }else{
+        mvc.screenName = self.screenName;
+    }
     [self.navigationController pushViewController:mvc animated:YES];
 }
 

@@ -9,7 +9,7 @@
 #import "MainPageViewController.h"
 #import "WriteWbViewController.h"
 #import "StatusDetailViewController.h"
-
+#import "ProfileViewController.h"
 #define FriendStatusCell @"FriendStatusCell"
 @interface MainPageViewController ()
 
@@ -139,11 +139,16 @@
     [cell setStatusEntity:status];
      
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    cell.viewController = self;
     return cell;
 }
 
-
+- (void)goToUserDetailVC:(NSString *)ascreenName
+{
+    ProfileViewController *pvc = [[ProfileViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    pvc.screenName = ascreenName;
+    [self.navigationController pushViewController:pvc animated: YES];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

@@ -10,7 +10,7 @@
 #import "SinaWeibo.h"
 #import "StatusCell.h"
 #import "StatusDetailViewController.h"
-
+#import "ProfileViewController.h"
 #define MentionsStatusCell @"MentionsStatusCell"
 @interface MentionsViewController ()
 
@@ -32,7 +32,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tabBarItem.title=@"@我";
+        //self.tabBarItem.title=@"@我";
         self.tabBarItem.image=[UIImage imageNamed:@"Technorati-32p"];
     }
     return self;
@@ -106,9 +106,17 @@
     [cell setStatusEntity:status];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.viewController = self;
     
     return cell;
 
+}
+
+- (void)goToUserDetailVC:(NSString *)ascreenName
+{
+    ProfileViewController *pvc = [[ProfileViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    pvc.screenName = ascreenName;
+    [self.navigationController pushViewController:pvc animated: YES];
 }
 
 /*

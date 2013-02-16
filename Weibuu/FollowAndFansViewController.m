@@ -72,8 +72,12 @@
     NSLog(@"friends viewWillAppear");
     
     _segControl.selectedSegmentIndex=_segIndex;
-
-    [self requestfriends];
+    if (_segIndex==1) {
+        [self requestFans];
+    }else{
+        [self requestfriends];
+    }
+    
     
 }
 

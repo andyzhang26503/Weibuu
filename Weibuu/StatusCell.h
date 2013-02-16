@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Status.h"
 #import "STTweetLabel.h"
+#import <QuartzCore/QuartzCore.h>
 @interface StatusCell : UITableViewCell<UIWebViewDelegate>
 {
     CGFloat _webViewHeight;
@@ -30,8 +31,9 @@
 @property (nonatomic,strong) UIWebView *tweetWebView;
 @property (nonatomic,strong) UIWebView *retweetWebView;
 
-
 @property (nonatomic,strong) Status *statusEntity;
+
+@property (nonatomic,weak) id viewController;
 //@property (nonatomic,assign) CGFloat webViewHeight;
 - (CGFloat)hightForCellWithStatus:(Status *)status;
 @end

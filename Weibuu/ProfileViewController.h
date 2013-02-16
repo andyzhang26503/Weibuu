@@ -13,5 +13,6 @@
 @interface ProfileViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
 @property (nonatomic,strong) User *userEntity;
+@property (nonatomic,strong) NSString *screenName;
 //- (id)initWithUserInfo:(User *)user;
 @end

@@ -95,8 +95,20 @@ static NSDateFormatter *resultFormatter;
         self.verifiedImage.hidden = YES;
     }
     
+//    CALayer *imageLayer =  self.avatarImage.layer;
+//    imageLayer.shadowOffset = CGSizeMake(0, 3);
+//    imageLayer.shadowRadius = 5.0;
+//    imageLayer.shadowColor = [UIColor blackColor].CGColor;
+//    imageLayer.shadowOpacity = 0.8;
+//    //imageLayer.borderColor = [UIColor blackColor].CGColor;
+//    //imageLayer.borderWidth = 2.0;
+//    
+//    imageLayer.masksToBounds = YES;
+    
     NSURL *imageUrl = [NSURL URLWithString:statusEntity.user.profileImageUrl];
     [self.avatarImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"touxiang_40x40.png"]];
+    
+    
     self.name.textColor = [UIColor grayColor];
     if (statusEntity.thumbnailPic) {
         NSURL *thumbnailPicUrl = [NSURL URLWithString:statusEntity.thumbnailPic];
@@ -275,10 +287,14 @@ static NSDateFormatter *resultFormatter;
     if ([urlComps count] > 1 && [(NSString *)[urlComps objectAtIndex:1] isEqualToString:@"cmd1"])//@方法
     {
         NSString *str = [[urlComps objectAtIndex:2] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSLog(@"%@", str);
+        str = [str substringFromIndex:1];
+        //NSLog(@"%@", str);
+        //alert = [[UIAlertView alloc] initWithTitle:str message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        //[alert show];
+        if ([self.viewController respondsToSelector:@selector(goToUserDetailVC:)]) {
+            [self.viewController performSelector:@selector(goToUserDetailVC:) withObject:str];
+        }
         
-        alert = [[UIAlertView alloc] initWithTitle:str message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
         return YES;
     }
     
