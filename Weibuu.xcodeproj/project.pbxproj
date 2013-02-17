@@ -444,9 +444,7 @@
 		2968345E16A6F70000497598 /* Weibuu */ = {
 			isa = PBXGroup;
 			children = (
-				291F889A16CF8E9D004F7363 /* SORelativeDateTransformer.bundle */,
-				291F889B16CF8E9D004F7363 /* SORelativeDateTransformer.h */,
-				291F889C16CF8E9D004F7363 /* SORelativeDateTransformer.m */,
+				299BCD2016D07AE100C54D16 /* SORelativeDateTransformer */,
 				291F889916CF7B47004F7363 /* PullRefresh */,
 				29336C5116B7657300071EE7 /* Sina_emoji */,
 				29ABDDDE16B61C13008D1500 /* STTweetLabel */,
@@ -601,6 +599,16 @@
 				2986387616C4DE7F00334EA0 /* UserDetailIntroCell.xib */,
 			);
 			name = UserDetailVCs;
+			sourceTree = "<group>";
+		};
+		299BCD2016D07AE100C54D16 /* SORelativeDateTransformer */ = {
+			isa = PBXGroup;
+			children = (
+				291F889A16CF8E9D004F7363 /* SORelativeDateTransformer.bundle */,
+				291F889B16CF8E9D004F7363 /* SORelativeDateTransformer.h */,
+				291F889C16CF8E9D004F7363 /* SORelativeDateTransformer.m */,
+			);
+			name = SORelativeDateTransformer;
 			sourceTree = "<group>";
 		};
 		29ABDDDE16B61C13008D1500 /* STTweetLabel */ = {
