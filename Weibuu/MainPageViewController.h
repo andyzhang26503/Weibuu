@@ -11,7 +11,8 @@
 #import "Status.h"
 #import "SinaWeiboManager.h"
 #import "StatusCell.h"
-@interface MainPageViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
+#import "PullRefreshTableViewController.h"
+@interface MainPageViewController : PullRefreshTableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 {
     UIActivityIndicatorView *_activityIndicatorView;
 }

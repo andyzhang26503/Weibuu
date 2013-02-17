@@ -69,8 +69,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSLog(@"friends viewWillAppear");
-    
+
     _segControl.selectedSegmentIndex=_segIndex;
     if (_segIndex==1) {
         [self requestFans];
@@ -79,6 +78,16 @@
     }
     
     
+}
+- (void)refresh
+{
+    _segControl.selectedSegmentIndex=_segIndex;
+    if (_segIndex==1) {
+        [self requestFans];
+    }else{
+        [self requestfriends];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -288,6 +297,7 @@
         NSLog(@"friendships/destroy.json==%@",result);
 
     }
+    [self stopLoading];
 }
 
 

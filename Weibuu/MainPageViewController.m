@@ -243,5 +243,7 @@
     }
     [_activityIndicatorView stopAnimating];
     [[self tableView] setHidden:NO];
+    
+    [self stopLoading];
 }
 @end

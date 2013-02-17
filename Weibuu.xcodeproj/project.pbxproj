@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		291BCB2916A827A20091F508 /* Status.m in Sources */ = {isa = PBXBuildFile; fileRef = 291BCB2816A827A20091F508 /* Status.m */; };
 		291BCB2C16A8295F0091F508 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 291BCB2B16A8295F0091F508 /* User.m */; };
+		291F889816CF7B3D004F7363 /* PullRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291F889716CF7B3D004F7363 /* PullRefreshTableViewController.m */; };
+		291F889D16CF8E9D004F7363 /* SORelativeDateTransformer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 291F889A16CF8E9D004F7363 /* SORelativeDateTransformer.bundle */; };
+		291F889E16CF8E9D004F7363 /* SORelativeDateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 291F889C16CF8E9D004F7363 /* SORelativeDateTransformer.m */; };
 		292582C916A79A7600B2B2F5 /* Delicious-32p.png in Resources */ = {isa = PBXBuildFile; fileRef = 292582C216A79A7600B2B2F5 /* Delicious-32p.png */; };
 		292582CA16A79A7600B2B2F5 /* Digg-32p.png in Resources */ = {isa = PBXBuildFile; fileRef = 292582C316A79A7600B2B2F5 /* Digg-32p.png */; };
 		292582CB16A79A7600B2B2F5 /* Technorati-32p.png in Resources */ = {isa = PBXBuildFile; fileRef = 292582C416A79A7600B2B2F5 /* Technorati-32p.png */; };
@@ -138,10 +141,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2908D14F16CFADF400D94BF5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		291BCB2716A827A20091F508 /* Status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Status.h; sourceTree = "<group>"; };
 		291BCB2816A827A20091F508 /* Status.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Status.m; sourceTree = "<group>"; };
 		291BCB2A16A8295F0091F508 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		291BCB2B16A8295F0091F508 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		291F889616CF7B3D004F7363 /* PullRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullRefreshTableViewController.h; sourceTree = "<group>"; };
+		291F889716CF7B3D004F7363 /* PullRefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullRefreshTableViewController.m; sourceTree = "<group>"; };
+		291F889A16CF8E9D004F7363 /* SORelativeDateTransformer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SORelativeDateTransformer.bundle; sourceTree = "<group>"; };
+		291F889B16CF8E9D004F7363 /* SORelativeDateTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SORelativeDateTransformer.h; sourceTree = "<group>"; };
+		291F889C16CF8E9D004F7363 /* SORelativeDateTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SORelativeDateTransformer.m; sourceTree = "<group>"; };
 		292582C216A79A7600B2B2F5 /* Delicious-32p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Delicious-32p.png"; sourceTree = "<group>"; };
 		292582C316A79A7600B2B2F5 /* Digg-32p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Digg-32p.png"; sourceTree = "<group>"; };
 		292582C416A79A7600B2B2F5 /* Technorati-32p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Technorati-32p.png"; sourceTree = "<group>"; };
@@ -340,6 +349,15 @@
 			name = model;
 			sourceTree = "<group>";
 		};
+		291F889916CF7B47004F7363 /* PullRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				291F889616CF7B3D004F7363 /* PullRefreshTableViewController.h */,
+				291F889716CF7B3D004F7363 /* PullRefreshTableViewController.m */,
+			);
+			name = PullRefresh;
+			sourceTree = "<group>";
+		};
 		292582A416A7956700B2B2F5 /* myimage */ = {
 			isa = PBXGroup;
 			children = (
@@ -426,6 +444,10 @@
 		2968345E16A6F70000497598 /* Weibuu */ = {
 			isa = PBXGroup;
 			children = (
+				291F889A16CF8E9D004F7363 /* SORelativeDateTransformer.bundle */,
+				291F889B16CF8E9D004F7363 /* SORelativeDateTransformer.h */,
+				291F889C16CF8E9D004F7363 /* SORelativeDateTransformer.m */,
+				291F889916CF7B47004F7363 /* PullRefresh */,
 				29336C5116B7657300071EE7 /* Sina_emoji */,
 				29ABDDDE16B61C13008D1500 /* STTweetLabel */,
 				29E9702616B25DEB00D12F0A /* AFNetworking */,
@@ -651,6 +673,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 2968344916A6F70000497598;
 			productRefGroup = 2968345516A6F70000497598 /* Products */;
@@ -753,6 +776,7 @@
 				29E96D0716C6035A003B9CBE /* tabbar_whitebtn@2x.png in Resources */,
 				29E96D0816C6035A003B9CBE /* tabbar_greenbtn.png in Resources */,
 				29E96D0916C6035A003B9CBE /* tabbar_greenbtn@2x.png in Resources */,
+				291F889D16CF8E9D004F7363 /* SORelativeDateTransformer.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -800,6 +824,8 @@
 				2986386616C4A24F00334EA0 /* UserDetailNameCell.m in Sources */,
 				2986386E16C4A47100334EA0 /* UserDetailInfoCell.m in Sources */,
 				2986387A16C4DE8F00334EA0 /* UserDetailIntroCell.m in Sources */,
+				291F889816CF7B3D004F7363 /* PullRefreshTableViewController.m in Sources */,
+				291F889E16CF8E9D004F7363 /* SORelativeDateTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -810,6 +836,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				2968346216A6F70000497598 /* en */,
+				2908D14F16CFADF400D94BF5 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

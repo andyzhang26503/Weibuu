@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SinaWeiboManager.h"
 #import "Status.h"
-@interface MentionsViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
+#import "PullRefreshTableViewController.h"
+@interface MentionsViewController : PullRefreshTableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 
 @property (strong, nonatomic) NSString *screenName;
 @property (nonatomic,strong) NSMutableArray *retweetStatus;

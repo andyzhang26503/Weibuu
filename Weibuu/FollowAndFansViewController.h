@@ -10,7 +10,8 @@
 #import "SinaWeibo.h"
 #import "SinaWeiboManager.h"
 #import "User.h"
-@interface FollowAndFansViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
+#import "PullRefreshTableViewController.h"
+@interface FollowAndFansViewController : PullRefreshTableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 {
     UISegmentedControl *_segControl;
     int _segIndex;

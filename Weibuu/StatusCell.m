@@ -73,9 +73,13 @@ static NSDateFormatter *resultFormatter;
     [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     NSDate *date=[formatter dateFromString:statusEntity.createdAt];
     
-    resultFormatter=[[NSDateFormatter alloc] init];
-    resultFormatter.dateFormat = @"MM-dd HH:mm";
-    self.createdAt.text = [resultFormatter stringFromDate:date];
+    SORelativeDateTransformer *relativeTrans = [[SORelativeDateTransformer alloc] init];
+    NSString *relativeDate = [relativeTrans transformedValue:date];
+    
+    //resultFormatter=[[NSDateFormatter alloc] init];
+    //resultFormatter.dateFormat = @"MM-dd HH:mm";
+    //self.createdAt.text = [resultFormatter stringFromDate:date];
+    self.createdAt.text = relativeDate;
 
     NSRegularExpression *reg = [[NSRegularExpression alloc] initWithPattern:@"<a .*>(.*)</a>" options:0 error:nil];
     NSArray *matches = [reg matchesInString:statusEntity.source options:0 range:NSMakeRange(0, [statusEntity.source length])];

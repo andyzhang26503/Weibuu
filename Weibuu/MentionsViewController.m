@@ -32,7 +32,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        //self.tabBarItem.title=@"@我";
+        self.tabBarItem.title=@"@我";
         self.tabBarItem.image=[UIImage imageNamed:@"Technorati-32p"];
     }
     return self;
@@ -56,13 +56,20 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"mentions viewWillAppear");
     if (!self.screenName &&!self.loginUserId) {
         [self requestMenstions];
     }else{
         [self requestAllStatusByUser];
     }
 
+}
+- (void)refresh
+{
+    if (!self.screenName &&!self.loginUserId) {
+        [self requestMenstions];
+    }else{
+        [self requestAllStatusByUser];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -238,6 +245,7 @@
         [[self tableView] reloadData];
         
     }
+    [self stopLoading];
 }
 
 

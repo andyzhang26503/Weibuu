@@ -10,6 +10,7 @@
 #import "Status.h"
 #import "STTweetLabel.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SORelativeDateTransformer.h"
 @interface StatusCell : UITableViewCell<UIWebViewDelegate>
 {
     CGFloat _webViewHeight;
