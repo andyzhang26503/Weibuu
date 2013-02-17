@@ -101,7 +101,7 @@
 		2986387C16C4F56600334EA0 /* QQ20130208-1p.png in Resources */ = {isa = PBXBuildFile; fileRef = 2986387B16C4F56600334EA0 /* QQ20130208-1p.png */; };
 		2986387E16C4F76400334EA0 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2986387D16C4F76400334EA0 /* Default@2x.png */; };
 		29886BA016ACED7500CA7E8C /* SinaWeiboManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 29886B9F16ACED7500CA7E8C /* SinaWeiboManager.m */; };
-		29ABDDE116B61C13008D1500 /* STTweetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ABDDE016B61C13008D1500 /* STTweetLabel.m */; };
+		299BCD2416D0B7EE00C54D16 /* STTweetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 299BCD2316D0B7EE00C54D16 /* STTweetLabel.m */; };
 		29B69C7416BA4B5600F3F446 /* timeline_rt_border@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29B69C7216BA4B5600F3F446 /* timeline_rt_border@2x.png */; };
 		29B69C7516BA4B5600F3F446 /* timeline_rt_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 29B69C7316BA4B5600F3F446 /* timeline_rt_border.png */; };
 		29CD822A16AF8F3800F4114F /* StatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29CD822916AF8F3800F4114F /* StatusCell.m */; };
@@ -269,8 +269,8 @@
 		2986387D16C4F76400334EA0 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		29886B9E16ACED7500CA7E8C /* SinaWeiboManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboManager.h; sourceTree = "<group>"; };
 		29886B9F16ACED7500CA7E8C /* SinaWeiboManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboManager.m; sourceTree = "<group>"; };
-		29ABDDDF16B61C13008D1500 /* STTweetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTweetLabel.h; sourceTree = "<group>"; };
-		29ABDDE016B61C13008D1500 /* STTweetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTweetLabel.m; sourceTree = "<group>"; };
+		299BCD2216D0B7EE00C54D16 /* STTweetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTweetLabel.h; sourceTree = "<group>"; };
+		299BCD2316D0B7EE00C54D16 /* STTweetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTweetLabel.m; sourceTree = "<group>"; };
 		29B69C7216BA4B5600F3F446 /* timeline_rt_border@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "timeline_rt_border@2x.png"; sourceTree = "<group>"; };
 		29B69C7316BA4B5600F3F446 /* timeline_rt_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeline_rt_border.png; sourceTree = "<group>"; };
 		29CD822816AF8F3800F4114F /* StatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusCell.h; sourceTree = "<group>"; };
@@ -444,10 +444,10 @@
 		2968345E16A6F70000497598 /* Weibuu */ = {
 			isa = PBXGroup;
 			children = (
+				299BCD2116D0B7EE00C54D16 /* STTweetLabel */,
 				299BCD2016D07AE100C54D16 /* SORelativeDateTransformer */,
 				291F889916CF7B47004F7363 /* PullRefresh */,
 				29336C5116B7657300071EE7 /* Sina_emoji */,
-				29ABDDDE16B61C13008D1500 /* STTweetLabel */,
 				29E9702616B25DEB00D12F0A /* AFNetworking */,
 				2986386716C4A25A00334EA0 /* StatusDetailVCs */,
 				2986386916C4A29E00334EA0 /* UserDetailVCs */,
@@ -611,11 +611,11 @@
 			name = SORelativeDateTransformer;
 			sourceTree = "<group>";
 		};
-		29ABDDDE16B61C13008D1500 /* STTweetLabel */ = {
+		299BCD2116D0B7EE00C54D16 /* STTweetLabel */ = {
 			isa = PBXGroup;
 			children = (
-				29ABDDDF16B61C13008D1500 /* STTweetLabel.h */,
-				29ABDDE016B61C13008D1500 /* STTweetLabel.m */,
+				299BCD2216D0B7EE00C54D16 /* STTweetLabel.h */,
+				299BCD2316D0B7EE00C54D16 /* STTweetLabel.m */,
 			);
 			path = STTweetLabel;
 			sourceTree = "<group>";
@@ -820,7 +820,6 @@
 				29E9704016B25DEB00D12F0A /* AFURLConnectionOperation.m in Sources */,
 				29E9704116B25DEB00D12F0A /* AFXMLRequestOperation.m in Sources */,
 				29E9704216B25DEB00D12F0A /* UIImageView+AFNetworking.m in Sources */,
-				29ABDDE116B61C13008D1500 /* STTweetLabel.m in Sources */,
 				29336C5716B7659700071EE7 /* HtmlString.m in Sources */,
 				29336C5816B7659700071EE7 /* RegexKitLite.m in Sources */,
 				29751D8E16BFC3CC00F1EC9F /* StatusDetailViewController.m in Sources */,
@@ -834,6 +833,7 @@
 				2986387A16C4DE8F00334EA0 /* UserDetailIntroCell.m in Sources */,
 				291F889816CF7B3D004F7363 /* PullRefreshTableViewController.m in Sources */,
 				291F889E16CF8E9D004F7363 /* SORelativeDateTransformer.m in Sources */,
+				299BCD2416D0B7EE00C54D16 /* STTweetLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

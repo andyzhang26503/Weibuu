@@ -22,9 +22,7 @@
 @property (nonatomic,strong) NSNumber *repostsCount;
 @property (nonatomic,strong) NSString *source;
 @property (nonatomic,strong) NSString *text;
-
-@property (nonatomic,strong) NSString *textHtml;
-
+@property (nonatomic,strong) NSString *nameAndText;
 @property (nonatomic,strong) NSString *thumbnailPic;
 
 @property (nonatomic,strong) User *user;

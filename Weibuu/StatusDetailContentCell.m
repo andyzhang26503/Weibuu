@@ -50,16 +50,16 @@
     self.retweetCount.text = [statusEntity.repostsCount stringValue];
     self.commentCount.text = [statusEntity.commentsCount stringValue];
     
-    NSString *myDescriptionHTML = [NSString stringWithFormat:@"<html> \n"
-                                   "<head> \n"
-                                   "<style type=\"text/css\"> \n"
-                                   "body {font-family: \"%@\"; font-size: %@;}\n"
-                                   "</style> \n"
-                                   "</head> \n"
-                                   "<body>%@</body> \n"
-                                   "</html>", @"helvetica", [NSNumber numberWithInt:12], statusEntity.textHtml];
-    
-    [[self tweetWebView] loadHTMLString:myDescriptionHTML baseURL:nil];
+//    NSString *myDescriptionHTML = [NSString stringWithFormat:@"<html> \n"
+//                                   "<head> \n"
+//                                   "<style type=\"text/css\"> \n"
+//                                   "body {font-family: \"%@\"; font-size: %@;}\n"
+//                                   "</style> \n"
+//                                   "</head> \n"
+//                                   "<body>%@</body> \n"
+//                                   "</html>", @"helvetica", [NSNumber numberWithInt:12], statusEntity.textHtml];
+//    
+//    [[self tweetWebView] loadHTMLString:myDescriptionHTML baseURL:nil];
     
     NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"EEE MMM dd HH:mm:ss zzz yyyy"];
@@ -93,18 +93,18 @@
         UIEdgeInsets edge = UIEdgeInsetsMake(10, 40, 10, 20);
         self.retweetBlock.image = [[UIImage imageNamed:@"timeline_rt_border.png"] resizableImageWithCapInsets:edge];
         
-        statusEntity.origStatus.textHtml = [HtmlString transformString:[NSString stringWithFormat:@"@%@:%@",statusEntity.origStatus.user.name, statusEntity.origStatus.text]];
-        
-        NSString *retweetDescriptionHTML = [NSString stringWithFormat:@"<html> \n"
-                                            "<head> \n"
-                                            "<style type=\"text/css\"> \n"
-                                            "body {font-family: \"%@\"; font-size: %@;}\n"
-                                            "</style> \n"
-                                            "</head> \n"
-                                            "<body>%@</body> \n"
-                                            "</html>", @"helvetica", [NSNumber numberWithInt:12],statusEntity.origStatus.textHtml ];
-        
-        [[self retweetWebView] loadHTMLString:retweetDescriptionHTML baseURL:nil];
+//        statusEntity.origStatus.textHtml = [HtmlString transformString:[NSString stringWithFormat:@"@%@:%@",statusEntity.origStatus.user.name, statusEntity.origStatus.text]];
+//        
+//        NSString *retweetDescriptionHTML = [NSString stringWithFormat:@"<html> \n"
+//                                            "<head> \n"
+//                                            "<style type=\"text/css\"> \n"
+//                                            "body {font-family: \"%@\"; font-size: %@;}\n"
+//                                            "</style> \n"
+//                                            "</head> \n"
+//                                            "<body>%@</body> \n"
+//                                            "</html>", @"helvetica", [NSNumber numberWithInt:12],statusEntity.origStatus.textHtml ];
+//        
+//        [[self retweetWebView] loadHTMLString:retweetDescriptionHTML baseURL:nil];
         self.retweetWebView.hidden = NO;
         
         if (statusEntity.origStatus.thumbnailPic) {

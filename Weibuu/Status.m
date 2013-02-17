@@ -7,7 +7,6 @@
 //
 
 #import "Status.h"
-#import "HtmlString.h"
 @implementation Status
 
 @synthesize attitudesCount=_attitudesCount;
@@ -22,7 +21,6 @@
 @synthesize repostsCount=_repostsCount;
 @synthesize source=_source;
 @synthesize text=_text;
-@synthesize textHtml = _textHtml;
 
 @synthesize thumbnailPic=_thumbnailPic;
 
@@ -46,23 +44,15 @@
         status.originalPic = [statues objectForKey:@"original_pic"];
         status.repostsCount = [statues objectForKey:@"reposts_count"];
         status.source = [statues objectForKey:@"source"];
-        status.text = [statues objectForKey:@"text"];
-        
-        status.textHtml = [HtmlString transformString:status.text];
-        
+        status.text = [statues objectForKey:@"text"];  
         status.thumbnailPic = [statues objectForKey:@"thumbnail_pic"];
-        
-        
-        
+ 
         NSDictionary *origStatusDict = [statues objectForKey:@"retweeted_status"];
         Status *origStatus = [[Status alloc] init];
         origStatus.attitudesCount = [origStatusDict objectForKey:@"attitudes_count"];
         origStatus.createdAt = [origStatusDict objectForKey:@"created_at"];
         origStatus.statusId = [[origStatusDict objectForKey:@"id"] intValue];
         origStatus.text = [origStatusDict objectForKey:@"text"];
-        
-        //origStatus.textHtml = [HtmlString transformString:origStatus.text];
-        
         origStatus.source = [origStatusDict objectForKey:@"source"];
         origStatus.favorited = [origStatusDict objectForKey:@"favorited"];
         origStatus.geo = [origStatusDict objectForKey:@"geo"];
@@ -112,9 +102,10 @@
         origStatusUser.verifiedType = [origStatusDict objectForKey:@"verified_type"];
         origStatusUser.weihao = [origStatusDict objectForKey:@"weihao"];
         status.origStatus.user = origStatusUser;
-        
-        
-        
+        if (origStatusUser.name) {
+            status.origStatus.nameAndText = [[[@"@" stringByAppendingString:origStatusUser.name] stringByAppendingString:@":"] stringByAppendingString:status.origStatus.text];
+        }
+   
         NSDictionary *userDict = [statues objectForKey:@"user"];
         User *user = [[User alloc] init];
         user.allowAllActMsg = [userDict objectForKey:@"allow_all_act_msg"];

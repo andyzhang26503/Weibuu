@@ -140,6 +140,7 @@
      
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.viewController = self;
+    cell.curIndexPath = indexPath;
     return cell;
 }
 
@@ -194,6 +195,12 @@
 {
     StatusDetailViewController *dvc = [[StatusDetailViewController alloc] initWithStatusMain:[self.statusesArray objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:dvc animated:YES];
+}
+
+- (void)webViewTap:(NSIndexPath *)curIndexPath
+{
+    NSLog(@"webViewTap:(NSIndexPath *)curIndexPath");
+    [self tableView:self.tableView didSelectRowAtIndexPath:curIndexPath];
 }
 
 
