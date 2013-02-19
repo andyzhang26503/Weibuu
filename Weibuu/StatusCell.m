@@ -60,17 +60,14 @@ static NSDateFormatter *formatter;
                     if ([self.viewController respondsToSelector:@selector(goToUserDetailVC:)]) {
                         [self.viewController performSelector:@selector(goToUserDetailVC:) withObject:[link substringFromIndex:1]];
                     }
-                    jumpOutFlag = YES;
                     break;
                 case STLinkActionTypeHashtag:
                     self.cellClickStatus = CellSpecialClick;
                     displayString = [NSString stringWithFormat:@"Twitter hashtag:\n%@", link];
-                    jumpOutFlag = YES;
                     break;
                 case STLinkActionTypeWebsite:
                     self.cellClickStatus = CellSpecialClick;
                     displayString = [NSString stringWithFormat:@"Website:\n%@", link];
-                    jumpOutFlag = YES;
                     break;
                 case STLinkActionTypeNothing:
                     self.cellClickStatus = CellNormalClick;
@@ -113,6 +110,7 @@ static NSDateFormatter *formatter;
             switch (actionType) {
                     
                 case STLinkActionTypeAccount:
+                    self.cellClickStatus = CellSpecialClick;
                     displayString = [NSString stringWithFormat:@"Twitter account:\n%@", link];
                     if ([self.viewController respondsToSelector:@selector(goToUserDetailVC:)]) {
                         [self.viewController performSelector:@selector(goToUserDetailVC:) withObject:[link substringFromIndex:1]];
@@ -120,12 +118,19 @@ static NSDateFormatter *formatter;
                     break;
                     
                 case STLinkActionTypeHashtag:
+                    self.cellClickStatus = CellSpecialClick;
                     displayString = [NSString stringWithFormat:@"Twitter hashtag:\n%@", link];
                     break;
                     
                 case STLinkActionTypeWebsite:
+                    self.cellClickStatus = CellSpecialClick;
                     displayString = [NSString stringWithFormat:@"Website:\n%@", link];
                     break;
+                case STLinkActionTypeNothing:
+                    self.cellClickStatus = CellNormalClick;
+                    displayString = @"Nothing";
+                    break;
+
             }
             NSLog(@"tap==%@",displayString);
         };
@@ -299,7 +304,8 @@ static NSDateFormatter *formatter;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    jumpOutFlag = NO;
+
+    self.cellClickStatus = CellNormalClick;
     
     CGRect tweetLabelRect =  self.tweetLabel.frame;
     tweetLabelRect.size.height = [self tweetStatusHeight:_statusEntity.text];

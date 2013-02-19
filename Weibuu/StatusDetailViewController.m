@@ -15,7 +15,7 @@
 #import "SinaWeiboManager.h"
 #import "Comment.h"
 #import "UserDetailViewController.h"
-
+#import "ProfileViewController.h"
 #define StatusDetailName @"StatusDetailCellName"
 #define StatusDetailContent @"StatusDetailCellContent"
 #define StatusDetailComment @"StatusDetailCellComment"
@@ -163,6 +163,7 @@
             }
             [contentCell setStatusEntity:_statusEntity];
             [contentCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            [contentCell setViewController:self];
             return contentCell;
             break;
         default:
@@ -185,6 +186,12 @@
     return nil;
 }
 
+- (void)goToUserDetailVC:(NSString *)ascreenName
+{
+    ProfileViewController *pvc = [[ProfileViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    pvc.screenName = ascreenName;
+    [self.navigationController pushViewController:pvc animated: YES];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -228,16 +235,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-    
-    UserDetailViewController *udv = [[UserDetailViewController alloc] initWithUserInfo:_statusEntity.user];
-    [self.navigationController pushViewController:udv animated: YES];
+    StatusDetailContentCell *cell = (StatusDetailContentCell *)[tableView cellForRowAtIndexPath:indexPath];
+    if (cell.cellClickStatus==CellNormalClick) {
+        UserDetailViewController *udv = [[UserDetailViewController alloc] initWithUserInfo:_statusEntity.user];
+        [self.navigationController pushViewController:udv animated: YES];
+    }
 }
 
 

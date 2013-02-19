@@ -24,8 +24,7 @@ typedef enum {
     CGFloat _tweetLabelHeight;
     CGFloat _retweetLabelHeight;
     CellClickStatus _cellClickStatus;
-    
-    BOOL __block jumpOutFlag;
+
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImage;

@@ -9,10 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "Status.h"
 #import "STTweetLabel.h"
+typedef enum {
+    CellNotClick,
+    CellSpecialClick,
+    CellNormalClick
+}CellClickStatus;
+
+
 @interface StatusDetailContentCell : UITableViewCell<STLinkProtocol>
 {
     CGFloat _tweetLabelHeight;
     CGFloat _retweetLabelHeight;
+    CellClickStatus _cellClickStatus;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *retweetCount;
@@ -27,5 +35,6 @@
 
 @property (nonatomic,strong) Status *statusEntity;
 @property (nonatomic,weak) id viewController;
+@property (nonatomic,assign) CellClickStatus cellClickStatus;
 - (CGFloat)hightForCellWithStatus:(Status *)status;
 @end
