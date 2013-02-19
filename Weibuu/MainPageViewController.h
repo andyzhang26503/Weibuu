@@ -12,9 +12,13 @@
 #import "SinaWeiboManager.h"
 #import "StatusCell.h"
 #import "PullRefreshTableViewController.h"
+
+
 @interface MainPageViewController : PullRefreshTableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 {
     UIActivityIndicatorView *_activityIndicatorView;
 }
+
 @property (nonatomic,strong) NSMutableArray *statusesArray;
+
 @end

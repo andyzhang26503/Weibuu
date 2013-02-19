@@ -11,7 +11,8 @@
 typedef enum {
     STLinkActionTypeAccount,
     STLinkActionTypeHashtag,
-    STLinkActionTypeWebsite
+    STLinkActionTypeWebsite,
+    STLinkActionTypeNothing
 } STLinkActionType;
 
 typedef void(^STLinkCallbackBlock)(STLinkActionType actionType, NSString *link);

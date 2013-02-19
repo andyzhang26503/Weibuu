@@ -12,10 +12,20 @@
 #import <QuartzCore/QuartzCore.h>
 #import "SORelativeDateTransformer.h"
 #import "STTweetLabel.h"
+
+typedef enum {
+    CellNotClick,
+    CellSpecialClick,
+    CellNormalClick
+}CellClickStatus;
+
 @interface StatusCell : UITableViewCell<STLinkProtocol>
 {
     CGFloat _tweetLabelHeight;
     CGFloat _retweetLabelHeight;
+    CellClickStatus _cellClickStatus;
+    
+    BOOL __block jumpOutFlag;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImage;
@@ -39,6 +49,7 @@
 
 @property (nonatomic,weak) id viewController;
 //@property (nonatomic,strong) NSIndexPath *curIndexPath;
+@property (nonatomic,assign) CellClickStatus cellClickStatus;
 
 - (CGFloat)hightForCellWithStatus:(Status *)status;
 @end

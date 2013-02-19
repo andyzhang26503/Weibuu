@@ -444,6 +444,8 @@
         [super touchesEnded:touches withEvent:event];
     }
     
+    BOOL __block nothingSpecial = YES;
+    
     [touchLocations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
      {
          CGRect touchZone = [obj CGRectValue];
@@ -451,9 +453,7 @@
          if (CGRectContainsPoint(touchZone, touchPoint))
          {
              //A touchable word is found
-             
              NSString *url = [touchWords objectAtIndex:idx];
-
              if ([[touchWords objectAtIndex:idx] hasPrefix:@"@"])
              {
                  //Twitter account clicked
@@ -461,12 +461,10 @@
                      [_delegate twitterAccountClicked:url];
                  }
                  
-                 if (_callbackBlock != NULL) {
-                     
-                     _callbackBlock(STLinkActionTypeAccount, url);
-                     
+                 if (_callbackBlock != NULL) {                     
+                     _callbackBlock(STLinkActionTypeAccount, url);                     
                  }
-                 
+                 nothingSpecial = NO;
              }
              else if ([[touchWords objectAtIndex:idx] hasPrefix:@"#"])
              {
@@ -477,9 +475,9 @@
                  
                  if (_callbackBlock != NULL) {
                      
-                     _callbackBlock(STLinkActionTypeHashtag, url);
-                     
+                     _callbackBlock(STLinkActionTypeHashtag, url);                     
                  }
+                 nothingSpecial = NO;
              }
              else if ([[touchWords objectAtIndex:idx] hasPrefix:@"http"])
              {
@@ -489,19 +487,24 @@
                      [_delegate websiteClicked:url];
                  }
                  
-                 if (_callbackBlock != NULL) {
-                     
-                     _callbackBlock(STLinkActionTypeWebsite, url);
-                     
+                 if (_callbackBlock != NULL) {                     
+                     _callbackBlock(STLinkActionTypeWebsite, url);                     
                  }
-                 
+                 nothingSpecial = NO;
              }
+
          }
          else
          {
-             [super touchesEnded:touches withEvent:event];
+             [super touchesEnded:touches withEvent:event];             
          }
      }];
+    
+    if (nothingSpecial) {
+        if (_callbackBlock != NULL) {
+            _callbackBlock(STLinkActionTypeNothing, nil);
+        }
+    }
 }
 
 - (NSString *)htmlToText:(NSString *)htmlString

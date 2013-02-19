@@ -41,35 +41,42 @@ static NSDateFormatter *formatter;
 //    return _tweetWebView;
 //}
 
+
 - (STTweetLabel *)tweetLabel
 {
     if (!_tweetLabel) {
         _tweetLabel = [[STTweetLabel alloc] initWithFrame:CGRectMake(60.0, 27.0, 250.0, 80.0)];
+        
         [_tweetLabel setFont:[UIFont fontWithName:fontName size:12]];
         [_tweetLabel setTextColor:[UIColor blackColor]];
 
         STLinkCallbackBlock callBackBlock = ^(STLinkActionType actionType, NSString *link) {
             
             NSString *displayString = NULL;
-            
             switch (actionType) {
-                    
                 case STLinkActionTypeAccount:
+                    self.cellClickStatus = CellSpecialClick;
                     displayString = [NSString stringWithFormat:@"Twitter account:\n%@", link];
-                    
                     if ([self.viewController respondsToSelector:@selector(goToUserDetailVC:)]) {
                         [self.viewController performSelector:@selector(goToUserDetailVC:) withObject:[link substringFromIndex:1]];
                     }
-          
+                    jumpOutFlag = YES;
                     break;
-                    
                 case STLinkActionTypeHashtag:
+                    self.cellClickStatus = CellSpecialClick;
                     displayString = [NSString stringWithFormat:@"Twitter hashtag:\n%@", link];
+                    jumpOutFlag = YES;
+                    break;
+                case STLinkActionTypeWebsite:
+                    self.cellClickStatus = CellSpecialClick;
+                    displayString = [NSString stringWithFormat:@"Website:\n%@", link];
+                    jumpOutFlag = YES;
+                    break;
+                case STLinkActionTypeNothing:
+                    self.cellClickStatus = CellNormalClick;
+                    displayString = @"Nothing";
                     break;
                     
-                case STLinkActionTypeWebsite:
-                    displayString = [NSString stringWithFormat:@"Website:\n%@", link];
-                    break;
             }
             NSLog(@"tap==%@",displayString);
         };
@@ -292,7 +299,8 @@ static NSDateFormatter *formatter;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-
+    jumpOutFlag = NO;
+    
     CGRect tweetLabelRect =  self.tweetLabel.frame;
     tweetLabelRect.size.height = [self tweetStatusHeight:_statusEntity.text];
     self.tweetLabel.frame = tweetLabelRect;

@@ -192,8 +192,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    StatusDetailViewController *dvc = [[StatusDetailViewController alloc] initWithStatusMain:[self.statusesArray objectAtIndex:indexPath.row]];
-    [self.navigationController pushViewController:dvc animated:YES];
+    StatusCell *cell = (StatusCell *)[tableView cellForRowAtIndexPath:indexPath];
+    if (cell.cellClickStatus==CellNormalClick) {
+        StatusDetailViewController *dvc = [[StatusDetailViewController alloc] initWithStatusMain:[self.statusesArray objectAtIndex:indexPath.row]];
+        [self.navigationController pushViewController:dvc animated:YES];
+    }
 }
 
 
