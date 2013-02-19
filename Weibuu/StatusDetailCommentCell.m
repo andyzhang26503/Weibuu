@@ -36,8 +36,7 @@ static NSDateFormatter *resultFormatter;
     NSURL *commentUserImageUrl =  [NSURL URLWithString:_commentEntity.user.profileImageUrl];
     [self.avatarImage setImageWithURL:commentUserImageUrl placeholderImage:[UIImage imageNamed:@"touxiang_40x40.png"]];
     self.name.text = comment.user.name;
-    //self.createAt.text = comment.createdAt;
-    
+
     formatter=[[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"EEE MMM dd HH:mm:ss zzz yyyy"];
     [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
@@ -47,18 +46,19 @@ static NSDateFormatter *resultFormatter;
     resultFormatter.dateFormat = @"MM-dd HH:mm";
     self.createAt.text = [resultFormatter stringFromDate:date];
     
-    _commentEntity.textHtml = [HtmlString transformString:_commentEntity.text];
-    
-    NSString *retweetDescriptionHTML = [NSString stringWithFormat:@"<html> \n"
-                                        "<head> \n"
-                                        "<style type=\"text/css\"> \n"
-                                        "body {font-family: \"%@\"; font-size: %@;}\n"
-                                        "</style> \n"
-                                        "</head> \n"
-                                        "<body>%@</body> \n"
-                                        "</html>", @"helvetica", [NSNumber numberWithInt:10],_commentEntity.textHtml];
-    
-    [[self commentWebView] loadHTMLString:retweetDescriptionHTML baseURL:nil];
+//    _commentEntity.textHtml = [HtmlString transformString:_commentEntity.text];
+//    
+//    NSString *retweetDescriptionHTML = [NSString stringWithFormat:@"<html> \n"
+//                                        "<head> \n"
+//                                        "<style type=\"text/css\"> \n"
+//                                        "body {font-family: \"%@\"; font-size: %@;}\n"
+//                                        "</style> \n"
+//                                        "</head> \n"
+//                                        "<body>%@</body> \n"
+//                                        "</html>", @"helvetica", [NSNumber numberWithInt:10],_commentEntity.textHtml];
+//    
+//    [[self commentWebView] loadHTMLString:retweetDescriptionHTML baseURL:nil];
+    [[self tweetLabel] setText:_commentEntity.text];
     
     if (_commentEntity.user.verified) {
         self.verifiedImage.hidden = NO;
@@ -68,82 +68,85 @@ static NSDateFormatter *resultFormatter;
 
 }
 
-- (UIWebView *)commentWebView
+//- (UIWebView *)commentWebView
+//{
+//    if (!_commentWebView) {
+//        _commentWebView = [[UIWebView alloc] initWithFrame:CGRectMake(50.0, 25.0, 240.0, 30.0)];
+//        _commentWebView.delegate = self;
+//        _commentWebView.scrollView.scrollEnabled = NO;
+//        [self.contentView addSubview:_commentWebView];
+//    }
+//    return _commentWebView;
+//}
+
+
+- (STTweetLabel *)tweetLabel
 {
-    if (!_commentWebView) {
-        _commentWebView = [[UIWebView alloc] initWithFrame:CGRectMake(50.0, 25.0, 240.0, 30.0)];
-        _commentWebView.delegate = self;
-        _commentWebView.scrollView.scrollEnabled = NO;
-        [self.contentView addSubview:_commentWebView];
+    if (!_tweetLabel) {
+        _tweetLabel = [[STTweetLabel alloc] initWithFrame:CGRectMake(56.0, 25.0, 240.0, 30.0)];
+        [_tweetLabel setFont:[UIFont fontWithName:@"helvetica" size:12]];
+        [_tweetLabel setTextColor:[UIColor blackColor]];
+        
+        STLinkCallbackBlock callBackBlock = ^(STLinkActionType actionType, NSString *link) {
+            
+            NSString *displayString = NULL;
+            
+            switch (actionType) {
+                    
+                case STLinkActionTypeAccount:
+                    displayString = [NSString stringWithFormat:@"Twitter account:\n%@", link];
+                    
+//                    if ([self.viewController respondsToSelector:@selector(goToUserDetailVC:)]) {
+//                        [self.viewController performSelector:@selector(goToUserDetailVC:) withObject:[link substringFromIndex:1]];
+//                    }
+//                    
+                    break;
+                    
+                case STLinkActionTypeHashtag:
+                    displayString = [NSString stringWithFormat:@"Twitter hashtag:\n%@", link];
+                    break;
+                    
+                case STLinkActionTypeWebsite:
+                    displayString = [NSString stringWithFormat:@"Website:\n%@", link];
+                    break;
+            }
+            NSLog(@"tap==%@",displayString);
+        };
+        
+        [_tweetLabel setCallbackBlock:callBackBlock];
     }
-    return _commentWebView;
+    
+    [self.contentView addSubview:_tweetLabel];
+    return _tweetLabel;
 }
+
 
 //- (CGFloat)commentHeight:(NSString *)text
 //{
 //    CGSize commentSize =  [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:10] constrainedToSize:CGSizeMake(226, CGFLOAT_MAX) lineBreakMode:NSLineBreakByCharWrapping];
 //    return commentSize.height+17.0f;
 //}
-- (CGFloat)webViewHeight:(NSString *)text
+- (CGFloat)tweetLabelHeight:(NSString *)text
 {
-    CGSize commentSize =  [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:10] constrainedToSize:CGSizeMake(226, CGFLOAT_MAX) lineBreakMode:NSLineBreakByCharWrapping];
-    return commentSize.height+17.0f;
+    CGSize commentSize =  [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:12] constrainedToSize:CGSizeMake(240, CGFLOAT_MAX) lineBreakMode:NSLineBreakByCharWrapping];
+    return commentSize.height;
 
 }
 - (CGFloat)heightForCellWithComment:(Comment *)comment
 {
     _commentEntity = comment;
     [self setNeedsLayout];
-    CGFloat webViewHeight = [self webViewHeight:_commentEntity.text];
-    CGFloat cellHeight =  webViewHeight+30.0f;
+    CGFloat webViewHeight = [self tweetLabelHeight:_commentEntity.text];
+    CGFloat cellHeight =  webViewHeight+40;
     return cellHeight;
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    CGRect commentRect = self.commentWebView.frame;
-    commentRect.size.height = [self webViewHeight:_commentEntity.text];;
-    self.commentWebView.frame = commentRect;
+    CGRect commentRect = self.tweetLabel.frame;
+    commentRect.size.height = [self tweetLabelHeight:_commentEntity.text];;
+    self.tweetLabel.frame = commentRect;
 }
-
-
-- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    
-    NSString *requestString = [[request URL] absoluteString];
-    
-    NSArray *urlComps = [requestString componentsSeparatedByString:@"&"];
-    UIAlertView *alert;
-    
-    if ([urlComps count] > 1 && [(NSString *)[urlComps objectAtIndex:1] isEqualToString:@"cmd1"])//@方法
-    {
-        NSString *str = [[urlComps objectAtIndex:2] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSLog(@"%@", str);
-        
-        alert = [[UIAlertView alloc] initWithTitle:str message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return YES;
-    }
-    
-    if ([urlComps count] > 1 && [(NSString *)[urlComps objectAtIndex:1] isEqualToString:@"cmd2"])//话题方法
-    {
-        NSString *str = [[urlComps objectAtIndex:2] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSLog(@"%@", str);
-        
-        alert = [[UIAlertView alloc] initWithTitle:str message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return YES;
-    }
-    
-    //以下是使用safri打开链接
-    NSURL *requestURL =[ request URL ];
-    if ( ( [ [ requestURL scheme ] isEqualToString: @"http" ] || [ [ requestURL scheme ] isEqualToString: @"https" ] || [ [ requestURL scheme ] isEqualToString: @"mailto" ])
-        && ( navigationType == UIWebViewNavigationTypeLinkClicked ) ) {
-        return ![ [ UIApplication sharedApplication ] openURL: requestURL];
-    }
-    return YES;
-}
-
 
 @end

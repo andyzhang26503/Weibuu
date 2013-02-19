@@ -104,6 +104,8 @@
         status.origStatus.user = origStatusUser;
         if (origStatusUser.name) {
             status.origStatus.nameAndText = [[[@"@" stringByAppendingString:origStatusUser.name] stringByAppendingString:@":"] stringByAppendingString:status.origStatus.text];
+        }else{
+            status.origStatus.nameAndText = status.origStatus.text;
         }
    
         NSDictionary *userDict = [statues objectForKey:@"user"];

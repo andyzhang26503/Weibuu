@@ -9,9 +9,13 @@
 #import "StatusDetailContentCell.h"
 #import "AFNetworking.h"
 #import "HtmlString.h"
+#import "SORelativeDateTransformer.h"
 #define thumbnailPicHeight 122.0f
+
 @implementation StatusDetailContentCell
 @synthesize statusEntity  = _statusEntity;
+static NSDateFormatter *formatter;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -22,65 +26,133 @@
     return self;
 }
 
-- (UIWebView *)tweetWebView
+
+- (STTweetLabel *)tweetLabel
 {
-    if (!_tweetWebView) {
-        _tweetWebView = [[UIWebView alloc] initWithFrame:CGRectMake(10, 20.0, 300.0, 80.0)];
-        _tweetWebView.delegate = self;
-        _tweetWebView.scrollView.scrollEnabled = NO;
-        [self.contentView addSubview:_tweetWebView];
+    if (!_tweetLabel) {
+        _tweetLabel = [[STTweetLabel alloc] initWithFrame:CGRectMake(20.0, 27.0, 280.0, 80.0)];
+        [_tweetLabel setFont:[UIFont fontWithName:@"helvetica" size:12]];
+        [_tweetLabel setTextColor:[UIColor blackColor]];
+        
+        STLinkCallbackBlock callBackBlock = ^(STLinkActionType actionType, NSString *link) {
+            
+            NSString *displayString = NULL;
+            
+            switch (actionType) {
+                    
+                case STLinkActionTypeAccount:
+                    displayString = [NSString stringWithFormat:@"Twitter account:\n%@", link];
+                    
+                    if ([self.viewController respondsToSelector:@selector(goToUserDetailVC:)]) {
+                        [self.viewController performSelector:@selector(goToUserDetailVC:) withObject:[link substringFromIndex:1]];
+                    }
+                    
+                    break;
+                    
+                case STLinkActionTypeHashtag:
+                    displayString = [NSString stringWithFormat:@"Twitter hashtag:\n%@", link];
+                    break;
+                    
+                case STLinkActionTypeWebsite:
+                    displayString = [NSString stringWithFormat:@"Website:\n%@", link];
+                    break;
+            }
+            NSLog(@"tap==%@",displayString);
+        };
+        
+        [_tweetLabel setCallbackBlock:callBackBlock];
     }
-    return _tweetWebView;
+    
+    [self.contentView addSubview:_tweetLabel];
+    return _tweetLabel;
 }
 
-- (UIWebView *)retweetWebView
+- (STTweetLabel *)retweetLabel
 {
-    if (!_retweetWebView) {
-        _retweetWebView = [[UIWebView alloc] initWithFrame:CGRectMake(20.0f, 91.0f, 250.0f, 50.0f)];
-        _retweetWebView.delegate = self;
-        _retweetWebView.scrollView.scrollEnabled = NO;
-        [self.contentView addSubview:_retweetWebView];
+    if (!_retweetLabel) {
+        _retweetLabel = [[STTweetLabel alloc] initWithFrame:CGRectMake(57.0f, 89.0f, 280.0f, 50.0f)];
+        [_retweetLabel setFont:[UIFont fontWithName:@"helvetica" size:12]];
+        [_retweetLabel setTextColor:[UIColor blackColor]];
+        
+        STLinkCallbackBlock callBackBlock = ^(STLinkActionType actionType, NSString *link) {
+            
+            NSString *displayString = NULL;
+            
+            switch (actionType) {
+                    
+                case STLinkActionTypeAccount:
+                    displayString = [NSString stringWithFormat:@"Twitter account:\n%@", link];
+                    if ([self.viewController respondsToSelector:@selector(goToUserDetailVC:)]) {
+                        [self.viewController performSelector:@selector(goToUserDetailVC:) withObject:[link substringFromIndex:1]];
+                    }
+                    break;
+                    
+                case STLinkActionTypeHashtag:
+                    displayString = [NSString stringWithFormat:@"Twitter hashtag:\n%@", link];
+                    break;
+                    
+                case STLinkActionTypeWebsite:
+                    displayString = [NSString stringWithFormat:@"Website:\n%@", link];
+                    break;
+            }
+            NSLog(@"tap==%@",displayString);
+        };
+        
+        [_retweetLabel setCallbackBlock:callBackBlock];
     }
-    return _retweetWebView;
+    
+    [self.contentView addSubview:_retweetLabel];
+    return _retweetLabel;
 }
+
 
 - (void)setStatusEntity:(Status *)statusEntity
 {
     _statusEntity = statusEntity;
+    
+    //self.name.text = statusEntity.user.name;
     self.retweetCount.text = [statusEntity.repostsCount stringValue];
     self.commentCount.text = [statusEntity.commentsCount stringValue];
+
+    [[self tweetLabel] setText:statusEntity.text];
     
-//    NSString *myDescriptionHTML = [NSString stringWithFormat:@"<html> \n"
-//                                   "<head> \n"
-//                                   "<style type=\"text/css\"> \n"
-//                                   "body {font-family: \"%@\"; font-size: %@;}\n"
-//                                   "</style> \n"
-//                                   "</head> \n"
-//                                   "<body>%@</body> \n"
-//                                   "</html>", @"helvetica", [NSNumber numberWithInt:12], statusEntity.textHtml];
-//    
-//    [[self tweetWebView] loadHTMLString:myDescriptionHTML baseURL:nil];
-    
-    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    formatter=[[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"EEE MMM dd HH:mm:ss zzz yyyy"];
     [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     NSDate *date=[formatter dateFromString:statusEntity.createdAt];
     
-    NSDateFormatter *resultFormatter=[[NSDateFormatter alloc] init];
-    resultFormatter.dateFormat = @"MM-dd HH:mm";
-    self.createdAt.text = [resultFormatter stringFromDate:date];
+    SORelativeDateTransformer *relativeTrans = [[SORelativeDateTransformer alloc] init];
+    NSString *relativeDate = [relativeTrans transformedValue:date];
     
-    //    NSRegularExpression *reg = [[NSRegularExpression alloc] initWithPattern:@"<a .*>(.*)</a>" options:0 error:nil];
-    //    NSArray *matches = [reg matchesInString:statusEntity.source options:0 range:NSMakeRange(0, [statusEntity.source length])];
-    //    if ([matches count]>0) {
-    //        NSTextCheckingResult *result = [matches objectAtIndex:0];
-    //        if ([result numberOfRanges]==2) {
-    //            NSRange r = [result rangeAtIndex:1];
-    //            self.source.text =[NSString stringWithFormat:@" 来自:%@",[[statusEntity source] substringWithRange:r]];
-    //
-    //        }
-    //    }
+    //resultFormatter=[[NSDateFormatter alloc] init];
+    //resultFormatter.dateFormat = @"MM-dd HH:mm";
+    //self.createdAt.text = [resultFormatter stringFromDate:date];
+    self.createdAt.text = relativeDate;
     
+    NSRegularExpression *reg = [[NSRegularExpression alloc] initWithPattern:@"<a .*>(.*)</a>" options:0 error:nil];
+    NSArray *matches = [reg matchesInString:statusEntity.source options:0 range:NSMakeRange(0, [statusEntity.source length])];
+    if ([matches count]>0) {
+        NSTextCheckingResult *result = [matches objectAtIndex:0];
+        if ([result numberOfRanges]==2) {
+            NSRange r = [result rangeAtIndex:1];
+            self.source.text =[NSString stringWithFormat:@" 来自:%@",[[statusEntity source] substringWithRange:r]];
+            
+        }
+    }
+    
+    
+//    if (statusEntity.user.verified) {
+//        self.verifiedImage.hidden = NO;
+//    }else{
+//        self.verifiedImage.hidden = YES;
+//    }
+    
+    
+//    NSURL *imageUrl = [NSURL URLWithString:statusEntity.user.profileImageUrl];
+//    [self.avatarImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"touxiang_40x40.png"]];
+//    
+//    
+//    self.name.textColor = [UIColor grayColor];
     if (statusEntity.thumbnailPic) {
         NSURL *thumbnailPicUrl = [NSURL URLWithString:statusEntity.thumbnailPic];
         [self.thumbnailPic setImageWithURL:thumbnailPicUrl placeholderImage:[UIImage imageNamed:@"loadingImage_50x118.png"]];
@@ -93,19 +165,9 @@
         UIEdgeInsets edge = UIEdgeInsetsMake(10, 40, 10, 20);
         self.retweetBlock.image = [[UIImage imageNamed:@"timeline_rt_border.png"] resizableImageWithCapInsets:edge];
         
-//        statusEntity.origStatus.textHtml = [HtmlString transformString:[NSString stringWithFormat:@"@%@:%@",statusEntity.origStatus.user.name, statusEntity.origStatus.text]];
-//        
-//        NSString *retweetDescriptionHTML = [NSString stringWithFormat:@"<html> \n"
-//                                            "<head> \n"
-//                                            "<style type=\"text/css\"> \n"
-//                                            "body {font-family: \"%@\"; font-size: %@;}\n"
-//                                            "</style> \n"
-//                                            "</head> \n"
-//                                            "<body>%@</body> \n"
-//                                            "</html>", @"helvetica", [NSNumber numberWithInt:12],statusEntity.origStatus.textHtml ];
-//        
-//        [[self retweetWebView] loadHTMLString:retweetDescriptionHTML baseURL:nil];
-        self.retweetWebView.hidden = NO;
+        self.retweetLabel.hidden = NO;
+        self.retweetBlock.hidden = NO;
+        [self.retweetLabel setText:statusEntity.origStatus.nameAndText];
         
         if (statusEntity.origStatus.thumbnailPic) {
             NSURL *thumbnailPicUrl = [NSURL URLWithString:statusEntity.origStatus.thumbnailPic];
@@ -114,8 +176,8 @@
             self.thumbnailPic.image=nil;
         }
     }else{
-        self.retweetBlock.image = nil;
-        self.retweetWebView.hidden = YES;
+        self.retweetBlock.hidden = YES;
+        self.retweetLabel.hidden = YES;
     }
     
 }
@@ -128,66 +190,56 @@
     // Configure the view for the selected state
 }
 
-- (CGFloat)statusHeight:(NSString *)text
+- (CGFloat)tweetStatusHeight:(NSString *)text
 {
     
-    CGSize statusSize = [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:13.0] constrainedToSize:CGSizeMake(300, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-    return statusSize.height+52.0f;
+    CGSize statusSize = [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:12.0] constrainedToSize:CGSizeMake(280, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    _tweetLabelHeight = statusSize.height;
+    
+    return _tweetLabelHeight;
 }
 
 - (CGFloat)retweetStatusHeight:(NSString *)text
 {
     
-    CGSize statusSize = [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:13.0] constrainedToSize:CGSizeMake(260, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-    return statusSize.height+52.0f;
+    CGSize statusSize = [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:12.0] constrainedToSize:CGSizeMake(256, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    _retweetLabelHeight = statusSize.height;
+    return _retweetLabelHeight;
 }
 
-- (CGFloat)webViewHeight
-{
-    CGFloat newHeight =  [self statusHeight:self.statusEntity.text];
-    _webViewHeight = newHeight;
-    return _webViewHeight;
-}
-
-- (CGFloat)retweetWebViewHeight
-{
-    CGFloat newHeight =  [self retweetStatusHeight:self.statusEntity.origStatus.text];
-    _retweetWebViewHeight = newHeight;
-    return _retweetWebViewHeight;
-}
-
-- (CGFloat)hightForCellWithStatus:(Status *)status
+- (CGFloat)hightForCellWithStatus:(Status *)status;
 {
     _statusEntity = status;
-
+    
     [self setNeedsLayout];
-    CGFloat webViewHeight = [self webViewHeight];
-    CGFloat cellHeight =  webViewHeight;
+    
+    CGFloat tweetHeight = [self tweetStatusHeight:_statusEntity.text];
+    CGFloat cellHeight =  tweetHeight+30;
     if (self.statusEntity.thumbnailPic) {
-        cellHeight += thumbnailPicHeight-60.0f;
+        cellHeight += thumbnailPicHeight+25;
     }
     
-    if (self.statusEntity.origStatus) {
+    if (self.statusEntity.origStatus.text) {
         if (self.statusEntity.origStatus.thumbnailPic) {
-            cellHeight += [self retweetWebViewHeight] + thumbnailPicHeight+90.0f;
+            cellHeight += [self retweetStatusHeight:_statusEntity.origStatus.nameAndText] + thumbnailPicHeight+55;
         }else{
-            cellHeight += [self retweetWebViewHeight]+90.0f;
+            cellHeight += [self retweetStatusHeight:_statusEntity.origStatus.nameAndText]+45;
         }
     }
+    return fmaxf(150.0f, cellHeight);
     
-    return fmaxf(105.0f, cellHeight);
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    CGRect webViewRect =  self.tweetWebView.frame;
-    webViewRect.size.height = [self webViewHeight];
-    self.tweetWebView.frame = webViewRect;
+    CGRect tweetLabelRect =  self.tweetLabel.frame;
+    tweetLabelRect.size.height = [self tweetStatusHeight:_statusEntity.text];
+    self.tweetLabel.frame = tweetLabelRect;
     
     if (self.statusEntity.thumbnailPic) {
         CGRect thumbnailPicRect = self.thumbnailPic.frame;
-        thumbnailPicRect.origin.y = webViewRect.size.height+20.0f;
+        thumbnailPicRect.origin.y = tweetLabelRect.size.height+30;
         thumbnailPicRect.size.height = thumbnailPicHeight;
         self.thumbnailPic.frame = thumbnailPicRect;
     }else{
@@ -197,39 +249,40 @@
     }
     
     if (self.statusEntity.origStatus.text) {
-        CGRect retweetWebViewRect;
+        CGRect retweetLabelRect;
         if (self.statusEntity.origStatus.thumbnailPic) {
             CGRect retweetBlockRect = self.retweetBlock.frame;
-            retweetBlockRect.size.height= [self retweetWebViewHeight] + thumbnailPicHeight+30.0f;
-            retweetBlockRect.origin.y = webViewRect.size.height+30.0f;
+            retweetBlockRect.size.height= fmaxf(70.0f, [self retweetStatusHeight:_statusEntity.origStatus.nameAndText] + thumbnailPicHeight+30.0f); ;
+            retweetBlockRect.origin.y = tweetLabelRect.size.height+30;
             self.retweetBlock.frame = retweetBlockRect;
             
-            retweetWebViewRect = retweetBlockRect;
-            retweetWebViewRect.origin.y += 10;
-            retweetWebViewRect.origin.x += 20;
-            CGFloat retweetWebViewHeight = [self retweetWebViewHeight];
-            retweetWebViewRect.size.height = retweetWebViewHeight;
-            retweetWebViewRect.size.width = 260.0f;
-            self.retweetWebView.frame = retweetWebViewRect;
+            retweetLabelRect = retweetBlockRect;
+            retweetLabelRect.origin.y += 10;
+            retweetLabelRect.origin.x += 20;
+            CGFloat retweetLabelHeight = [self retweetStatusHeight:_statusEntity.origStatus.nameAndText];
+            retweetLabelRect.size.height = retweetLabelHeight;
+            retweetLabelRect.size.width = 256.0f;
+            self.retweetLabel.frame = retweetLabelRect;
             
             CGRect thumbnailPicRect = self.thumbnailPic.frame;
-            thumbnailPicRect.origin.y = retweetWebViewRect.size.height+webViewRect.size.height +50.0f;
+            thumbnailPicRect.origin.y = retweetLabelRect.size.height+tweetLabelRect.size.height +50.0f;
             thumbnailPicRect.size.height = thumbnailPicHeight;
             self.thumbnailPic.frame = thumbnailPicRect;
             
         }else{
             CGRect retweetBlockRect = self.retweetBlock.frame;
-            retweetBlockRect.size.height= [self retweetWebViewHeight]+30.0f;
-            retweetBlockRect.origin.y = webViewRect.size.height+30.0f;
+            retweetBlockRect.size.height= fmaxf(70.0f, [self retweetStatusHeight:_statusEntity.origStatus.nameAndText]+10.0f);
+            retweetBlockRect.origin.y = tweetLabelRect.size.height+30.0f;
             self.retweetBlock.frame = retweetBlockRect;
             
-            retweetWebViewRect = retweetBlockRect;
-            retweetWebViewRect.origin.y += 10;
-            retweetWebViewRect.origin.x += 20;
-            CGFloat retweetWebViewHeight = [self retweetWebViewHeight];
-            retweetWebViewRect.size.height = retweetWebViewHeight;
-            retweetWebViewRect.size.width = 236.0f;
-            self.retweetWebView.frame = retweetWebViewRect;
+            retweetLabelRect = retweetBlockRect;
+            retweetLabelRect.origin.y += 10;
+            retweetLabelRect.origin.x += 20;
+            CGFloat retweetLabelHeight = [self retweetStatusHeight:_statusEntity.origStatus.nameAndText];
+            retweetLabelRect.size.height = retweetLabelHeight;
+            retweetLabelRect.size.width = 256.0f;
+            self.retweetLabel.frame = retweetLabelRect;
+            
         }
         
     }else{
@@ -237,43 +290,6 @@
     }
     
     
-}
-
-- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    
-    NSString *requestString = [[request URL] absoluteString];
-    
-    NSArray *urlComps = [requestString componentsSeparatedByString:@"&"];
-    UIAlertView *alert;
-    
-    if ([urlComps count] > 1 && [(NSString *)[urlComps objectAtIndex:1] isEqualToString:@"cmd1"])//@方法
-    {
-        NSString *str = [[urlComps objectAtIndex:2] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSLog(@"%@", str);
-        
-        alert = [[UIAlertView alloc] initWithTitle:str message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return YES;
-    }
-    
-    if ([urlComps count] > 1 && [(NSString *)[urlComps objectAtIndex:1] isEqualToString:@"cmd2"])//话题方法
-    {
-        NSString *str = [[urlComps objectAtIndex:2] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSLog(@"%@", str);
-        
-        alert = [[UIAlertView alloc] initWithTitle:str message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return YES;
-    }
-    
-    //以下是使用safri打开链接
-    NSURL *requestURL =[ request URL ];
-    if ( ( [ [ requestURL scheme ] isEqualToString: @"http" ] || [ [ requestURL scheme ] isEqualToString: @"https" ] || [ [ requestURL scheme ] isEqualToString: @"mailto" ])
-        && ( navigationType == UIWebViewNavigationTypeLinkClicked ) ) {
-        return ![ [ UIApplication sharedApplication ] openURL: requestURL];
-    }
-    return YES;
 }
 
 @end

@@ -12,7 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "SORelativeDateTransformer.h"
 #import "STTweetLabel.h"
-@interface StatusCell : UITableViewCell<UIWebViewDelegate,UIGestureRecognizerDelegate,STLinkProtocol>
+@interface StatusCell : UITableViewCell<STLinkProtocol>
 {
     CGFloat _tweetLabelHeight;
     CGFloat _retweetLabelHeight;
@@ -35,11 +35,10 @@
 
 @property (nonatomic, strong) STTweetLabel *tweetLabel;
 @property (nonatomic, strong) STTweetLabel *retweetLabel;
-
 @property (nonatomic,strong) Status *statusEntity;
 
 @property (nonatomic,weak) id viewController;
-@property (nonatomic,strong) NSIndexPath *curIndexPath;
-//@property (nonatomic,assign) CGFloat webViewHeight;
+//@property (nonatomic,strong) NSIndexPath *curIndexPath;
+
 - (CGFloat)hightForCellWithStatus:(Status *)status;
 @end

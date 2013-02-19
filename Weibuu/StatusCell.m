@@ -11,6 +11,7 @@
 #import "HtmlString.h"
 
 #define thumbnailPicHeight 80.0f
+#define fontName @"HelveticaNeue"
 @implementation StatusCell
 @synthesize statusEntity  = _statusEntity;
 @synthesize statusLabel = _statusLabel;
@@ -44,7 +45,7 @@ static NSDateFormatter *formatter;
 {
     if (!_tweetLabel) {
         _tweetLabel = [[STTweetLabel alloc] initWithFrame:CGRectMake(60.0, 27.0, 250.0, 80.0)];
-        [_tweetLabel setFont:[UIFont fontWithName:@"helvetica" size:12]];
+        [_tweetLabel setFont:[UIFont fontWithName:fontName size:12]];
         [_tweetLabel setTextColor:[UIColor blackColor]];
 
         STLinkCallbackBlock callBackBlock = ^(STLinkActionType actionType, NSString *link) {
@@ -55,6 +56,11 @@ static NSDateFormatter *formatter;
                     
                 case STLinkActionTypeAccount:
                     displayString = [NSString stringWithFormat:@"Twitter account:\n%@", link];
+                    
+                    if ([self.viewController respondsToSelector:@selector(goToUserDetailVC:)]) {
+                        [self.viewController performSelector:@selector(goToUserDetailVC:) withObject:[link substringFromIndex:1]];
+                    }
+          
                     break;
                     
                 case STLinkActionTypeHashtag:
@@ -90,7 +96,7 @@ static NSDateFormatter *formatter;
 {
     if (!_retweetLabel) {
         _retweetLabel = [[STTweetLabel alloc] initWithFrame:CGRectMake(57.0f, 89.0f, 236.0f, 50.0f)];
-        [_retweetLabel setFont:[UIFont fontWithName:@"helvetica" size:12]];
+        [_retweetLabel setFont:[UIFont fontWithName:fontName size:12]];
         [_retweetLabel setTextColor:[UIColor blackColor]];
         
         STLinkCallbackBlock callBackBlock = ^(STLinkActionType actionType, NSString *link) {
@@ -101,6 +107,9 @@ static NSDateFormatter *formatter;
                     
                 case STLinkActionTypeAccount:
                     displayString = [NSString stringWithFormat:@"Twitter account:\n%@", link];
+                    if ([self.viewController respondsToSelector:@selector(goToUserDetailVC:)]) {
+                        [self.viewController performSelector:@selector(goToUserDetailVC:) withObject:[link substringFromIndex:1]];
+                    }
                     break;
                     
                 case STLinkActionTypeHashtag:
@@ -230,7 +239,7 @@ static NSDateFormatter *formatter;
 - (CGFloat)tweetStatusHeight:(NSString *)text
 {
 
-    CGSize statusSize = [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:12.0] constrainedToSize:CGSizeMake(250, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize statusSize = [text sizeWithFont:[UIFont fontWithName:fontName size:12.0] constrainedToSize:CGSizeMake(250, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
     _tweetLabelHeight = statusSize.height;
 
     return _tweetLabelHeight;
@@ -239,7 +248,7 @@ static NSDateFormatter *formatter;
 - (CGFloat)retweetStatusHeight:(NSString *)text
 {
     
-    CGSize statusSize = [text sizeWithFont:[UIFont fontWithName:@"helvetica" size:12.0] constrainedToSize:CGSizeMake(256, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize statusSize = [text sizeWithFont:[UIFont fontWithName:fontName size:12.0] constrainedToSize:CGSizeMake(236, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
     _retweetLabelHeight = statusSize.height;
     return _retweetLabelHeight;
 }
@@ -272,9 +281,9 @@ static NSDateFormatter *formatter;
     
     if (self.statusEntity.origStatus.text) {
         if (self.statusEntity.origStatus.thumbnailPic) {
-            cellHeight += [self retweetStatusHeight:_statusEntity.origStatus.nameAndText] + thumbnailPicHeight+55;
+            cellHeight += fmaxf(70.0f,[self retweetStatusHeight:_statusEntity.origStatus.nameAndText] + thumbnailPicHeight+30)+25;
         }else{
-            cellHeight += [self retweetStatusHeight:_statusEntity.origStatus.nameAndText]+45;
+            cellHeight += fmaxf(70.0f,[self retweetStatusHeight:_statusEntity.origStatus.nameAndText]+10)+25;
         }
     }    
     return fmaxf(150.0f, cellHeight);
@@ -344,68 +353,47 @@ static NSDateFormatter *formatter;
 }
 
 
-
-- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
-{
-
-    NSString *requestString = [[request URL] absoluteString];
-
-    NSArray *urlComps = [requestString componentsSeparatedByString:@"&"];
-    UIAlertView *alert;
-    
-    if ([urlComps count] > 1 && [(NSString *)[urlComps objectAtIndex:1] isEqualToString:@"cmd1"])//@方法
-    {
-        NSString *str = [[urlComps objectAtIndex:2] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        str = [str substringFromIndex:1];
-        //NSLog(@"%@", str);
-        //alert = [[UIAlertView alloc] initWithTitle:str message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        //[alert show];
-        if ([self.viewController respondsToSelector:@selector(goToUserDetailVC:)]) {
-            [self.viewController performSelector:@selector(goToUserDetailVC:) withObject:str];
-        }
-        
-        return YES;
-    }
-    
-    if ([urlComps count] > 1 && [(NSString *)[urlComps objectAtIndex:1] isEqualToString:@"cmd2"])//话题方法
-    {
-        NSString *str = [[urlComps objectAtIndex:2] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSLog(@"%@", str);
-        
-        alert = [[UIAlertView alloc] initWithTitle:str message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return YES;
-    }
-    
-    //以下是使用safri打开链接
-    NSURL *requestURL =[ request URL ];
-    if ( ( [ [ requestURL scheme ] isEqualToString: @"http" ] || [ [ requestURL scheme ] isEqualToString: @"https" ] || [ [ requestURL scheme ] isEqualToString: @"mailto" ])
-        && ( navigationType == UIWebViewNavigationTypeLinkClicked ) ) {
-        return ![ [ UIApplication sharedApplication ] openURL: requestURL];
-    }
-    return YES;
-}
-
-#pragma mark STLink Protocol
-
-- (void)twitterAccountClicked:(NSString *)link {
-    
-    NSString *string = [NSString stringWithFormat:@"Twitter account:\n%@", link];
-    //[_displayLabel setText:string];
-    
-}
-- (void)twitterHashtagClicked:(NSString *)link {
-    
-    NSString *string = [NSString stringWithFormat:@"Twitter hashtag:\n%@", link];
-    //[_displayLabel setText:string];
-    
-}
-- (void)websiteClicked:(NSString *)link {
-    
-    NSString *string = [NSString stringWithFormat:@"Website:\n%@", link];
-    //[_displayLabel setText:string];
-    
-}
+//
+//- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
+//{
+//
+//    NSString *requestString = [[request URL] absoluteString];
+//
+//    NSArray *urlComps = [requestString componentsSeparatedByString:@"&"];
+//    UIAlertView *alert;
+//    
+//    if ([urlComps count] > 1 && [(NSString *)[urlComps objectAtIndex:1] isEqualToString:@"cmd1"])//@方法
+//    {
+//        NSString *str = [[urlComps objectAtIndex:2] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//        str = [str substringFromIndex:1];
+//        //NSLog(@"%@", str);
+//        //alert = [[UIAlertView alloc] initWithTitle:str message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        //[alert show];
+//        if ([self.viewController respondsToSelector:@selector(goToUserDetailVC:)]) {
+//            [self.viewController performSelector:@selector(goToUserDetailVC:) withObject:str];
+//        }
+//        
+//        return YES;
+//    }
+//    
+//    if ([urlComps count] > 1 && [(NSString *)[urlComps objectAtIndex:1] isEqualToString:@"cmd2"])//话题方法
+//    {
+//        NSString *str = [[urlComps objectAtIndex:2] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//        NSLog(@"%@", str);
+//        
+//        alert = [[UIAlertView alloc] initWithTitle:str message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [alert show];
+//        return YES;
+//    }
+//    
+//    //以下是使用safri打开链接
+//    NSURL *requestURL =[ request URL ];
+//    if ( ( [ [ requestURL scheme ] isEqualToString: @"http" ] || [ [ requestURL scheme ] isEqualToString: @"https" ] || [ [ requestURL scheme ] isEqualToString: @"mailto" ])
+//        && ( navigationType == UIWebViewNavigationTypeLinkClicked ) ) {
+//        return ![ [ UIApplication sharedApplication ] openURL: requestURL];
+//    }
+//    return YES;
+//}
 
 
 @end

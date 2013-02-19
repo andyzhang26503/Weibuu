@@ -269,10 +269,7 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if ([request.url hasSuffix:@"comments/show.json"]) {
-        //NSLog(@"comments/show.json==%@",result);
         _commentsArray = [Comment commentsWithJson:result];
-        //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:1];
-        //[[self tableView] reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [[self tableView] reloadData];
     }
 

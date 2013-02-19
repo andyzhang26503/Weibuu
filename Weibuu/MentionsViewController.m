@@ -40,9 +40,8 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"mentions viewDidload");
     [super viewDidLoad];
-
+    [[self tableView] setHidden:YES];
     self.title=@"@我";
     
     UINib *nib = [UINib nibWithNibName:@"StatusCell" bundle:nil];
@@ -245,6 +244,7 @@
         [[self tableView] reloadData];
         
     }
+    [[self tableView] setHidden:NO];
     [self stopLoading];
 }
 

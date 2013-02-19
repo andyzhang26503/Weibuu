@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "Comment.h"
 #import "AFNetworking.h"
+#import "STTweetLabel.h"
 @interface StatusDetailCommentCell : UITableViewCell<UIWebViewDelegate>
 {
-    CGFloat _webViewHeight;
+    CGFloat _tweetLabelHeight;
 }
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImage;
 @property (weak, nonatomic) IBOutlet UILabel *name;
@@ -19,8 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImage;
 
 @property (nonatomic,strong) Comment *commentEntity;
-@property (nonatomic,strong) UIWebView *commentWebView;
-
+//@property (nonatomic,strong) UIWebView *commentWebView;
+@property (nonatomic,strong) STTweetLabel *tweetLabel;
 
 - (CGFloat)heightForCellWithComment:(Comment *)comment;
 
