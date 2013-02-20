@@ -235,11 +235,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    StatusDetailContentCell *cell = (StatusDetailContentCell *)[tableView cellForRowAtIndexPath:indexPath];
-    if (cell.cellClickStatus==CellNormalClick) {
-        UserDetailViewController *udv = [[UserDetailViewController alloc] initWithUserInfo:_statusEntity.user];
-        [self.navigationController pushViewController:udv animated: YES];
+    UserDetailViewController *udv;
+    switch (indexPath.row) {
+        case 0:
+            udv = [[UserDetailViewController alloc] initWithUserInfo:_statusEntity.user];
+            [self.navigationController pushViewController:udv animated: YES];
+            break;
+        case 1:
+
+            break;
+            
+        default:
+            break;
     }
+    
 }
 
 
