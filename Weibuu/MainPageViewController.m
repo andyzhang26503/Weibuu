@@ -10,7 +10,9 @@
 #import "WriteWbViewController.h"
 #import "StatusDetailViewController.h"
 #import "ProfileViewController.h"
+#import "OrinImageViewController.h"
 #define FriendStatusCell @"FriendStatusCell"
+
 @interface MainPageViewController ()
 
 @end
@@ -49,24 +51,23 @@
     
     SinaWeibo *mysinaweibo = [SinaWeiboManager sinaweibo];
     [mysinaweibo logIn];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
-    self.navigationItem.rightBarButtonItem = bbi;
     
+    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _activityIndicatorView.hidesWhenStopped = YES;
+    [_activityIndicatorView startAnimating];
 
+    _bbiRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
+    
+    _bbiLoading = [[UIBarButtonItem alloc] initWithCustomView:_activityIndicatorView];
+    self.navigationItem.rightBarButtonItem = _bbiLoading;
+    
     UIBarButtonItem *bbiQuit = [[UIBarButtonItem alloc] initWithTitle:@"写微博" style:UIBarButtonItemStylePlain target:self action:@selector(writeWeibo)];
     self.navigationItem.leftBarButtonItem=bbiQuit;
     
     UINib *nib = [UINib nibWithNibName:@"StatusCell" bundle:nil];
     [[self tableView] registerNib:nib forCellReuseIdentifier:FriendStatusCell];
     
-    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    _activityIndicatorView.hidesWhenStopped = YES;
-    _activityIndicatorView.center = self.view.center;
-    [self.view addSubview:_activityIndicatorView];
-    [_activityIndicatorView startAnimating];
+        
     
     [self requestTimeLine];
     
@@ -74,6 +75,8 @@
 
 - (void)refresh
 {
+    self.navigationItem.rightBarButtonItem = _bbiLoading;
+    [_activityIndicatorView startAnimating];
     [self requestTimeLine];
 }
 
@@ -148,6 +151,14 @@
     ProfileViewController *pvc = [[ProfileViewController alloc] initWithStyle:UITableViewStyleGrouped];
     pvc.screenName = ascreenName;
     [self.navigationController pushViewController:pvc animated: YES];
+}
+
+- (void)tapPic:(NSURL *)oringPic
+{
+    NSLog(@"Main page tapPic,%@",oringPic);
+    OrinImageViewController *orinVC = [[OrinImageViewController alloc] initWithPicURL:oringPic];
+    [self.navigationController presentViewController:orinVC animated:NO completion:nil];
+    
 }
 /*
 // Override to support conditional editing of the table view.
@@ -244,6 +255,9 @@
         self.statusesArray = [Status statusesWithJson:result];
         [[self tableView] reloadData];
     }
+    
+    self.navigationItem.rightBarButtonItem = _bbiRefresh;
+    
     [_activityIndicatorView stopAnimating];
     [[self tableView] setHidden:NO];
     

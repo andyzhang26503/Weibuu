@@ -16,6 +16,7 @@
 #import "Comment.h"
 #import "UserDetailViewController.h"
 #import "ProfileViewController.h"
+#import "OrinImageViewController.h"
 #define StatusDetailName @"StatusDetailCellName"
 #define StatusDetailContent @"StatusDetailCellContent"
 #define StatusDetailComment @"StatusDetailCellComment"
@@ -191,6 +192,14 @@
     ProfileViewController *pvc = [[ProfileViewController alloc] initWithStyle:UITableViewStyleGrouped];
     pvc.screenName = ascreenName;
     [self.navigationController pushViewController:pvc animated: YES];
+}
+
+- (void)tapPic:(NSURL *)oringPic
+{
+    NSLog(@"Main page tapPic,%@",oringPic);
+    OrinImageViewController *orinVC = [[OrinImageViewController alloc] initWithPicURL:oringPic];
+    [self.navigationController presentViewController:orinVC animated:YES completion:nil];
+    
 }
 /*
 // Override to support conditional editing of the table view.

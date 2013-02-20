@@ -17,6 +17,7 @@
 @synthesize statusLabel = _statusLabel;
 
 static NSDateFormatter *formatter;
+static UITapGestureRecognizer *tap;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -24,23 +25,9 @@ static NSDateFormatter *formatter;
     if (self) {
         // Initialization code
     }
-
+    NSLog(@"enter initWithStyle");
     return self;
 }
-
-//- (UIWebView *)tweetWebView
-//{
-//    if (!_tweetWebView) {
-//        _tweetWebView = [[UIWebView alloc] initWithFrame:CGRectMake(60.0, 27.0, 250.0, 80.0)];
-//        _tweetWebView.delegate = self;
-//        _tweetWebView.scrollView.scrollEnabled = NO;
-//        //_tweetWebView.userInteractionEnabled = YES;
-//
-//        [self.contentView addSubview:_tweetWebView];
-//    }
-//    return _tweetWebView;
-//}
-
 
 - (STTweetLabel *)tweetLabel
 {
@@ -84,17 +71,6 @@ static NSDateFormatter *formatter;
     [self.contentView addSubview:_tweetLabel];
     return _tweetLabel;
 }
-
-//- (UIWebView *)retweetWebView
-//{
-//    if (!_retweetWebView) {
-//        _retweetWebView = [[UIWebView alloc] initWithFrame:CGRectMake(57.0f, 89.0f, 236.0f, 50.0f)];
-//        _retweetWebView.delegate = self;
-//        _retweetWebView.scrollView.scrollEnabled = NO;
-//        [self.contentView addSubview:_retweetWebView];
-//    }
-//    return _retweetWebView;
-//}
 
 - (STTweetLabel *)retweetLabel
 {
@@ -162,7 +138,9 @@ static NSDateFormatter *formatter;
     //[[self tweetWebView] loadHTMLString:myDescriptionHTML baseURL:nil];
     [[self tweetLabel] setText:statusEntity.text];
     
-    formatter=[[NSDateFormatter alloc] init];
+    if (!formatter) {
+        formatter=[[NSDateFormatter alloc] init];
+    }
     [formatter setDateFormat:@"EEE MMM dd HH:mm:ss zzz yyyy"];
     [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     NSDate *date=[formatter dateFromString:statusEntity.createdAt];
@@ -193,15 +171,17 @@ static NSDateFormatter *formatter;
         self.verifiedImage.hidden = YES;
     }
     
-    
     NSURL *imageUrl = [NSURL URLWithString:statusEntity.user.profileImageUrl];
     [self.avatarImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"touxiang_40x40.png"]];
-    
-    
     self.name.textColor = [UIColor grayColor];
+    
+    tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPic)];    
+    [self.thumbnailPic addGestureRecognizer:tap];
+    self.thumbnailPic.userInteractionEnabled = YES;
     if (statusEntity.thumbnailPic) {
         NSURL *thumbnailPicUrl = [NSURL URLWithString:statusEntity.thumbnailPic];
         [self.thumbnailPic setImageWithURL:thumbnailPicUrl placeholderImage:[UIImage imageNamed:@"loadingImage_50x118.png"]];
+        _oringPic = [NSURL URLWithString:statusEntity.bmiddlePic];
     }else{
       
     }
@@ -211,18 +191,6 @@ static NSDateFormatter *formatter;
         UIEdgeInsets edge = UIEdgeInsetsMake(10, 40, 10, 20);
         self.retweetBlock.image = [[UIImage imageNamed:@"timeline_rt_border.png"] resizableImageWithCapInsets:edge];
 
-        //statusEntity.origStatus.textHtml = [HtmlString transformString:[NSString stringWithFormat:@"@%@:%@",statusEntity.origStatus.user.name, statusEntity.origStatus.text]];
-        
-//        NSString *retweetDescriptionHTML = [NSString stringWithFormat:@"<html> \n"
-//                                       "<head> \n"
-//                                       "<style type=\"text/css\"> \n"
-//                                       "body {font-family: \"%@\"; font-size: %@;}\n"
-//                                       "</style> \n"
-//                                       "</head> \n"
-//                                       "<body>%@</body> \n"
-//                                       "</html>", @"helvetica", [NSNumber numberWithInt:12],statusEntity.origStatus.textHtml ];
-//        
-//        [[self retweetWebView] loadHTMLString:retweetDescriptionHTML baseURL:nil];
         self.retweetLabel.hidden = NO;
         self.retweetBlock.hidden = NO;
         [self.retweetLabel setText:statusEntity.origStatus.nameAndText];
@@ -230,6 +198,7 @@ static NSDateFormatter *formatter;
         if (statusEntity.origStatus.thumbnailPic) {
             NSURL *thumbnailPicUrl = [NSURL URLWithString:statusEntity.origStatus.thumbnailPic];
             [self.thumbnailPic setImageWithURL:thumbnailPicUrl placeholderImage:[UIImage imageNamed:@"loadingImage_50x118.png"]];
+            _oringPic = [NSURL URLWithString:statusEntity.origStatus.bmiddlePic];
         }else{
             self.thumbnailPic.image=nil;
         }
@@ -238,6 +207,14 @@ static NSDateFormatter *formatter;
         self.retweetLabel.hidden = YES;
     }
     
+}
+
+- (void)tapPic
+{
+    NSLog(@"tapPic");
+    if([self.viewController respondsToSelector:@selector(tapPic:)]&&_oringPic){
+        [self.viewController performSelector:@selector(tapPic:) withObject:_oringPic];
+    }
 }
 
 
@@ -264,20 +241,6 @@ static NSDateFormatter *formatter;
     _retweetLabelHeight = statusSize.height;
     return _retweetLabelHeight;
 }
-
-//- (CGFloat)tweetLabelHeight
-//{
-//    CGFloat newHeight =  [self statusHeight:self.statusEntity.text];
-//    _webViewHeight = newHeight;
-//    return _webViewHeight;
-//}
-//
-//- (CGFloat)retweetLabelHeight
-//{
-//    CGFloat newHeight =  [self retweetStatusHeight:self.statusEntity.origStatus.text];
-//    _retweetWebViewHeight = newHeight;
-//    return _retweetWebViewHeight;
-//}
 
 - (CGFloat)hightForCellWithStatus:(Status *)status;
 {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2905050C16D462CC005AC00A /* OrinImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2905050A16D462CC005AC00A /* OrinImageViewController.m */; };
+		2905050D16D462CC005AC00A /* OrinImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2905050B16D462CC005AC00A /* OrinImageViewController.xib */; };
 		291BCB2916A827A20091F508 /* Status.m in Sources */ = {isa = PBXBuildFile; fileRef = 291BCB2816A827A20091F508 /* Status.m */; };
 		291BCB2C16A8295F0091F508 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 291BCB2B16A8295F0091F508 /* User.m */; };
 		291F889816CF7B3D004F7363 /* PullRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291F889716CF7B3D004F7363 /* PullRefreshTableViewController.m */; };
@@ -35,7 +37,6 @@
 		2968346316A6F70000497598 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968346116A6F70000497598 /* InfoPlist.strings */; };
 		2968346516A6F70000497598 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2968346416A6F70000497598 /* main.m */; };
 		2968346916A6F70000497598 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2968346816A6F70000497598 /* AppDelegate.m */; };
-		2968346B16A6F70000497598 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2968346A16A6F70000497598 /* Default.png */; };
 		2968346F16A6F70000497598 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2968346E16A6F70000497598 /* Default-568h@2x.png */; };
 		2968348B16A6F87D00497598 /* SinaWeibo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2968348216A6F87D00497598 /* SinaWeibo.bundle */; };
 		2968348C16A6F87D00497598 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2968348416A6F87D00497598 /* SinaWeibo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -46,6 +47,8 @@
 		2968349816A6FA5B00497598 /* FollowAndFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2968349716A6FA5B00497598 /* FollowAndFansViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2968349B16A6FA8600497598 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2968349A16A6FA8600497598 /* ProfileViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2968349E16A6FA9600497598 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2968349D16A6FA9600497598 /* SettingsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		296C93B916D4DBDA00E095EE /* black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 296C93B716D4DBDA00E095EE /* black@2x.png */; };
+		296C93BA16D4DBDA00E095EE /* black.png in Resources */ = {isa = PBXBuildFile; fileRef = 296C93B816D4DBDA00E095EE /* black.png */; };
 		2973767E16D309FE006B4C75 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2973767D16D309FE006B4C75 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		29751D8E16BFC3CC00F1EC9F /* StatusDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29751D8D16BFC3CC00F1EC9F /* StatusDetailViewController.m */; };
 		2978D7D716AD2A980002E134 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2978D7D616AD2A980002E134 /* QuartzCore.framework */; };
@@ -141,6 +144,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2905050916D462CC005AC00A /* OrinImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrinImageViewController.h; sourceTree = "<group>"; };
+		2905050A16D462CC005AC00A /* OrinImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrinImageViewController.m; sourceTree = "<group>"; };
+		2905050B16D462CC005AC00A /* OrinImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrinImageViewController.xib; sourceTree = "<group>"; };
 		2908D14F16CFADF400D94BF5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		291BCB2716A827A20091F508 /* Status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Status.h; sourceTree = "<group>"; };
 		291BCB2816A827A20091F508 /* Status.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Status.m; sourceTree = "<group>"; };
@@ -205,6 +211,8 @@
 		2968349A16A6FA8600497598 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		2968349C16A6FA9600497598 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		2968349D16A6FA9600497598 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		296C93B716D4DBDA00E095EE /* black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "black@2x.png"; sourceTree = "<group>"; };
+		296C93B816D4DBDA00E095EE /* black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black.png; sourceTree = "<group>"; };
 		2973767C16D309FE006B4C75 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = ../JSONKit.h; sourceTree = "<group>"; };
 		2973767D16D309FE006B4C75 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = ../JSONKit.m; sourceTree = "<group>"; };
 		29751D8C16BFC3CC00F1EC9F /* StatusDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusDetailViewController.h; sourceTree = "<group>"; };
@@ -361,6 +369,8 @@
 		292582A416A7956700B2B2F5 /* myimage */ = {
 			isa = PBXGroup;
 			children = (
+				296C93B716D4DBDA00E095EE /* black@2x.png */,
+				296C93B816D4DBDA00E095EE /* black.png */,
 				29E96D0216C6035A003B9CBE /* tabbar_whitebtn.png */,
 				29E96D0316C6035A003B9CBE /* tabbar_whitebtn@2x.png */,
 				29E96D0416C6035A003B9CBE /* tabbar_greenbtn.png */,
@@ -459,6 +469,9 @@
 				29CD822816AF8F3800F4114F /* StatusCell.h */,
 				29CD822916AF8F3800F4114F /* StatusCell.m */,
 				29CD822C16AF8F7000F4114F /* StatusCell.xib */,
+				2905050916D462CC005AC00A /* OrinImageViewController.h */,
+				2905050A16D462CC005AC00A /* OrinImageViewController.m */,
+				2905050B16D462CC005AC00A /* OrinImageViewController.xib */,
 				2978D7DB16AD2C880002E134 /* WriteWbViewController.h */,
 				2978D7DC16AD2C880002E134 /* WriteWbViewController.m */,
 				2968349316A6FA0900497598 /* MentionsViewController.h */,
@@ -699,7 +712,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2968346316A6F70000497598 /* InfoPlist.strings in Resources */,
-				2968346B16A6F70000497598 /* Default.png in Resources */,
 				2968346F16A6F70000497598 /* Default-568h@2x.png in Resources */,
 				2968348B16A6F87D00497598 /* SinaWeibo.bundle in Resources */,
 				292582C916A79A7600B2B2F5 /* Delicious-32p.png in Resources */,
@@ -785,6 +797,9 @@
 				29E96D0816C6035A003B9CBE /* tabbar_greenbtn.png in Resources */,
 				29E96D0916C6035A003B9CBE /* tabbar_greenbtn@2x.png in Resources */,
 				291F889D16CF8E9D004F7363 /* SORelativeDateTransformer.bundle in Resources */,
+				2905050D16D462CC005AC00A /* OrinImageViewController.xib in Resources */,
+				296C93B916D4DBDA00E095EE /* black@2x.png in Resources */,
+				296C93BA16D4DBDA00E095EE /* black.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -834,6 +849,7 @@
 				291F889E16CF8E9D004F7363 /* SORelativeDateTransformer.m in Sources */,
 				299BCD2416D0B7EE00C54D16 /* STTweetLabel.m in Sources */,
 				2973767E16D309FE006B4C75 /* JSONKit.m in Sources */,
+				2905050C16D462CC005AC00A /* OrinImageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -893,7 +909,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: zixu zhang (6W42DX98N6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zixu zhang (6W42DX98N6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: zixu zhang";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -902,6 +918,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "363AA15B-70FD-4E08-B08E-A63FD4D3D834";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B7EC0C9B-721E-4566-80BB-BA39491540BE";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

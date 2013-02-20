@@ -11,6 +11,7 @@
 #import "StatusCell.h"
 #import "StatusDetailViewController.h"
 #import "ProfileViewController.h"
+#import "OrinImageViewController.h"
 #define MentionsStatusCell @"MentionsStatusCell"
 @interface MentionsViewController ()
 
@@ -42,7 +43,7 @@
 {
     [super viewDidLoad];
     [[self tableView] setHidden:YES];
-    self.title=@"@我";
+    //self.title=@"@我";
     
     UINib *nib = [UINib nibWithNibName:@"StatusCell" bundle:nil];
     [[self tableView] registerNib:nib forCellReuseIdentifier:MentionsStatusCell];
@@ -125,6 +126,14 @@
     [self.navigationController pushViewController:pvc animated: YES];
 }
 
+- (void)tapPic:(NSURL *)oringPic
+{
+    NSLog(@"Main page tapPic,%@",oringPic);
+    OrinImageViewController *orinVC = [[OrinImageViewController alloc] initWithPicURL:oringPic];
+    [self.navigationController presentViewController:orinVC animated:YES completion:nil];
+    
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -168,8 +177,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    StatusDetailViewController *dvc = [[StatusDetailViewController alloc] initWithStatusMain:[self.retweetStatus objectAtIndex:indexPath.row]];
-    [self.navigationController pushViewController:dvc animated:YES];
+    StatusCell *cell = (StatusCell *)[tableView cellForRowAtIndexPath:indexPath];
+    if (cell.cellClickStatus==CellNormalClick) {
+        StatusDetailViewController *dvc = [[StatusDetailViewController alloc] initWithStatusMain:[self.retweetStatus objectAtIndex:indexPath.row]];
+        [self.navigationController pushViewController:dvc animated:YES];
+    }
 }
 
 #pragma mark - weibo request

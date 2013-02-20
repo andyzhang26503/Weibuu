@@ -21,6 +21,7 @@ typedef enum {
     CGFloat _tweetLabelHeight;
     CGFloat _retweetLabelHeight;
     CellClickStatus _cellClickStatus;
+    NSURL *_oringPic;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *retweetCount;

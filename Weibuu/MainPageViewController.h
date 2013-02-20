@@ -17,6 +17,8 @@
 @interface MainPageViewController : PullRefreshTableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate>
 {
     UIActivityIndicatorView *_activityIndicatorView;
+    UIBarButtonItem *_bbiRefresh;
+    UIBarButtonItem *_bbiLoading;
 }
 
 @property (nonatomic,strong) NSMutableArray *statusesArray;

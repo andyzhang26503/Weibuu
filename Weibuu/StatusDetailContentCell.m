@@ -15,7 +15,7 @@
 @implementation StatusDetailContentCell
 @synthesize statusEntity  = _statusEntity;
 static NSDateFormatter *formatter;
-
+static UITapGestureRecognizer *tap;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -124,8 +124,9 @@ static NSDateFormatter *formatter;
     self.commentCount.text = [statusEntity.commentsCount stringValue];
 
     [[self tweetLabel] setText:statusEntity.text];
-    
-    formatter=[[NSDateFormatter alloc] init];
+    if (!formatter) {
+        formatter=[[NSDateFormatter alloc] init];
+    }    
     [formatter setDateFormat:@"EEE MMM dd HH:mm:ss zzz yyyy"];
     [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     NSDate *date=[formatter dateFromString:statusEntity.createdAt];
@@ -148,23 +149,14 @@ static NSDateFormatter *formatter;
             
         }
     }
+    tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPic)];
+    [self.thumbnailPic addGestureRecognizer:tap];
+    self.thumbnailPic.userInteractionEnabled = YES;
     
-    
-//    if (statusEntity.user.verified) {
-//        self.verifiedImage.hidden = NO;
-//    }else{
-//        self.verifiedImage.hidden = YES;
-//    }
-    
-    
-//    NSURL *imageUrl = [NSURL URLWithString:statusEntity.user.profileImageUrl];
-//    [self.avatarImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"touxiang_40x40.png"]];
-//    
-//    
-//    self.name.textColor = [UIColor grayColor];
     if (statusEntity.thumbnailPic) {
         NSURL *thumbnailPicUrl = [NSURL URLWithString:statusEntity.thumbnailPic];
         [self.thumbnailPic setImageWithURL:thumbnailPicUrl placeholderImage:[UIImage imageNamed:@"loadingImage_50x118.png"]];
+        _oringPic = [NSURL URLWithString:statusEntity.bmiddlePic];
     }else{
         
     }
@@ -181,6 +173,7 @@ static NSDateFormatter *formatter;
         if (statusEntity.origStatus.thumbnailPic) {
             NSURL *thumbnailPicUrl = [NSURL URLWithString:statusEntity.origStatus.thumbnailPic];
             [self.thumbnailPic setImageWithURL:thumbnailPicUrl placeholderImage:[UIImage imageNamed:@"loadingImage_50x118.png"]];
+            _oringPic = [NSURL URLWithString:statusEntity.origStatus.bmiddlePic];
         }else{
             self.thumbnailPic.image=nil;
         }
@@ -191,6 +184,13 @@ static NSDateFormatter *formatter;
     
 }
 
+- (void)tapPic
+{
+    NSLog(@"tapPic");
+    if([self.viewController respondsToSelector:@selector(tapPic:)]&&_oringPic){
+        [self.viewController performSelector:@selector(tapPic:) withObject:_oringPic];
+    }
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
