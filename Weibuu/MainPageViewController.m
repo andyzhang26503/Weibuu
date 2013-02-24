@@ -66,9 +66,7 @@
     
     UINib *nib = [UINib nibWithNibName:@"StatusCell" bundle:nil];
     [[self tableView] registerNib:nib forCellReuseIdentifier:FriendStatusCell];
-    
-        
-    
+
     [self requestTimeLine];
     
 }

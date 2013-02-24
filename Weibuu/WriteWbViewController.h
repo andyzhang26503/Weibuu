@@ -9,9 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "SinaWeiboManager.h"
-@interface WriteWbViewController : UIViewController<UITextViewDelegate,SinaWeiboDelegate, SinaWeiboRequestDelegate>
+#import <CoreLocation/CoreLocation.h>
+@interface WriteWbViewController : UIViewController<UITextViewDelegate,SinaWeiboDelegate, SinaWeiboRequestDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 {
-    UITextView *_textView;
+    UIImage *_oringImage;
+    CLLocation *_userLocation;
 }
+@property (weak, nonatomic) IBOutlet UIButton *uploadImage;
+@property (weak, nonatomic) IBOutlet UIImageView *textViewBackgroundPic;
+@property (weak, nonatomic) IBOutlet UITextView *weiboTextVIew;
+- (IBAction)takePicture:(id)sender;
+- (IBAction)getLocation:(id)sender;
 
 @end
