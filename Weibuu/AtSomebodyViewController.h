@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface AtSomebodyViewController : UITableViewController
+#import "SinaWeibo.h"
+@interface AtSomebodyViewController : UITableViewController<SinaWeiboDelegate, SinaWeiboRequestDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
+@property (nonatomic,strong)NSMutableArray *usersArray;
+@property (nonatomic,strong)NSMutableArray *filteredUsersArray;
+@property (nonatomic,weak)id viewController;
+@property (weak, nonatomic) IBOutlet UISearchBar *mySearchBar;
 
 @end

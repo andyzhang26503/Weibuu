@@ -20,5 +20,6 @@
 @property (weak, nonatomic) IBOutlet UITextView *weiboTextVIew;
 - (IBAction)takePicture:(id)sender;
 - (IBAction)getLocation:(id)sender;
+- (IBAction)getFriends:(id)sender;
 
 @end

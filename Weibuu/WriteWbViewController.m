@@ -11,6 +11,8 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "PoisViewController.h"
 #import "POI.h"
+#import "AtSomebodyViewController.h"
+#import "User.h"
 @interface WriteWbViewController ()
 
 @end
@@ -156,6 +158,17 @@
     PoisViewController *pvc = [[PoisViewController alloc] init];
     pvc.pViewController = self;
     [self.navigationController pushViewController:pvc animated:YES];
+}
+
+- (IBAction)getFriends:(id)sender {
+    AtSomebodyViewController *avc = [[AtSomebodyViewController alloc] initWithStyle:UITableViewStylePlain];
+    avc.viewController = self;
+    [self.navigationController pushViewController:avc animated:YES];
+}
+
+- (void)selAtUser:(NSString *)name{
+    NSString *text = [self.weiboTextVIew.text stringByAppendingFormat:@"@%@",name];
+    self.weiboTextVIew.text = text;
 }
 - (void)chooseLocation:(CLLocation *)location withPOI:(POI *)poi
 {

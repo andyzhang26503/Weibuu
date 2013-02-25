@@ -478,9 +478,6 @@
 		2968344916A6F70000497598 = {
 			isa = PBXGroup;
 			children = (
-				296115E416D8A87B00298A52 /* CoreLocation.framework */,
-				2969750716D71564003F1630 /* AssetsLibrary.framework */,
-				2969750516D7103A003F1630 /* MobileCoreServices.framework */,
 				297F86C316CB6ABB0046CA90 /* Default-568h@2x.png */,
 				2968345E16A6F70000497598 /* Weibuu */,
 				2968345716A6F70000497598 /* Frameworks */,
@@ -499,6 +496,9 @@
 		2968345716A6F70000497598 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				296115E416D8A87B00298A52 /* CoreLocation.framework */,
+				2969750716D71564003F1630 /* AssetsLibrary.framework */,
+				2969750516D7103A003F1630 /* MobileCoreServices.framework */,
 				29336C5916B7674100071EE7 /* libicucore.dylib */,
 				2978D7D616AD2A980002E134 /* QuartzCore.framework */,
 				2968345816A6F70000497598 /* UIKit.framework */,
